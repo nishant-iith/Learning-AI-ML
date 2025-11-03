@@ -13,17 +13,17 @@
 **Definition**: Process of finding optimal model parameters to improve performance
 
 **Why Hyperparameter Tuning?**:
-- Different λ values create different model complexities
-- No universal best λ value - depends on dataset
+- Different lambda values create different model complexities
+- No universal best lambda value - depends on dataset
 - Automated process better than manual trial and error
 
 ```mermaid
-graph TD
-    A[Define Parameter Grid] --> B[GridSearchCV]
-    B --> C[Cross-Validation]
-    C --> D[Train Multiple Models]
-    D --> E[Evaluate Performance]
-    E --> F[Select Best Parameters]
+flowchart TD
+    A["Define Parameter Grid"] --> B["GridSearchCV"]
+    B --> C["Cross-Validation"]
+    C --> D["Train Multiple Models"]
+    D --> E["Evaluate Performance"]
+    E --> F["Select Best Parameters"]
 ```
 
 ### 7.2 Ridge Regression Implementation
@@ -39,7 +39,7 @@ from sklearn.model_selection import cross_val_score
 ```python
 # Alpha values to test (logarithmic scale)
 parameters = {
-    'alpha': [1e-10, 1e-8, 1e-5, 1e-3, 1e-2, 1, 5, 10, 20, 30, 35, 40, 45, 100]
+    'alpha': ["1e-10, 1e-8, 1e-5, 1e-3, 1e-2, 1, 5, 10, 20, 30, 35, 40, 45, 100"]
 }
 ```
 
@@ -63,11 +63,11 @@ ridge_regressor.fit(X_train, y_train)
 #### Results Interpretation
 ```python
 # Best parameters found
-print(f"Best alpha: {ridge_regressor.best_params_}")
-# Output: {'alpha': 100}
+print(f"Best alpha: {"ridge_regressor.best_params_"}")
+# Output: {"'alpha': 100"}
 
 # Best score achieved
-print(f"Best score: {ridge_regressor.best_score_}")
+print(f"Best score: {"ridge_regressor.best_score_"}")
 # Output: -29.34 (lower MSE is better)
 ```
 
@@ -92,10 +92,10 @@ lasso_regressor = GridSearchCV(
 lasso_regressor.fit(X_train, y_train)
 
 # Results
-print(f"Best alpha: {lasso_regressor.best_params_}")
-# Output: {'alpha': 1}
+print(f"Best alpha: {"lasso_regressor.best_params_"}")
+# Output: {"'alpha': 1"}
 
-print(f"Best score: {lasso_regressor.best_score_}")
+print(f"Best score: {"lasso_regressor.best_score_"}")
 # Output: -35.67
 ```
 
@@ -107,28 +107,28 @@ print(f"Best score: {lasso_regressor.best_score_}")
 lin_reg = LinearRegression()
 lin_mse = cross_val_score(lin_reg, X_train, y_train,
                           scoring='neg_mean_squared_error', cv=5)
-print(f"Linear Regression MSE: {np.mean(lin_mse):.2f}")
+print(f"Linear Regression MSE: {"np.mean(lin_mse):.2f"}")
 # Output: -37.13
 
 # Ridge Regression
-print(f"Ridge Regression MSE: {ridge_regressor.best_score_:.2f}")
+print(f"Ridge Regression MSE: {"ridge_regressor.best_score_:.2f"}")
 # Output: -29.34
 
 # Lasso Regression
-print(f"Lasso Regression MSE: {lasso_regressor.best_score_:.2f}")
+print(f"Lasso Regression MSE: {"lasso_regressor.best_score_:.2f"}")
 # Output: -35.67
 ```
 
 #### Decision Making Process
 
 ```mermaid
-graph TD
-    A[Compare MSE Scores] --> B{Ridge MSE < Linear?}
-    B -->|Yes| C[Use Ridge - Better Performance + Regularization]
-    B -->|No| D[Compare Lasso vs Linear]
-    D --> E{Lasso MSE < Linear?}
-    E -->|Yes| F[Use Lasso - Feature Selection Benefit]
-    E -->|No| G[Use Linear Regression]
+flowchart TD
+    A["Compare MSE Scores"] --> B{"Ridge MSE < Linear?"}
+    B -->|Yes| C["Use Ridge - Better Performance + Regularization"]
+    B -->|No| D["Compare Lasso vs Linear"]
+    D --> E{"Lasso MSE < Linear?"}
+    E -->|Yes| F["Use Lasso - Feature Selection Benefit"]
+    E -->|No| G["Use Linear Regression"]
 ```
 
 ### 7.5 Train-Test Split vs Cross-Validation
@@ -166,7 +166,7 @@ y_pred = best_ridge.predict(X_test)
 from sklearn.metrics import r2_score
 
 r2 = r2_score(y_test, y_pred)
-print(f"R² Score: {r2:.4f}")
+print(f"R² Score: {"r2:.4f"}")
 # Output: 0.7684 (76.84% variance explained)
 ```
 
@@ -191,8 +191,8 @@ print(y.value_counts())
 ```python
 # Parameter grid for logistic regression
 log_params = {
-    'C': [1, 10, 20],           # Inverse of regularization strength
-    'max_iter': [100, 150, 200]  # Maximum iterations
+    'C': ["1, 10, 20"],           # Inverse of regularization strength
+    'max_iter': ["100, 150, 200"]  # Maximum iterations
 }
 
 # Initialize and fit
@@ -218,8 +218,8 @@ y_pred = log_regressor.predict(X_test)
 cm = confusion_matrix(y_test, y_pred)
 print("Confusion Matrix:")
 print(cm)
-# Output: [[63  3]
-#          [ 4 118]]
+# Output: ["[63  3"]
+#          [" 4 118"]]
 
 # Classification Report
 print("\nClassification Report:")
@@ -227,7 +227,7 @@ print(classification_report(y_test, y_pred))
 
 # Accuracy Score
 accuracy = accuracy_score(y_test, y_pred)
-print(f"Accuracy: {accuracy:.4f}")
+print(f"Accuracy: {"accuracy:.4f"}")
 # Output: 0.9615 (96.15% accuracy)
 ```
 
@@ -237,10 +237,10 @@ print(f"Accuracy: {accuracy:.4f}")
 ```python
 # Start with wide range, then narrow down
 # First pass:
-alphas_wide = [1e-10, 1e-5, 1e-3, 1e-1, 1, 10, 100]
+alphas_wide = ["1e-10, 1e-5, 1e-3, 1e-1, 1, 10, 100"]
 
 # Second pass (around best value):
-alphas_narrow = [50, 75, 100, 125, 150]
+alphas_narrow = ["50, 75, 100, 125, 150"]
 ```
 
 #### Cross-Validation Folds
@@ -254,10 +254,10 @@ cv_folds = 3  # For faster iteration
 #### Scoring Metrics
 ```python
 # Regression metrics
-scoring_regression = ['neg_mean_squared_error', 'r2', 'neg_mean_absolute_error']
+scoring_regression = ["'neg_mean_squared_error', 'r2', 'neg_mean_absolute_error'"]
 
 # Classification metrics
-scoring_classification = ['f1', 'accuracy', 'precision', 'recall']
+scoring_classification = ["'f1', 'accuracy', 'precision', 'recall'"]
 ```
 
 ## ❓ Interview Questions & Answers
@@ -274,7 +274,7 @@ scoring_classification = ['f1', 'accuracy', 'precision', 'recall']
 
 ### Q3: How do you choose the range of alpha values for Ridge/Lasso?
 **Answer**:
-- Start with logarithmic scale: [1e-10, 1e-5, 1e-3, 1e-1, 1, 10, 100]
+- Start with logarithmic scale: ["1e-10, 1e-5, 1e-3, 1e-1, 1, 10, 100"]
 - Wider range initially, then narrow around best value
 - Consider dataset size and feature scaling
 - Domain knowledge about expected regularization strength

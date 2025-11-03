@@ -15,14 +15,14 @@
 **Core Concept**: Instead of using entropy/Gini, we use **Mean Squared Error (MSE)** or **Mean Absolute Error (MAE)** as the splitting criterion
 
 ```mermaid
-graph TD
-    A[Continuous Input Features] --> B[Select Best Feature]
-    B --> C[Split Based on Feature Values]
-    C --> D[Calculate Mean for Each Node]
-    D --> E[Compute MSE/MAE]
-    E --> F{Continue Splitting?}
+flowchart TD
+    A["Continuous Input Features"] --> B["Select Best Feature"]
+    B --> C["Split Based on Feature Values"]
+    C --> D["Calculate Mean for Each Node"]
+    D --> E["Compute MSE/MAE"]
+    E --> F{"Continue Splitting?"}
     F -->|Yes| C
-    F -->|No| G[Leaf Node with Mean Value]
+    F -->|No| G["Leaf Node with Mean Value"]
 ```
 
 ### 11.2 Regression vs Classification Trees
@@ -54,7 +54,7 @@ Where:
 
 #### Step 1: Calculate Initial Mean
 ```python
-# Example: Target values [20, 24, 26, 28, 30]
+# Example: Target values ["20, 24, 26, 28, 30"]
 initial_mean = (20 + 24 + 26 + 28 + 30) / 5 = 25.6
 ```
 
@@ -66,14 +66,14 @@ mse_initial = 13.84
 
 #### Step 3: Test All Possible Splits
 ```mermaid
-graph TD
-    A[Feature F1 with Categories] --> B[Split at Category 1]
-    A --> C[Split at Category 2]
-    A --> D[Split at Category 3]
+flowchart TD
+    A["Feature F1 with Categories"] --> B["Split at Category 1"]
+    A --> C["Split at Category 2"]
+    A --> D["Split at Category 3"]
 
-    B --> E[Left Group: Calculate Mean & MSE]
-    B --> F[Right Group: Calculate Mean & MSE]
-    E --> G[Weighted Average MSE]
+    B --> E["Left Group: Calculate Mean & MSE"]
+    B --> F["Right Group: Calculate Mean & MSE"]
+    E --> G["Weighted Average MSE"]
     F --> G
 ```
 
@@ -102,14 +102,14 @@ Feature F1 | Target
 **Initial Mean**: 25.6, **Initial MSE**: 13.84
 
 **Split by Category1 vs Others**:
-- **Group 1** (Category1): [20, 24] → Mean = 22, MSE = 8
-- **Group 2** (Category2,3): [26, 28, 30] → Mean = 28, MSE = 2.67
+- **Group 1** (Category1): ["20, 24"] → Mean = 22, MSE = 8
+- **Group 2** (Category2,3): ["26, 28, 30"] → Mean = 28, MSE = 2.67
 - **Weighted MSE**: (2/5) × 8 + (3/5) × 2.67 = 4.4
 - **Information Gain**: 13.84 - 4.4 = 9.44
 
 **Split by Category3 vs Others**:
-- **Group 1** (Category3): [28, 30] → Mean = 29, MSE = 2
-- **Group 2** (Category1,2): [20, 24, 26] → Mean = 23.33, MSE = 8.89
+- **Group 1** (Category3): ["28, 30"] → Mean = 29, MSE = 2
+- **Group 2** (Category1,2): ["20, 24, 26"] → Mean = 23.33, MSE = 8.89
 - **Weighted MSE**: (2/5) × 2 + (3/5) × 8.89 = 5.93
 - **Information Gain**: 13.84 - 5.93 = 7.91
 
@@ -120,15 +120,15 @@ Feature F1 | Target
 **Process**: Similar to classification but evaluate splits based on MSE reduction
 
 ```mermaid
-graph TD
-    A[Continuous Feature: [1.2, 2.3, 3.1, 4.5, 5.8]] --> B[Test Split ≤ 1.2]
-    B --> C[Calculate MSE Reduction]
-    A --> D[Test Split ≤ 2.3]
-    D --> E[Calculate MSE Reduction]
-    A --> F[Test Split ≤ 3.1]
-    F --> G[Calculate MSE Reduction]
-    A --> H[Continue for All Values]
-    H --> I[Select Split with Max MSE Reduction]
+flowchart TD
+    A["Continuous Feature: [1.2, 2.3, 3.1, 4.5, 5.8"]] --> B["Test Split ≤ 1.2"]
+    B --> C["Calculate MSE Reduction"]
+    A --> D["Test Split ≤ 2.3"]
+    D --> E["Calculate MSE Reduction"]
+    A --> F["Test Split ≤ 3.1"]
+    F --> G["Calculate MSE Reduction"]
+    A --> H["Continue for All Values"]
+    H --> I["Select Split with Max MSE Reduction"]
 ```
 
 ### 11.7 Hyperparameters for Regression Trees
@@ -148,10 +148,10 @@ from sklearn.model_selection import GridSearchCV
 
 # Define parameter grid
 parameters = {
-    'max_depth': [3, 5, 7, 10, None],
-    'min_samples_split': [2, 5, 10],
-    'min_samples_leaf': [1, 2, 4],
-    'max_leaf_nodes': [None, 10, 20, 30]
+    'max_depth': ["3, 5, 7, 10, None"],
+    'min_samples_split': ["2, 5, 10"],
+    'min_samples_leaf': ["1, 2, 4"],
+    'max_leaf_nodes': ["None, 10, 20, 30"]
 }
 
 # Initialize regressor
@@ -176,11 +176,11 @@ best_params = grid_search.best_params_
 - Poor generalization to new data
 
 ```mermaid
-graph TD
-    A[Overfitted Tree] --> B[Training MSE: 0.1]
-    A --> C[Test MSE: 50.2]
-    D[Well-Fitted Tree] --> E[Training MSE: 5.2]
-    D --> F[Test MSE: 6.8]
+flowchart TD
+    A["Overfitted Tree"] --> B["Training MSE: 0.1"]
+    A --> C["Test MSE: 50.2"]
+    D["Well-Fitted Tree"] --> E["Training MSE: 5.2"]
+    D --> F["Test MSE: 6.8"]
 ```
 
 ### 11.9 Pruning Techniques
@@ -199,13 +199,13 @@ Grow full tree, then remove branches that don't improve validation performance
 
 **Post-Pruning Process**:
 ```mermaid
-graph TD
-    A[Grow Full Tree] --> B[Calculate Validation MSE]
-    B --> C[Consider Pruning Each Node]
-    C --> D[Prune if Validation MSE Doesn't Increase]
-    D --> E{More Nodes to Consider?}
+flowchart TD
+    A["Grow Full Tree"] --> B["Calculate Validation MSE"]
+    B --> C["Consider Pruning Each Node"]
+    C --> D["Prune if Validation MSE Doesn't Increase"]
+    D --> E{"More Nodes to Consider?"}
     E -->|Yes| C
-    E -->|No| F[Final Pruned Tree]
+    E -->|No| F["Final Pruned Tree"]
 ```
 
 ### 11.10 Practical Implementation
@@ -240,8 +240,8 @@ test_mse = mean_squared_error(y_test, y_pred_test)
 train_r2 = r2_score(y_train, y_pred_train)
 test_r2 = r2_score(y_test, y_pred_test)
 
-print(f"Train MSE: {train_mse:.2f}, Test MSE: {test_mse:.2f}")
-print(f"Train R²: {train_r2:.4f}, Test R²: {test_r2:.4f}")
+print(f"Train MSE: {"train_mse:.2f"}, Test MSE: {"test_mse:.2f"}")
+print(f"Train R²: {"train_r2:.4f"}, Test R²: {"test_r2:.4f"}")
 
 # Feature importance
 feature_importance = pd.DataFrame({

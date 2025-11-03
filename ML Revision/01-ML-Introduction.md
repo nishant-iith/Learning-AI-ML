@@ -10,10 +10,10 @@
 ### 1.1 AI vs ML vs Deep Learning vs Data Science
 
 ```mermaid
-graph TD
-    A[Artificial Intelligence] --> B[Machine Learning]
-    B --> C[Deep Learning]
-    A --> D[Data Science]
+flowchart TD
+    A["Artificial Intelligence"] --> B["Machine Learning"]
+    B --> C["Deep Learning"]
+    A --> D["Data Science"]
     D --> B
     D --> C
 ```
@@ -46,12 +46,12 @@ graph TD
 
 ```mermaid
 flowchart LR
-    A[Business Problem] --> B{Problem Type}
-    B -->|Supervised| C[Regression]
-    B -->|Supervised| D[Classification]
-    B -->|Unsupervised| E[Clustering]
-    B -->|Unsupervised| F[Dimensionality Reduction]
-    B -->|Reinforcement| G[Decision Making]
+    A["Business Problem"] --> B{"Problem Type"}
+    B -->|Supervised| C["Regression"]
+    B -->|Supervised| D["Classification"]
+    B -->|Unsupervised| E["Clustering"]
+    B -->|Unsupervised| F["Dimensionality Reduction"]
+    B -->|Reinforcement| G["Decision Making"]
 ```
 
 ## 🚀 Interview Focus

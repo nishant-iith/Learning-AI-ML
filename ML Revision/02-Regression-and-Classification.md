@@ -11,15 +11,15 @@
 ### 2.1 Independent vs Dependent Features
 
 ```mermaid
-graph LR
-    A[Independent Features] --> B[Model]
-    B --> C[Dependent Feature]
-    D[Age] --> B
-    E[Study Hours] --> B
-    F[Experience] --> B
-    B --> G[Weight]
-    B --> H[Salary]
-    B --> I[Pass/Fail]
+flowchart LR
+    A["Independent Features"] --> B["Model"]
+    B --> C["Dependent Feature"]
+    D["Age"] --> B
+    E["Study Hours"] --> B
+    F["Experience"] --> B
+    B --> G["Weight"]
+    B --> H["Salary"]
+    B --> I["Pass/Fail"]
 ```
 
 **Independent Features (Input Variables)**
@@ -44,13 +44,13 @@ graph LR
 - Data points: Age (24) → Weight (62), Age (25) → Weight (63)
 
 ```mermaid
-graph TD
-    A[Input: Age] --> B[Linear Regression Model]
-    B --> C[Output: Weight<br/>(Continuous Value)]
-    D[Age: 24] --> B
-    E[Age: 25] --> B
-    B --> F[Weight: 62.5]
-    B --> G[Weight: 63.2]
+flowchart TD
+    A["Input: Age"] --> B["Linear Regression Model"]
+    B --> C["Output: Weight<br/>(Continuous Value)"]
+    D["Age: 24"] --> B
+    E["Age: 25"] --> B
+    B --> F["Weight: 62.5"]
+    B --> G["Weight: 63.2"]
 ```
 
 **Real-world Examples**:
@@ -70,15 +70,15 @@ graph TD
   - **Multiclass Classification**: More than 2 categories (A/B/C/D, Cat/Dog/Bird)
 
 ```mermaid
-graph TD
-    A[Input Features<br/>Study Hours, Play Hours, Sleep Hours] --> B[Classification Model]
-    B --> C[Output: Pass/Fail<br/>(Categorical)]
+flowchart TD
+    A["Input Features<br/>Study Hours, Play Hours, Sleep Hours"] --> B["Classification Model"]
+    B --> C["Output: Pass/Fail<br/>(Categorical)"]
 
-    D[Study: 8h<br/>Play: 2h<br/>Sleep: 8h] --> B
-    E[Study: 2h<br/>Play: 6h<br/>Sleep: 6h] --> B
+    D["Study: 8h<br/>Play: 2h<br/>Sleep: 8h"] --> B
+    E["Study: 2h<br/>Play: 6h<br/>Sleep: 6h"] --> B
 
-    B --> F[Result: PASS]
-    B --> G[Result: FAIL]
+    B --> F["Result: PASS"]
+    B --> G["Result: FAIL"]
 ```
 
 **Real-world Examples**:
@@ -90,21 +90,21 @@ graph TD
 ### 2.4 Supervised vs Unsupervised Learning
 
 ```mermaid
-graph TD
-    A[Machine Learning] --> B[Supervised Learning]
-    A --> C[Unsupervised Learning]
+flowchart TD
+    A["Machine Learning"] --> B["Supervised Learning"]
+    A --> C["Unsupervised Learning"]
 
-    B --> D[Regression]
-    B --> E[Classification]
+    B --> D["Regression"]
+    B --> E["Classification"]
 
-    C --> F[Clustering]
-    C --> G[Dimensionality Reduction]
+    C --> F["Clustering"]
+    C --> G["Dimensionality Reduction"]
 
-    H[Data with Labels<br/>Age → Weight] --> D
-    I[Data with Labels<br/>Features → Pass/Fail] --> E
+    H["Data with Labels<br/>Age → Weight"] --> D
+    I["Data with Labels<br/>Features → Pass/Fail"] --> E
 
-    J[Data without Labels<br/>Salary, Age] --> F
-    K[Data with Many Features<br/>1000+ Features] --> G
+    J["Data without Labels<br/>Salary, Age"] --> F
+    K["Data with Many Features<br/>1000+ Features"] --> G
 ```
 
 **Supervised Learning**
@@ -129,15 +129,15 @@ graph TD
 - **Business Use**: Target specific marketing campaigns
 
 ```mermaid
-graph TD
-    A[Customer Data<br/>Salary & Age] --> B[Clustering Algorithm]
-    B --> C[Cluster 1<br/>Young & High Salary]
-    B --> D[Cluster 2<br/>Old & High Salary]
-    B --> E[Cluster 3<br/>Middle Class]
+flowchart TD
+    A["Customer Data<br/>Salary & Age"] --> B["Clustering Algorithm"]
+    B --> C["Cluster 1<br/>Young & High Salary"]
+    B --> D["Cluster 2<br/>Old & High Salary"]
+    B --> E["Cluster 3<br/>Middle Class"]
 
-    F[Product 1<br/>Luxury Items] --> C
-    G[Product 2<br/>Retirement Plans] --> D
-    H[Product 3<br/>Family Packages] --> E
+    F["Product 1<br/>Luxury Items"] --> C
+    G["Product 2<br/>Retirement Plans"] --> D
+    H["Product 3<br/>Family Packages"] --> E
 ```
 
 **Key Points**:

@@ -19,12 +19,12 @@
 - **Step-by-step**: Builds clusters incrementally
 
 ```mermaid
-graph TD
-    A[Individual Data Points] --> B[Combine Closest Points]
-    B --> C[Form Small Clusters]
-    C --> D[Merge Larger Clusters]
-    D --> E[Single Cluster]
-    E --> F[Dendrogram<br/>Tree Structure]
+flowchart TD
+    A["Individual Data Points"] --> B["Combine Closest Points"]
+    B --> C["Form Small Clusters"]
+    C --> D["Merge Larger Clusters"]
+    D --> E["Single Cluster"]
+    E --> F["Dendrogram<br/>Tree Structure"]
 ```
 
 ### 17.2 Types of Hierarchical Clustering
@@ -69,17 +69,17 @@ P7  6.2  5.4  3.8  3.4  1.9  0.8   0
 - Update distance matrix
 
 **Example**: P6 and P7 are closest (distance = 0.8)
-- Merge into Cluster C1 = {P6, P7}
+- Merge into Cluster C1 = {"P6, P7"}
 
 #### Step 3: Continue Merging Process
 ```mermaid
-graph TD
-    A[Individual Points<br/>P1, P2, P3, P4, P5, P6, P7] --> B[Merge P6-P7<br/>Cluster C1]
-    B --> C[Merge P1-P2<br/>Cluster C2]
-    C --> D[Merge P3-P5<br/>Cluster C3]
-    D --> E[Merge C3-P4<br/>Cluster C4]
-    E --> F[Merge C2-C4<br/>Cluster C5]
-    F --> G[Merge C5-C1<br/>Single Cluster]
+flowchart TD
+    A["Individual Points<br/>P1, P2, P3, P4, P5, P6, P7"] --> B["Merge P6-P7<br/>Cluster C1"]
+    B --> C["Merge P1-P2<br/>Cluster C2"]
+    C --> D["Merge P3-P5<br/>Cluster C3"]
+    D --> E["Merge C3-P4<br/>Cluster C4"]
+    E --> F["Merge C2-C4<br/>Cluster C5"]
+    F --> G["Merge C5-C1<br/>Single Cluster"]
 ```
 
 #### Step 4: Build Dendrogram
@@ -90,23 +90,23 @@ graph TD
 ### 17.4 Dendrogram Visualization
 
 ```mermaid
-graph TD
-    A[P1] --> H[Height: 1.2]
-    B[P2] --> H
-    C[P3] --> I[Height: 1.5]
-    D[P4] --> I
-    E[P5] --> I
-    F[P6] --> J[Height: 0.8]
-    G[P7] --> J
+flowchart TD
+    A["P1"] --> H["Height: 1.2"]
+    B["P2"] --> H
+    C["P3"] --> I["Height: 1.5"]
+    D["P4"] --> I
+    E["P5"] --> I
+    F["P6"] --> J["Height: 0.8"]
+    G["P7"] --> J
 
-    H --> K[Height: 2.1]
+    H --> K["Height: 2.1"]
     I --> K
-    J --> L[Height: 1.8]
+    J --> L["Height: 1.8"]
 
-    K --> M[Height: 3.5]
+    K --> M["Height: 3.5"]
     L --> M
 
-    M --> N[Height: 5.0]
+    M --> N["Height: 5.0"]
 ```
 
 **Dendrogram Interpretation**:
@@ -120,20 +120,20 @@ graph TD
 **Method**: Find the longest vertical line that no horizontal line passes through
 
 ```mermaid
-graph TD
-    A[Dendrogram] --> B[Identify Longest Vertical Line<br/>Without Horizontal Crossings]
-    B --> C[Count Number of Lines Crossed]
-    C --> D[Result = Number of Clusters]
+flowchart TD
+    A["Dendrogram"] --> B["Identify Longest Vertical Line<br/>Without Horizontal Crossings"]
+    B --> C["Count Number of Lines Crossed"]
+    C --> D["Result = Number of Clusters"]
 ```
 
 **Example**:
 ```mermaid
-graph LR
-    A[Longest Vertical Line] --> B[Crosses 4 Lines]
-    B --> C[Number of Clusters = 4]
+flowchart LR
+    A["Longest Vertical Line"] --> B["Crosses 4 Lines"]
+    B --> C["Number of Clusters = 4"]
 
-    D[Vertical Line] --> E[Multiple Horizontal Crossings]
-    E --> F[Not a Valid Cluster Boundary]
+    D["Vertical Line"] --> E["Multiple Horizontal Crossings"]
+    E --> F["Not a Valid Cluster Boundary"]
 ```
 
 ### 17.6 Distance Metrics in Hierarchical Clustering
@@ -170,8 +170,8 @@ from sklearn.preprocessing import StandardScaler
 
 # Generate sample data
 np.random.seed(42)
-data = np.random.multivariate_normal([0, 0], [[1, 0.5], [0.5, 1]], 30)
-data = np.vstack([data, np.random.multivariate_normal([5, 5], [[1, -0.2], [-0.2, 1]], 30)])
+data = np.random.multivariate_normal(["0, 0"], ["[1, 0.5"], ["0.5, 1"]], 30)
+data = np.vstack(["data, np.random.multivariate_normal([5, 5"], ["[1, -0.2"], ["-0.2, 1"]], 30)])
 
 # Standardize features
 scaler = StandardScaler()
@@ -196,8 +196,8 @@ optimal_clusters = 4  # Based on dendrogram analysis
 agg_clustering = AgglomerativeClustering(n_clusters=optimal_clusters)
 cluster_labels = agg_clustering.fit_predict(data_scaled)
 
-print(f"Optimal number of clusters: {optimal_clusters}")
-print(f"Cluster labels: {np.unique(cluster_labels)}")
+print(f"Optimal number of clusters: {"optimal_clusters"}")
+print(f"Cluster labels: {"np.unique(cluster_labels)"}")
 ```
 
 ### 17.9 Advantages and Disadvantages

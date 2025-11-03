@@ -15,12 +15,12 @@
 **Core Idea**: Y is a linear function of X
 
 ```mermaid
-graph TD
-    A[Training Data<br/>Age, Weight] --> B[Find Best Fit Line]
-    B --> C[Prediction Model]
-    C --> D[New Age → Predicted Weight]
+flowchart TD
+    A["Training Data<br/>Age, Weight"] --> B["Find Best Fit Line"]
+    B --> C["Prediction Model"]
+    C --> D["New Age → Predicted Weight"]
 
-    E[Data Points<br/>24→62, 25→63, 21→72] --> B
+    E["Data Points<br/>24→62, 25→63, 21→72"] --> B
 ```
 
 ### 3.2 Hypothesis Function
@@ -29,19 +29,19 @@ The equation of the best fit line can be written in multiple notations:
 
 - **Traditional**: `y = mx + c`
 - **Statistical**: `y = β₀ + β₁x`
-- **Machine Learning**: `h₀(x) = θ₀ + θ₁x`
+- **Machine Learning**: `h₀(x) = theta0 + theta1x`
 
 **Parameters**:
-- **θ₀ (Intercept)**: Value when X = 0 (where line meets Y-axis)
-- **θ₁ (Slope/Coefficient)**: Change in Y for 1 unit change in X
+- **theta0 (Intercept)**: Value when X = 0 (where line meets Y-axis)
+- **theta1 (Slope/Coefficient)**: Change in Y for 1 unit change in X
 
 ```mermaid
-graph LR
-    A[Input: Age] --> B[Hypothesis Function<br/>hθ(x) = θ₀ + θ₁x]
-    B --> C[Output: Predicted Weight]
+flowchart LR
+    A["Input: Age"] --> B["Hypothesis Function<br/>h(x) = theta0 + theta1x"]
+    B --> C["Output: Predicted Weight"]
 
-    D[θ₀: Intercept] --> B
-    E[θ₁: Slope] --> B
+    D["theta0: Intercept"] --> B
+    E["theta1: Slope"] --> B
 ```
 
 ### 3.3 Cost Function (Mean Squared Error)
@@ -50,12 +50,12 @@ graph LR
 
 **Formula**:
 ```
-J(θ₀, θ₁) = (1/2m) * Σ[hθ(xᵢ) - yᵢ]²
+J(theta0, theta1) = (1/2m) * Σ["h(xᵢ) - yᵢ"]²
 ```
 
 **Components**:
 - **m**: Number of data points
-- **hθ(xᵢ)**: Predicted value
+- **h(xᵢ)**: Predicted value
 - **yᵢ**: Actual value
 - **(1/2m)**: Average + simplifies derivation
 
@@ -66,58 +66,58 @@ J(θ₀, θ₁) = (1/2m) * Σ[hθ(xᵢ) - yᵢ]²
 
 ### 3.4 Gradient Descent Optimization
 
-**Goal**: Find the values of θ₀ and θ₁ that minimize the cost function
+**Goal**: Find the values of theta0 and theta1 that minimize the cost function
 
 ```mermaid
-graph TD
-    A[Initialize θ₀, θ₁] --> B[Calculate Cost]
-    B --> C[Update Parameters]
-    C --> D{Converged?}
+flowchart TD
+    A["Initialize theta0, theta1"] --> B["Calculate Cost"]
+    B --> C["Update Parameters"]
+    C --> D{"Converged?"}
     D -->|No| B
-    D -->|Yes| E[Optimal Parameters]
+    D -->|Yes| E["Optimal Parameters"]
 
-    F[Learning Rate α] --> C
+    F["Learning Rate alpha"] --> C
 ```
 
 **Update Rules**:
 ```
-θ₀ = θ₀ - α * (1/m) * Σ[hθ(xᵢ) - yᵢ]
-θ₁ = θ₁ - α * (1/m) * Σ[hθ(xᵢ) - yᵢ] * xᵢ
+theta0 = theta0 - alpha * (1/m) * Σ["h(xᵢ) - yᵢ"]
+theta1 = theta1 - alpha * (1/m) * Σ["h(xᵢ) - yᵢ"] * xᵢ
 ```
 
-**Learning Rate (α)**:
-- **Small α**: Takes tiny steps, slow convergence
-- **Large α**: May overshoot, never converge
+**Learning Rate (alpha)**:
+- **Small alpha**: Takes tiny steps, slow convergence
+- **Large alpha**: May overshoot, never converge
 - **Typical values**: 0.01, 0.1, 0.001
 
 **Gradient Descent Visualization**:
 
 ```mermaid
-graph TD
-    A[Cost Function<br/>J(θ₀, θ₁)] --> B[Bowl Shape]
-    B --> C[Global Minimum]
+flowchart TD
+    A["Cost Function<br/>J(theta0, theta1)"] --> B["Bowl Shape"]
+    B --> C["Global Minimum"]
 
-    D[High Cost] --> E[Medium Cost] --> F[Low Cost]
+    D["High Cost"] --> E["Medium Cost"] --> F["Low Cost"]
 
-    G[Start Point] --> H[Move Downhill] --> I[Reach Minimum]
+    G["Start Point"] --> H["Move Downhill"] --> I["Reach Minimum"]
 ```
 
 ### 3.5 Mathematical Example
 
 **Dataset**: (1,1), (2,2), (3,3)
 
-**When θ₁ = 1, θ₀ = 0**:
-- hθ(1) = 1, hθ(2) = 2, hθ(3) = 3
-- J(θ₁) = 0 (perfect fit)
+**When theta1 = 1, theta0 = 0**:
+- h(1) = 1, h(2) = 2, h(3) = 3
+- J(theta1) = 0 (perfect fit)
 
-**When θ₁ = 0.5, θ₀ = 0**:
-- hθ(1) = 0.5, hθ(2) = 1, hθ(3) = 1.5
-- J(θ₁) ≈ 0.58
+**When theta1 = 0.5, theta0 = 0**:
+- h(1) = 0.5, h(2) = 1, h(3) = 1.5
+- J(theta1) ≈ 0.58
 
 **Cost Function Graph**:
-- θ₁ = 1 → J = 0 (Global Minimum)
-- θ₁ = 0.5 → J = 0.58
-- θ₁ = 0 → J = 2.3
+- theta1 = 1 → J = 0 (Global Minimum)
+- theta1 = 0.5 → J = 0.58
+- theta1 = 0 → J = 2.3
 
 ### 3.6 Model Evaluation Metrics
 
@@ -129,8 +129,8 @@ R² = 1 - (SSR / SST)
 ```
 
 Where:
-- **SSR** = Σ[yᵢ - ŷᵢ]² (Sum of Squared Residuals)
-- **SST** = Σ[yᵢ - ȳ]² (Total Sum of Squares)
+- **SSR** = Σ["yᵢ - ŷᵢ"]² (Sum of Squared Residuals)
+- **SST** = Σ["yᵢ - ȳ"]² (Total Sum of Squares)
 
 **Interpretation**:
 - **R² = 1**: Perfect fit
@@ -145,7 +145,7 @@ Where:
 
 **Formula**:
 ```
-Adjusted R² = 1 - [(1 - R²) * (n - 1) / (n - p - 1)]
+Adjusted R² = 1 - ["(1 - R²) * (n - 1) / (n - p - 1)"]
 ```
 
 Where:
@@ -162,15 +162,15 @@ Where:
 
 ```mermaid
 flowchart TD
-    A[Data: Age, Weight] --> B[Initialize θ₀, θ₁ randomly]
-    B --> C[Calculate Predictions: hθ(x)]
-    C --> D[Calculate Cost: J(θ₀, θ₁)]
-    D --> E[Update θ₀, θ₁ using Gradient Descent]
-    E --> F{Cost Decreased?}
+    A["Data: Age, Weight"] --> B["Initialize theta0, theta1 randomly"]
+    B --> C["Calculate Predictions: h(x)"]
+    C --> D["Calculate Cost: J(theta0, theta1)"]
+    D --> E["Update theta0, theta1 using Gradient Descent"]
+    E --> F{"Cost Decreased?"}
     F -->|Yes| C
-    F -->|No| G[Convergence Reached]
-    G --> H[Final Model Ready]
-    H --> I[Predict New Values]
+    F -->|No| G["Convergence Reached"]
+    G --> H["Final Model Ready"]
+    H --> I["Predict New Values"]
 ```
 
 ## ❓ Interview Questions & Answers
@@ -194,11 +194,11 @@ flowchart TD
 ### Q4: Why does R² always increase when you add more features?
 **Answer**: R² measures the proportion of variance explained. Adding any feature (even random ones) will explain some additional variance, even if it's just noise. This is why we use Adjusted R².
 
-### Q5: What's the difference between θ₀ and θ₁ in the hypothesis function?
+### Q5: What's the difference between theta0 and theta1 in the hypothesis function?
 **Answer**:
-- **θ₀ (intercept)**: Baseline prediction when all features are zero
-- **θ₁ (coefficient/slope)**: Change in output for 1 unit change in input
-- **Example**: In weight = θ₀ + θ₁ × age, θ₁ shows how much weight increases per year
+- **theta0 (intercept)**: Baseline prediction when all features are zero
+- **theta1 (coefficient/slope)**: Change in output for 1 unit change in input
+- **Example**: In weight = theta0 + theta1 × age, theta1 shows how much weight increases per year
 
 ### Q6: How do you know when gradient descent has converged?
 **Answer**: When the cost function stops decreasing significantly between iterations, or when the parameter updates become very small. Practical approach: stop when cost change < threshold (e.g., 0.001) or after maximum iterations.
@@ -234,9 +234,9 @@ flowchart TD
 
 ## 📝 Quick Revision Points
 
-- **Hypothesis**: hθ(x) = θ₀ + θ₁x
-- **Cost**: J(θ₀, θ₁) = (1/2m) Σ[hθ(xᵢ) - yᵢ]²
-- **Gradient Descent**: θⱼ = θⱼ - α × ∂J/∂θⱼ
+- **Hypothesis**: h(x) = theta0 + theta1x
+- **Cost**: J(theta0, theta1) = (1/2m) Σ["h(xᵢ) - yᵢ"]²
+- **Gradient Descent**: θⱼ = θⱼ - alpha × ∂J/∂θⱼ
 - **R²**: Measures variance explained by model
 - **Adjusted R²**: Penalizes useless features
 - **Learning Rate**: Controls optimization step size

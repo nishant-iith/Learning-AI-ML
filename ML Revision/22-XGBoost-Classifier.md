@@ -17,15 +17,15 @@
 **Full Form**: Extreme Gradient Boosting
 
 ```mermaid
-graph TD
-    A[Input Data] --> B[Base Model<br/>Probability = 0.5]
-    B --> C[Calculate Residuals]
-    C --> D[Tree 1<br/>Binary Decision Tree]
-    D --> E[Update Predictions]
-    E --> F[Calculate New Residuals]
-    F --> G[Tree 2<br/>Binary Decision Tree]
-    G --> H[Continue for N Trees]
-    H --> I[Final Strong Learner]
+flowchart TD
+    A["Input Data"] --> B["Base Model<br/>Probability = 0.5"]
+    B --> C["Calculate Residuals"]
+    C --> D["Tree 1<br/>Binary Decision Tree"]
+    D --> E["Update Predictions"]
+    E --> F["Calculate New Residuals"]
+    F --> G["Tree 2<br/>Binary Decision Tree"]
+    G --> H["Continue for N Trees"]
+    H --> I["Final Strong Learner"]
 ```
 
 ### 22.2 XGBoost Dataset Example
@@ -77,21 +77,21 @@ Approval: 1, Predicted: 0.5 → Residual: 0.5
 
 **Formula**:
 ```
-Similarity Weight = (Σ Residual²) / (Σ [Probability × (1 - Probability)] + λ)
+Similarity Weight = (Σ Residual²) / (Σ ["Probability × (1 - Probability)"] + lambda)
 ```
 
 Where:
-- **λ (Lambda)**: Regularization parameter to prevent overfitting
+- **lambda (Lambda)**: Regularization parameter to prevent overfitting
 - **Probability**: Output from previous model
 - **Residual**: Error from previous model
 
 #### Example Calculation:
 
-**For a node with residuals [-0.5, 0.5, 0.5]**:
+**For a node with residuals ["-0.5, 0.5, 0.5"]**:
 ```
 Numerator = (-0.5)² + (0.5)² + (0.5)² = 0.25 + 0.25 + 0.25 = 0.75
 
-Denominator = Σ[P(1-P)] + λ
+Denominator = Σ["P(1-P)"] + lambda
            = (0.5×0.5) + (0.5×0.5) + (0.5×0.5) + 0
            = 0.25 + 0.25 + 0.25 = 0.75
 
@@ -134,11 +134,11 @@ IG = 1.75 - (0.33 + 0.33) = 1.75 - 0.66 = 1.09
 **Solution**: Group categories to create binary split
 
 ```mermaid
-graph TD
-    A[Credit] --> B[Bad]
-    A --> C[Good + Normal]
-    C --> D[Good]
-    C --> E[Normal]
+flowchart TD
+    A["Credit"] --> B["Bad"]
+    A --> C["Good + Normal"]
+    C --> D["Good"]
+    C --> E["Normal"]
 ```
 
 **Decision Tree Structure**:
@@ -149,32 +149,32 @@ graph TD
 
 **Final Prediction Formula**:
 ```
-Final Prediction = Base Model + Σ(αᵢ × Treeᵢ Output)
+Final Prediction = Base Model + Σ(alphaᵢ × Treeᵢ Output)
 ```
 
 **Where**:
 - **Base Model**: 0.5 (constant)
-- **αᵢ**: Learning rate for tree t
+- **alphaᵢ**: Learning rate for tree t
 - **Treeᵢ Output**: Output from decision tree t
 
 #### Inference Steps:
 
 ```mermaid
-graph TD
-    A[New Record] --> B[Base Model<br/>Output: 0.5]
-    B --> C[Log Transformation<br/>log(0.5/(1-0.5)) = 0]
-    C --> D[Tree 1 Path]
-    D --> E[Similarity Weight: 1.0]
-    E --> F[α₁ × 1.0]
-    F --> G[Sigmoid Function]
-    G --> H[Add to Base Model]
-    H --> I[Continue to Tree 2]
-    I --> J[Final Prediction]
+flowchart TD
+    A["New Record"] --> B["Base Model<br/>Output: 0.5"]
+    B --> C["Log Transformation<br/>log(0.5/(1-0.5)) = 0"]
+    C --> D["Tree 1 Path"]
+    D --> E["Similarity Weight: 1.0"]
+    E --> F["alpha₁ × 1.0"]
+    F --> G["Sigmoid Function"]
+    G --> H["Add to Base Model"]
+    H --> I["Continue to Tree 2"]
+    I --> J["Final Prediction"]
 ```
 
 **Mathematical Steps**:
 1. **Base Model**: 0.5
-2. **Tree 1 Contribution**: α₁ × similarity_weight
+2. **Tree 1 Contribution**: alpha₁ × similarity_weight
 3. **Apply Sigmoid**: Convert to probability
 4. **Aggregate**: Sum contributions from all trees
 5. **Final**: Sigmoid of final value
@@ -182,15 +182,15 @@ graph TD
 ### 22.8 Complete XGBoost Algorithm
 
 ```mermaid
-graph LR
-    A[Base Model] --> B[Tree 1]
-    B --> C[Residual 1]
-    C --> D[Tree 2]
-    D --> E[Residual 2]
-    E --> F[Tree 3]
-    F --> G[Residual 3]
-    G --> H[Continue...]
-    H --> I[Final Strong Learner]
+flowchart LR
+    A["Base Model"] --> B["Tree 1"]
+    B --> C["Residual 1"]
+    C --> D["Tree 2"]
+    D --> E["Residual 2"]
+    E --> F["Tree 3"]
+    F --> G["Residual 3"]
+    G --> H["Continue..."]
+    H --> I["Final Strong Learner"]
 ```
 
 **Algorithm Summary**:
@@ -198,7 +198,7 @@ graph LR
 2. For each iteration t = 1 to N:
    - Calculate residuals from current model
    - Build decision tree to predict residuals
-   - Update model: new_model = old_model + α × tree_t
+   - Update model: new_model = old_model + alpha × tree_t
 3. Final model is strong learner
 
 ### 22.9 Key XGBoost Hyperparameters
@@ -206,8 +206,8 @@ graph LR
 #### Core Parameters:
 - **n_estimators**: Number of trees (boosting rounds)
 - **max_depth**: Maximum depth of decision trees
-- **learning_rate (α)**: Step size shrinkage (0.01 to 0.3)
-- **lambda (λ)**: L2 regularization term
+- **learning_rate (alpha)**: Step size shrinkage (0.01 to 0.3)
+- **lambda (lambda)**: L2 regularization term
 - **subsample**: Fraction of samples used for each tree
 - **colsample_bytree**: Fraction of features used for each tree
 
@@ -227,7 +227,7 @@ import numpy as np
 # Create sample data
 np.random.seed(42)
 X = np.random.rand(1000, 5)  # 1000 samples, 5 features
-y = (X[:, 0] > 0.5).astype(int)  # Binary target
+y = (X[":, 0"] > 0.5).astype(int)  # Binary target
 
 # Split data
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
@@ -251,13 +251,13 @@ y_pred_proba = xgb_classifier.predict_proba(X_test)
 
 # Evaluate
 accuracy = accuracy_score(y_test, y_pred)
-print(f"Accuracy: {accuracy:.4f}")
+print(f"Accuracy: {"accuracy:.4f"}")
 print("\nClassification Report:")
 print(classification_report(y_test, y_pred))
 
 # Feature importance
 feature_importance = pd.DataFrame({
-    'feature': [f'feature_{i}' for i in range(X.shape[1])],
+    'feature': ["f'feature_{"i"}' for i in range(X.shape[1"])],
     'importance': xgb_classifier.feature_importances_
 }).sort_values('importance', ascending=False)
 
@@ -299,10 +299,10 @@ print(feature_importance)
 **Answer**: XGBoost is Extreme Gradient Boosting that builds trees sequentially to correct previous errors, while Random Forest builds trees independently and averages their predictions. XGBoost focuses on error correction, Random Forest focuses on reducing variance.
 
 ### Q2: How does XGBoost handle categorical variables?
-**Answer**: XGBoost automatically handles categorical variables by finding optimal binary splits. For example, a feature with categories [A, B, C] might be split as [A] vs [B,C], then [B] vs [C], creating the best binary partition.
+**Answer**: XGBoost automatically handles categorical variables by finding optimal binary splits. For example, a feature with categories ["A, B, C"] might be split as ["A"] vs ["B,C"], then ["B"] vs ["C"], creating the best binary partition.
 
-### Q3: What is the role of lambda (λ) in XGBoost?
-**Answer**: Lambda is the L2 regularization parameter that prevents overfitting by adding penalty for large weights in the model. It appears in the similarity weight calculation denominator: Σ[P(1-P)] + λ.
+### Q3: What is the role of lambda (lambda) in XGBoost?
+**Answer**: Lambda is the L2 regularization parameter that prevents overfitting by adding penalty for large weights in the model. It appears in the similarity weight calculation denominator: Σ["P(1-P)"] + lambda.
 
 ### Q4: How does XGBoost make predictions during inference?
 **Answer**: During inference, XGBoost makes predictions by starting with the base model (0.5) and sequentially adding the weighted outputs of each decision tree. The final prediction is the sigmoid of the sum of all contributions.
@@ -319,7 +319,7 @@ print(feature_importance)
 - Cache-aware computing
 
 ### Q7: How does learning rate affect XGBoost performance?
-**Answer**: Learning rate (α) controls the contribution of each tree:
+**Answer**: Learning rate (alpha) controls the contribution of each tree:
 - **Low learning rate**: Slower learning, but potentially better generalization
 - **High learning rate**: Faster learning, but risk of overfitting
 - **Typical range**: 0.01 to 0.3
@@ -361,7 +361,7 @@ print(feature_importance)
 - **Base Model**: Always outputs 0.5 probability
 - **Residuals**: Actual - Predicted, errors to be corrected
 - **Binary Trees**: All splits are binary in XGBoost
-- **Similarity Weight**: Σ(Residual²) / (Σ[P(1-P)] + λ)
+- **Similarity Weight**: Σ(Residual²) / (Σ["P(1-P)"] + lambda)
 - **Information Gain**: Parent weight - child weights sum
 - **Learning Rate**: Controls tree contribution, prevents overfitting
 - **Regularization**: Lambda parameter for L2 regularization

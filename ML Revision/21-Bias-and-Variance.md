@@ -15,11 +15,11 @@
 **Core Concept**: Bias measures how well a model performs on training data
 
 ```mermaid
-graph TD
-    A[Model] --> B[Training Data]
-    B --> C{Performance}
-    C -->|Good Performance| D[Low Bias<br/>Model favors training data]
-    C -->|Poor Performance| E[High Bias<br/>Model against training data]
+flowchart TD
+    A["Model"] --> B["Training Data"]
+    B --> C{"Performance"}
+    C -->|Good Performance| D["Low Bias<br/>Model favors training data"]
+    C -->|Poor Performance| E["High Bias<br/>Model against training data"]
 ```
 
 #### High Bias vs Low Bias:
@@ -43,11 +43,11 @@ graph TD
 **Core Concept**: Variance measures how well a model generalizes to new/unseen data
 
 ```mermaid
-graph TD
-    A[Training Model] --> B[Test Data]
-    B --> C{Performance}
-    C -->|Good Performance| D[Low Variance<br/>Model generalizes well]
-    C -->|Poor Performance| E[High Variance<br/>Model doesn't generalize]
+flowchart TD
+    A["Training Model"] --> B["Test Data"]
+    B --> C{"Performance"}
+    C -->|Good Performance| D["Low Variance<br/>Model generalizes well"]
+    C -->|Poor Performance| E["High Variance<br/>Model doesn't generalize"]
 ```
 
 #### High Variance vs Low Variance:
@@ -105,23 +105,23 @@ Test Accuracy: 63%
 ### 21.4 Visual Understanding of Bias-Variance
 
 ```mermaid
-graph TD
-    A[Data Split] --> B[Training Data]
-    A --> C[Test Data]
+flowchart TD
+    A["Data Split"] --> B["Training Data"]
+    A --> C["Test Data"]
 
-    B --> D[Model Training]
-    D --> E[Bias Measurement]
+    B --> D["Model Training"]
+    D --> E["Bias Measurement"]
 
-    C --> F[Model Evaluation]
-    F --> G[Variance Measurement]
+    C --> F["Model Evaluation"]
+    F --> G["Variance Measurement"]
 
-    H[Good Model] --> I[Low Bias + Low Variance]
+    H["Good Model"] --> I["Low Bias + Low Variance"]
 
-    J[Overfitting] --> K[Low Bias + High Variance]
+    J["Overfitting"] --> K["Low Bias + High Variance"]
 
-    L[Underfitting] --> M[High Bias + Low Variance]
+    L["Underfitting"] --> M["High Bias + Low Variance"]
 
-    N[Worst Case] --> O[High Bias + High Variance]
+    N["Worst Case"] --> O["High Bias + High Variance"]
 ```
 
 ### 21.5 Bias-Variance Tradeoff
@@ -129,15 +129,15 @@ graph TD
 **The Tradeoff**: In machine learning, we often face a tradeoff between bias and variance
 
 ```mermaid
-graph LR
-    A[Simple Model] --> B[High Bias, Low Variance]
-    A --> C[Underfitting]
+flowchart LR
+    A["Simple Model"] --> B["High Bias, Low Variance"]
+    A --> C["Underfitting"]
 
-    D[Complex Model] --> E[Low Bias, High Variance]
-    D --> F[Overfitting]
+    D["Complex Model"] --> E["Low Bias, High Variance"]
+    D --> F["Overfitting"]
 
-    G[Optimal Model] --> H[Low Bias, Low Variance]
-    G --> I[Generalization]
+    G["Optimal Model"] --> H["Low Bias, Low Variance"]
+    G --> I["Generalization"]
 ```
 
 **Key Insight**:
@@ -166,11 +166,11 @@ train_score = model.score(X_train, y_train)
 test_score = model.score(X_test, y_test)
 
 if train_score > test_score:
-    print(f"Overfitting: Train={train_score:.3f}, Test={test_score:.3f}")
+    print(f"Overfitting: Train={"train_score:.3f"}, Test={"test_score:.3f"}")
 elif train_score < 0.7:  # Low training accuracy
-    print(f"Underfitting: Train={train_score:.3f}")
+    print(f"Underfitting: Train={"train_score:.3f"}")
 else:
-    print(f"Good Model: Train={train_score:.3f}, Test={test_score:.3f}")
+    print(f"Good Model: Train={"train_score:.3f"}, Test={"test_score:.3f"}")
 ```
 
 **2. Cross-Validation Analysis**:

@@ -15,15 +15,15 @@
 **Core Concept**: "Many weak minds make one strong mind" - combine simple models that are slightly better than random
 
 ```mermaid
-graph LR
-    A[Original Data] --> B[Weak Learner 1<br/>Decision Stump]
-    B --> C[Predictions + Errors]
-    C --> D[Update Sample Weights<br/>Focus on Errors]
-    D --> E[Weak Learner 2<br/>Decision Stump]
-    E --> F[Predictions + Fewer Errors]
-    F --> G[Update Sample Weights<br/>Focus on Remaining Errors]
-    G --> H[Weak Learner 3<br/>Decision Stump]
-    H --> I[Combined Strong Learner]
+flowchart LR
+    A["Original Data"] --> B["Weak Learner 1<br/>Decision Stump"]
+    B --> C["Predictions + Errors"]
+    C --> D["Update Sample Weights<br/>Focus on Errors"]
+    D --> E["Weak Learner 2<br/>Decision Stump"]
+    E --> F["Predictions + Fewer Errors"]
+    F --> G["Update Sample Weights<br/>Focus on Remaining Errors"]
+    G --> H["Weak Learner 3<br/>Decision Stump"]
+    H --> I["Combined Strong Learner"]
 ```
 
 ### 15.2 Weak Learners (Decision Stumps)
@@ -37,16 +37,16 @@ graph LR
 - Focus on single most important feature
 
 ```mermaid
-graph TD
-    A[Feature F1 ≤ threshold] -->|Yes| B[Leaf: Class A]
-    A -->|No| C[Leaf: Class B]
+flowchart TD
+    A["Feature F1 ≤ threshold"] -->|Yes| B["Leaf: Class A"]
+    A -->|No| C["Leaf: Class B"]
 ```
 
 ### 15.3 AdaBoost Step-by-Step Process
 
 #### Step 1: Initialize Sample Weights
 
-**Dataset**: 7 samples with features [F1, F2, F3, F4] and target [Yes/No]
+**Dataset**: 7 samples with features ["F1, F2, F3, F4"] and target ["Yes/No"]
 
 **Initial Weights**: Equal weights for all samples
 ```
@@ -95,7 +95,7 @@ For Incorrect Samples: New Weight = Old Weight × e^(+Performance)
 - **Correct Samples**: (1/7) × e^(-0.895) = 0.05
 - **Incorrect Sample**: (1/7) × e^(0.895) = 0.349
 
-**Updated Weights**: [0.05, 0.05, 0.05, 0.349, 0.05, 0.05, 0.05]
+**Updated Weights**: ["0.05, 0.05, 0.05, 0.349, 0.05, 0.05, 0.05"]
 
 #### Step 5: Normalize Weights
 
@@ -107,21 +107,21 @@ Sum of weights = 0.05 × 6 + 0.349 = 0.649
 Normalized weights = Original weights / 0.649
 ```
 
-**Normalized Weights**: [0.077, 0.077, 0.077, 0.537, 0.077, 0.077, 0.077]
+**Normalized Weights**: ["0.077, 0.077, 0.077, 0.537, 0.077, 0.077, 0.077"]
 
 #### Step 6: Create Buckets for Next Learner
 
 **Purpose**: Probability-based selection of samples for next weak learner
 
 ```mermaid
-graph TD
-    A[Create Buckets] --> B[0 - 0.077<br/>Sample 1]
-    B --> C[0.077 - 0.154<br/>Sample 2]
-    C --> D[0.154 - 0.231<br/>Sample 3]
-    D --> E[0.231 - 0.768<br/>Sample 4<br/>(Largest Bucket)]
-    E --> F[0.768 - 0.845<br/>Sample 5]
-    F --> G[0.845 - 0.922<br/>Sample 6]
-    G --> H[0.922 - 1.0<br/>Sample 7]
+flowchart TD
+    A["Create Buckets"] --> B["0 - 0.077<br/>Sample 1"]
+    B --> C["0.077 - 0.154<br/>Sample 2"]
+    C --> D["0.154 - 0.231<br/>Sample 3"]
+    D --> E["0.231 - 0.768<br/>Sample 4<br/>(Largest Bucket)"]
+    E --> F["0.768 - 0.845<br/>Sample 5"]
+    F --> G["0.845 - 0.922<br/>Sample 6"]
+    G --> H["0.922 - 1.0<br/>Sample 7"]
 ```
 
 **Selection Process**:
@@ -134,12 +134,12 @@ graph TD
 Repeat Steps 2-6 for multiple weak learners (typically 50-500)
 
 ```mermaid
-graph LR
-    A[Stump 1<br/>Focus: All samples] --> B[Weight Update]
-    B --> C[Stump 2<br/>Focus: Sample 4]
-    C --> D[Weight Update]
-    D --> E[Stump 3<br/>Focus: Hardest samples]
-    E --> F[Continue for N stumps]
+flowchart LR
+    A["Stump 1<br/>Focus: All samples"] --> B["Weight Update"]
+    B --> C["Stump 2<br/>Focus: Sample 4"]
+    C --> D["Weight Update"]
+    D --> E["Stump 3<br/>Focus: Hardest samples"]
+    E --> F["Continue for N stumps"]
 ```
 
 ### 15.4 Final Prediction
@@ -168,13 +168,13 @@ TE = (Sum of weights of misclassified samples) / (Total weight)
 
 #### Alpha (Performance):
 ```
-α = 0.5 × log((1 - TE) / TE)
+alpha = 0.5 × log((1 - TE) / TE)
 ```
 
 #### Weight Update:
 ```
-For correct classification: w_new = w_old × e^(-α)
-For incorrect classification: w_new = w_old × e^(α)
+For correct classification: w_new = w_old × e^(-alpha)
+For incorrect classification: w_new = w_old × e^(alpha)
 ```
 
 #### Normalization:
@@ -190,8 +190,8 @@ def adaboost_algorithm(X, y, n_estimators):
     n_samples = len(X)
     weights = np.ones(n_samples) / n_samples
 
-    weak_learners = []
-    alphas = []
+    weak_learners = [""]
+    alphas = [""]
 
     for estimator in range(n_estimators):
         # Step 2: Train weak learner
@@ -203,14 +203,14 @@ def adaboost_algorithm(X, y, n_estimators):
 
         # Step 4: Calculate total error
         incorrect = (predictions != y)
-        total_error = np.sum(weights[incorrect])
+        total_error = np.sum(weights["incorrect"])
 
         # Step 5: Calculate alpha (performance)
         alpha = 0.5 * np.log((1 - total_error) / total_error)
 
         # Step 6: Update weights
-        weights[incorrect] *= np.exp(alpha)
-        weights[~incorrect] *= np.exp(-alpha)
+        weights["incorrect"] *= np.exp(alpha)
+        weights["~incorrect"] *= np.exp(-alpha)
 
         # Step 7: Normalize weights
         weights /= np.sum(weights)
@@ -254,8 +254,8 @@ y_test_pred = ada_classifier.predict(X_test)
 train_accuracy = accuracy_score(y_train, y_train_pred)
 test_accuracy = accuracy_score(y_test, y_test_pred)
 
-print(f"Training Accuracy: {train_accuracy:.4f}")
-print(f"Test Accuracy: {test_accuracy:.4f}")
+print(f"Training Accuracy: {"train_accuracy:.4f"}")
+print(f"Test Accuracy: {"test_accuracy:.4f"}")
 
 # Feature importance
 feature_importance = pd.DataFrame({

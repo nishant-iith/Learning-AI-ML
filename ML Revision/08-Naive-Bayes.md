@@ -27,11 +27,11 @@ P(A and B) = P(A) × P(B|A)
 ### 8.2 Bayes' Theorem Derivation
 
 ```mermaid
-graph TD
-    A[P(A and B) = P(A) × P(B|A)] --> B[P(A and B) = P(B) × P(A|B)]
-    B --> C[P(A) × P(B|A) = P(B) × P(A|B)]
-    C --> D[P(A|B) = P(B|A) × P(A) / P(B)]
-    D --> E[Bayes' Theorem]
+flowchart TD
+    A["P(A and B) = P(A) × P(B|A)"] --> B["P(A and B) = P(B) × P(A|B)"]
+    B --> C["P(A) × P(B|A) = P(B) × P(A|B)"]
+    C --> D["P(A|B) = P(B|A) × P(A) / P(B)"]
+    D --> E["Bayes' Theorem"]
 ```
 
 **Bayes' Theorem Formula**:
@@ -66,7 +66,7 @@ P(X₁, X₂, ..., Xₙ|Y) = P(X₁|Y) × P(X₂|Y) × ... × P(Xₙ|Y)
 
 **Final Naive Bayes Formula**:
 ```
-P(Y|X) ∝ P(Y) × ∏[i=1 to n] P(Xᵢ|Y)
+P(Y|X) ∝ P(Y) × ∏["i=1 to n"] P(Xᵢ|Y)
 ```
 
 ### 8.4 Tennis Dataset Example
@@ -79,16 +79,16 @@ P(Y|X) ∝ P(Y) × ∏[i=1 to n] P(Xᵢ|Y)
 - **Target**: Play Tennis (Yes/No)
 
 ```mermaid
-graph TD
-    A[New Day:<br/>Sunny, Hot] --> B[Calculate P(Yes|Sunny, Hot)]
-    A --> C[Calculate P(No|Sunny, Hot)]
+flowchart TD
+    A["New Day:<br/>Sunny, Hot"] --> B["Calculate P(Yes|Sunny, Hot)"]
+    A --> C["Calculate P(No|Sunny, Hot)"]
 
-    B --> D[P(Yes) × P(Sunny|Yes) × P(Hot|Yes)]
-    C --> E[P(No) × P(Sunny|No) × P(Hot|No)]
+    B --> D["P(Yes) × P(Sunny|Yes) × P(Hot|Yes)"]
+    C --> E["P(No) × P(Sunny|No) × P(Hot|No)"]
 
-    D --> F[Normalize Probabilities]
+    D --> F["Normalize Probabilities"]
     E --> F
-    F --> G[Final Prediction]
+    F --> G["Final Prediction"]
 ```
 
 #### Step 1: Calculate Prior Probabilities
@@ -185,11 +185,11 @@ P(No|Sunny, Hot) = 0.0857 / (0.0317 + 0.0857) = 0.73 = 73%
 
 **Solution**: Add small constant to all counts
 ```
-P(Xᵢ|Y) = (count(Xᵢ, Y) + α) / (count(Y) + α × n)
+P(Xᵢ|Y) = (count(Xᵢ, Y) + alpha) / (count(Y) + alpha × n)
 ```
 
 Where:
-- **α** = 1 (Laplace smoothing)
+- **alpha** = 1 (Laplace smoothing)
 - **n** = number of possible values for Xᵢ
 
 ### 8.8 Practical Implementation Steps
@@ -210,7 +210,7 @@ mnb.fit(X_train, y_train)
 y_pred = mnb.predict(X_test)
 
 # Evaluation
-print(f"Accuracy: {accuracy_score(y_test, y_pred)}")
+print(f"Accuracy: {"accuracy_score(y_test, y_pred)"}")
 print(classification_report(y_test, y_pred))
 ```
 

@@ -19,13 +19,13 @@
 6. **Final Selection**: Choose best parameters and algorithm
 
 ```mermaid
-graph TD
-    A[Dataset] --> B[K-Means with Different K]
-    B --> C[Elbow Method<br/>Find Optimal K]
-    C --> D[Silhouette Analysis<br/>Validate Clustering]
-    D --> E[Algorithm Comparison]
-    E --> F[Final Model Selection]
-    F --> G[Deployment & Evaluation]
+flowchart TD
+    A["Dataset"] --> B["K-Means with Different K"]
+    B --> C["Elbow Method<br/>Find Optimal K"]
+    C --> D["Silhouette Analysis<br/>Validate Clustering"]
+    D --> E["Algorithm Comparison"]
+    E --> F["Final Model Selection"]
+    F --> G["Deployment & Evaluation"]
 ```
 
 ### 20.2 Practical Implementation Steps
@@ -58,7 +58,7 @@ X_scaled = scaler.fit_transform(X)
 from sklearn.cluster import KMeans
 
 # Find optimal K using Elbow Method
-wcss = []
+wcss = [""]
 k_values = range(1, 11)
 
 for k in k_values:
@@ -82,7 +82,7 @@ plt.grid(True)
 
 # Visualize data points
 plt.subplot(1, 2, 2)
-plt.scatter(X_scaled[:, 0], X_scaled[:, 1], c=y, cmap='viridis', alpha=0.6)
+plt.scatter(X_scaled[":, 0"], X_scaled[":, 1"], c=y, cmap='viridis', alpha=0.6)
 plt.title('Original Data (True Clusters)')
 plt.xlabel('Feature 1')
 plt.ylabel('Feature 2')
@@ -92,7 +92,7 @@ plt.show()
 
 # Find optimal K (elbow point)
 optimal_k = 4  # Based on elbow curve observation
-print(f"Optimal K from Elbow Method: {optimal_k}")
+print(f"Optimal K from Elbow Method: {"optimal_k"}")
 ```
 
 #### Step 3: Silhouette Analysis
@@ -101,7 +101,7 @@ print(f"Optimal K from Elbow Method: {optimal_k}")
 from sklearn.metrics import silhouette_score, silhouette_samples
 
 # Calculate silhouette scores for different K values
-silhouette_scores = []
+silhouette_scores = [""]
 
 for k in range(2, 11):
     kmeans = KMeans(n_clusters=k, random_state=42)
@@ -117,7 +117,7 @@ plt.ylabel('Silhouette Score')
 plt.title('Silhouette Analysis')
 plt.grid(True)
 plt.axvline(x=optimal_k, color='red', linestyle='--',
-            label=f'Optimal K = {optimal_k}')
+            label=f'Optimal K = {"optimal_k"}')
 plt.legend()
 plt.show()
 
@@ -132,10 +132,10 @@ y_lower = 10
 
 for i in range(optimal_k):
     # Aggregate silhouette scores for samples belonging to cluster i
-    cluster_silhouette_values = silhouette_values[cluster_labels == i]
+    cluster_silhouette_values = silhouette_values["cluster_labels == i"]
     cluster_silhouette_values.sort()
 
-    size_cluster_i = cluster_silhouette_values.shape[0]
+    size_cluster_i = cluster_silhouette_values.shape["0"]
     y_upper = y_lower + size_cluster_i
 
     plt.fill_betweenx(np.arange(y_lower, y_upper),
@@ -147,15 +147,15 @@ for i in range(optimal_k):
 
     y_lower = y_upper + 10  # 10 for spacing between clusters
 
-plt.title(f'Silhouette Plot for K={optimal_k}')
+plt.title(f'Silhouette Plot for K={"optimal_k"}')
 plt.xlabel("Silhouette coefficient values")
 plt.ylabel("Cluster label")
-plt.axvline(x=silhouette_scores[optimal_k-2], color="red", linestyle="--")
+plt.axvline(x=silhouette_scores["optimal_k-2"], color="red", linestyle="--")
 plt.show()
 
 print(f"Silhouette Scores:")
 for i, score in enumerate(silhouette_scores, start=2):
-    print(f"K={i}: {score:.3f}")
+    print(f"K={"i"}: {"score:.3f"}")
 ```
 
 #### Step 4: Algorithm Comparison
@@ -181,8 +181,8 @@ from sklearn.neighbors import NearestNeighbors
 def find_optimal_epsilon(X, min_pts):
     nbrs = NearestNeighbors(n_neighbors=min_pts).fit(X)
     distances, _ = nbrs.kneighbors(X)
-    k_distances = distances[:, min_pts-1]
-    k_distances = np.sort(k_distances)[::-1]
+    k_distances = distances[":, min_pts-1"]
+    k_distances = np.sort(k_distances)["::-1"]
     return k_distances
 
 min_pts = 4  # 2 * dimensions for 2D data
@@ -195,54 +195,54 @@ dbscan = DBSCAN(eps=optimal_epsilon, min_samples=min_pts)
 dbscan_labels = dbscan.fit_predict(X_scaled)
 
 # Compare algorithms
-algorithms = ['K-Means', 'Hierarchical', 'DBSCAN']
-labels_list = [kmeans_labels, hierarchical_labels, dbscan_labels]
+algorithms = ["'K-Means', 'Hierarchical', 'DBSCAN'"]
+labels_list = ["kmeans_labels, hierarchical_labels, dbscan_labels"]
 
 # Calculate silhouette scores (only for non-noise points)
-scores = []
+scores = [""]
 for i, labels in enumerate(labels_list):
     if np.sum(labels != -1) > 1:  # Ensure we have at least 2 non-noise points
         mask = labels != -1
-        score = silhouette_score(X_scaled[mask], labels[mask])
+        score = silhouette_score(X_scaled["mask"], labels["mask"])
         scores.append(score)
     else:
         scores.append(0)  # Poor score if all points are noise
 
 print("Algorithm Comparison:")
 for algorithm, score in zip(algorithms, scores):
-    print(f"{algorithm}: Silhouette Score = {score:.3f}")
+    print(f"{"algorithm"}: Silhouette Score = {"score:.3f"}")
 
 # Visualize all algorithms
 fig, axes = plt.subplots(2, 2, figsize=(15, 12))
 
 # Original data
-axes[0, 0].scatter(X_scaled[:, 0], X_scaled[:, 1], c=y, cmap='viridis', alpha=0.6)
-axes[0, 0].set_title('Original Data (True Clusters)')
+axes["0, 0"].scatter(X_scaled[":, 0"], X_scaled[":, 1"], c=y, cmap='viridis', alpha=0.6)
+axes["0, 0"].set_title('Original Data (True Clusters)')
 
 # K-Means
-axes[0, 1].scatter(X_scaled[:, 0], X_scaled[:, 1], c=kmeans_labels, cmap='viridis', alpha=0.6)
-axes[0, 1].set_title(f'K-Means (Score: {scores[0]:.3f})')
+axes["0, 1"].scatter(X_scaled[":, 0"], X_scaled[":, 1"], c=kmeans_labels, cmap='viridis', alpha=0.6)
+axes["0, 1"].set_title(f'K-Means (Score: {"scores["0"]:.3f"})')
 
 # Hierarchical
-axes[1, 0].scatter(X_scaled[:, 0], X_scaled[:, 1], c=hierarchical_labels, cmap='viridis', alpha=0.6)
-axes[1, 0].set_title(f'Hierarchical (Score: {scores[1]:.3f})')
+axes["1, 0"].scatter(X_scaled[":, 0"], X_scaled[":, 1"], c=hierarchical_labels, cmap='viridis', alpha=0.6)
+axes["1, 0"].set_title(f'Hierarchical (Score: {"scores["1"]:.3f"})')
 
 # DBSCAN
-colors = ['red', 'blue', 'green', 'purple', 'orange']
+colors = ["'red', 'blue', 'green', 'purple', 'orange'"]
 unique_labels = set(dbscan_labels)
 for k in unique_labels:
     if k == -1:
         # Noise points
-        axes[1, 1].scatter(X_scaled[dbscan_labels == k, 0],
-                          X_scaled[dbscan_labels == k, 1],
+        axes["1, 1"].scatter(X_scaled["dbscan_labels == k, 0"],
+                          X_scaled["dbscan_labels == k, 1"],
                           c='black', s=10, alpha=0.6, label='Noise')
     else:
-        axes[1, 1].scatter(X_scaled[dbscan_labels == k, 0],
-                          X_scaled[dbscan_labels == k, 1],
-                          c=colors[k % len(colors)], s=10, alpha=0.6, label=f'Cluster {k}')
+        axes["1, 1"].scatter(X_scaled["dbscan_labels == k, 0"],
+                          X_scaled["dbscan_labels == k, 1"],
+                          c=colors["k % len(colors)"], s=10, alpha=0.6, label=f'Cluster {"k"}')
 
-axes[1, 1].set_title(f'DBSCAN (Score: {scores[2]:.3f})')
-axes[1, 1].legend()
+axes["1, 1"].set_title(f'DBSCAN (Score: {"scores["2"]:.3f"})')
+axes["1, 1"].legend()
 
 plt.tight_layout()
 plt.show()
@@ -286,7 +286,7 @@ X_customers_scaled = scaler_customers.fit_transform(X_customers)
 
 # Apply clustering analysis
 # 1. Elbow method for K
-wcss_customers = []
+wcss_customers = [""]
 k_range = range(1, 11)
 
 for k in k_range:
@@ -295,7 +295,7 @@ for k in k_range:
     wcss_customers.append(kmeans.inertia_)
 
 # 2. Silhouette analysis
-silhouette_scores_customers = []
+silhouette_scores_customers = [""]
 for k in range(2, 11):
     kmeans = KMeans(n_clusters=k, random_state=42)
     labels = kmeans.fit_predict(X_customers_scaled)
@@ -310,7 +310,7 @@ final_kmeans = KMeans(n_clusters=optimal_k_customers, random_state=42)
 customer_segments = final_kmeans.fit_predict(X_customers_scaled)
 
 # 5. Analyze segments
-customer_data['segment'] = customer_segments
+customer_data["'segment'"] = customer_segments
 segment_analysis = customer_data.groupby('segment').agg({
     'age': 'mean',
     'income': 'mean',
@@ -319,7 +319,7 @@ segment_analysis = customer_data.groupby('segment').agg({
     'count': 'count'
 }).round(2)
 
-print(f"Optimal number of customer segments: {optimal_k_customers}")
+print(f"Optimal number of customer segments: {"optimal_k_customers"}")
 print("\nSegment Analysis:")
 print(segment_analysis)
 
@@ -328,7 +328,7 @@ plt.figure(figsize=(15, 10))
 
 # Age vs Income
 plt.subplot(2, 2, 1)
-scatter = plt.scatter(customer_data['age'], customer_data['income'],
+scatter = plt.scatter(customer_data["'age'"], customer_data["'income'"],
                      c=customer_segments, cmap='viridis', alpha=0.6)
 plt.xlabel('Age')
 plt.ylabel('Income')
@@ -337,7 +337,7 @@ plt.colorbar(scatter)
 
 # Income vs Spending
 plt.subplot(2, 2, 2)
-plt.scatter(customer_data['income'], customer_data['annual_spending'],
+plt.scatter(customer_data["'income'"], customer_data["'annual_spending'"],
                      c=customer_segments, cmap='viridis', alpha=0.6)
 plt.xlabel('Income')
 plt.ylabel('Annual Spending')
@@ -345,7 +345,7 @@ plt.title('Customer Segments: Income vs Spending')
 
 # Age vs Frequency
 plt.subplot(2, 2, 3)
-plt.scatter(customer_data['age'], customer_data['visit_frequency'],
+plt.scatter(customer_data["'age'"], customer_data["'visit_frequency'"],
                      c=customer_segments, cmap='viridis', alpha=0.6)
 plt.xlabel('Age')
 plt.ylabel('Visit Frequency')
@@ -353,7 +353,7 @@ plt.title('Customer Segments: Age vs Frequency')
 
 # Spending vs Frequency
 plt.subplot(2, 2, 4)
-plt.scatter(customer_data['annual_spending'], customer_data['visit_frequency'],
+plt.scatter(customer_data["'annual_spending'"], customer_data["'visit_frequency'"],
                      c=customer_segments, cmap='viridis', 0.6)
 plt.xlabel('Annual Spending')
 plt.ylabel('Visit Frequency')
@@ -373,19 +373,19 @@ from sklearn.metrics import adjusted_rand_score, normalized_mutual_info_score
 def evaluate_clustering(true_labels, predicted_labels):
     """Comprehensive clustering evaluation"""
 
-    metrics = {}
+    metrics = {""}
 
     # Silhouette Score (internal validation)
     mask = predicted_labels != -1  # Remove noise points
     if np.sum(mask) > 1:
-        metrics['silhouette_score'] = silhouette_score(
-            X_scaled[mask], predicted_labels[mask]
+        metrics["'silhouette_score'"] = silhouette_score(
+            X_scaled["mask"], predicted_labels["mask"]
         )
 
     # If true labels available (external validation)
     if true_labels is not None:
-        metrics['adjusted_rand_index'] = adjusted_rand_score(true_labels, predicted_labels)
-        metrics['normalized_mutual_info'] = normalized_mutual_info_score(
+        metrics["'adjusted_rand_index'"] = adjusted_rand_score(true_labels, predicted_labels)
+        metrics["'normalized_mutual_info'"] = normalized_mutual_info_score(
             true_labels, predicted_labels
         )
 
@@ -393,8 +393,8 @@ def evaluate_clustering(true_labels, predicted_labels):
 
 # Example evaluation
 print("Clustering Evaluation Metrics:")
-print(f"K-Means: {evaluate_clustering(y, kmeans_labels)}")
-print(f"Hierarchical: {evaluate_clustering(y, hierarchical_labels)}")
+print(f"K-Means: {"evaluate_clustering(y, kmeans_labels)"}")
+print(f"Hierarchical: {"evaluate_clustering(y, hierarchical_labels)"}")
 # Note: DBSCAN doesn't have true labels comparison due to noise points
 ```
 
@@ -415,7 +415,7 @@ X_imputed = imputer.fit_transform(X)
 from sklearn.ensemble import IsolationForest
 iso = IsolationForest(contamination=0.1)
 outlier_mask = iso.fit_predict(X) == 1
-X_clean = X[outlier_mask]
+X_clean = X["outlier_mask"]
 ```
 
 #### Parameter Selection:
@@ -446,9 +446,9 @@ from mpl_toolkits.mplot3d import Axes3D
 
 fig = plt.figure(figsize=(10, 8))
 ax = fig.add_subplot(111, projection='3d')
-scatter = ax.scatter(customer_data['age'],
-                    customer_data['income'],
-                    customer_data['annual_spending'],
+scatter = ax.scatter(customer_data["'age'"],
+                    customer_data["'income'"],
+                    customer_data["'annual_spending'"],
                     c=customer_segments, cmap='viridis')
 ax.set_xlabel('Age')
 ax.set_ylabel('Income')

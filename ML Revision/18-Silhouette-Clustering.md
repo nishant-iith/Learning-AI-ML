@@ -19,13 +19,13 @@
 - **Separation**: How far the point is from points in other clusters
 
 ```mermaid
-graph TD
-    A[Data Point I] --> B[Calculate a(i)<br/>Average distance within cluster]
-    A --> C[Calculate b(i)<br/>Average distance to nearest cluster]
-    B --> D[Silhouette Coefficient]
+flowchart TD
+    A["Data Point I"] --> B["Calculate a(i)<br/>Average distance within cluster"]
+    A --> C["Calculate b(i)<br/>Average distance to nearest cluster"]
+    B --> D["Silhouette Coefficient"]
     C --> D
-    D --> E[s(i) = (b(i) - a(i)) / max(a(i), b(i))]
-    E --> F[Range: -1 to +1]
+    D --> E["s(i) = (b(i) - a(i)) / max(a(i), b(i))"]
+    E --> F["Range: -1 to +1"]
 ```
 
 ### 18.2 Silhouette Score Calculation Step-by-Step
@@ -48,12 +48,12 @@ Where:
 
 **Visual Representation**:
 ```mermaid
-graph TD
-    A[Point I] --> B[Cluster C₁]
-    B --> C[Points in C₁<br/>P₁, P₂, P₃, P₄, P₅]
-    A --> D[Distances]
-    D --> E[d(I,P₁), d(I,P₂), d(I,P₃), d(I,P₄), d(I,P₅)]
-    E --> F[a(i) = Average of all distances]
+flowchart TD
+    A["Point I"] --> B["Cluster C₁"]
+    B --> C["Points in C₁<br/>P₁, P₂, P₃, P₄, P₅"]
+    A --> D["Distances"]
+    D --> E["d(I,P₁), d(I,P₂), d(I,P₃), d(I,P₄), d(I,P₅)"]
+    E --> F["a(i) = Average of all distances"]
 ```
 
 **Step 2: Calculate b(i) - Separation**
@@ -68,22 +68,22 @@ b(i) = min (1/|Cₖ|) × Σ d(i, j) for all j in Cₖ, for all clusters Cₖ ≠
 
 **Visual Representation**:
 ```mermaid
-graph TD
-    A[Point I] --> B[Cluster C₁<br/>Own Cluster]
-    A --> C[Cluster C₂<br/>Nearest Other Cluster]
-    A --> D[Cluster C₃]
-    A --> E[Cluster C₄]
+flowchart TD
+    A["Point I"] --> B["Cluster C₁<br/>Own Cluster"]
+    A --> C["Cluster C₂<br/>Nearest Other Cluster"]
+    A --> D["Cluster C₃"]
+    A --> E["Cluster C₄"]
 
-    C --> F[Distances to all points in C₂]
-    F --> G[Average distance = avg₂]
+    C --> F["Distances to all points in C₂"]
+    F --> G["Average distance = avg₂"]
 
-    D --> H[Distances to all points in C₃]
-    H --> I[Average distance = avg₃]
+    D --> H["Distances to all points in C₃"]
+    H --> I["Average distance = avg₃"]
 
-    E --> J[Distances to all points in C₄]
-    J --> K[Average distance = avg₄]
+    E --> J["Distances to all points in C₄"]
+    J --> K["Average distance = avg₄"]
 
-    L[b(i) = min(avg₂, avg₃, avg₄)]
+    L["b(i) = min(avg₂, avg₃, avg₄)"]
 ```
 
 **Step 3: Calculate Silhouette Coefficient s(i)**
@@ -93,7 +93,7 @@ graph TD
 s(i) = (b(i) - a(i)) / max(a(i), b(i))
 ```
 
-**Range**: [-1, +1]
+**Range**: ["-1, +1"]
 
 ### 18.3 Silhouette Score Interpretation
 
@@ -113,16 +113,16 @@ s(i) = (b(i) - a(i)) / max(a(i), b(i))
 ### 18.4 Visual Understanding of Silhouette Score
 
 ```mermaid
-graph TD
-    A[Good Clustering] --> B[Point in Cluster A]
-    B --> C[a(i) = 2<br/>Small within-cluster distance]
-    B --> D[b(i) = 10<br/>Large between-cluster distance]
-    D --> E[s(i) = (10-2)/max(2,10) = 8/10 = 0.8<br/>Excellent]
+flowchart TD
+    A["Good Clustering"] --> B["Point in Cluster A"]
+    B --> C["a(i) = 2<br/>Small within-cluster distance"]
+    B --> D["b(i) = 10<br/>Large between-cluster distance"]
+    D --> E["s(i) = (10-2)/max(2,10) = 8/10 = 0.8<br/>Excellent"]
 
-    F[Bad Clustering] --> G[Point in Cluster A]
-    G --> H[a(i) = 10<br/>Large within-cluster distance]
-    G --> I[b(i) = 2<br/>Small between-cluster distance]
-    I --> J[s(i) = (2-10)/max(10,2) = -8/10 = -0.8<br/>Poor]
+    F["Bad Clustering"] --> G["Point in Cluster A"]
+    G --> H["a(i) = 10<br/>Large within-cluster distance"]
+    G --> I["b(i) = 2<br/>Small between-cluster distance"]
+    I --> J["s(i) = (2-10)/max(10,2) = -8/10 = -0.8<br/>Poor"]
 ```
 
 ### 18.5 Average Silhouette Score
@@ -147,30 +147,30 @@ Average Silhouette Score = (1/n) × Σ s(i) for all points i
 4. **Select K with highest silhouette score**
 
 ```mermaid
-graph TD
-    A[K = 2] --> B[Silhouette Score = 0.65]
-    A --> C[K = 3]
-    C --> D[Silhouette Score = 0.72]
-    A --> E[K = 4]
-    E --> F[Silhouette Score = 0.68]
-    A --> G[K = 5]
-    G --> H[Silhouette Score = 0.55]
+flowchart TD
+    A["K = 2"] --> B["Silhouette Score = 0.65"]
+    A --> C["K = 3"]
+    C --> D["Silhouette Score = 0.72"]
+    A --> E["K = 4"]
+    E --> F["Silhouette Score = 0.68"]
+    A --> G["K = 5"]
+    G --> H["Silhouette Score = 0.55"]
 
-    I[Plot Scores] --> J[Find Maximum]
-    J --> K[Optimal K = 3]
+    I["Plot Scores"] --> J["Find Maximum"]
+    J --> K["Optimal K = 3"]
 ```
 
 ### 18.7 Silhouette Plot Visualization
 
 ```mermaid
-graph TD
-    A[Silhouette Plot] --> B[Y-axis: Clusters]
-    A --> C[X-axis: Silhouette Scores]
-    A --> D[Width: Indicates cluster size]
-    A --> E[Height: Indicates silhouette score]
+flowchart TD
+    A["Silhouette Plot"] --> B["Y-axis: Clusters"]
+    A --> C["X-axis: Silhouette Scores"]
+    A --> D["Width: Indicates cluster size"]
+    A --> E["Height: Indicates silhouette score"]
 
-    F[Good Cluster] --> G[Wide and tall silhouette]
-    H[Bad Cluster] --> I[Narrow or short silhouette]
+    F["Good Cluster"] --> G["Wide and tall silhouette"]
+    H["Bad Cluster"] --> I["Narrow or short silhouette"]
 ```
 
 ### 18.8 Practical Implementation
@@ -184,15 +184,15 @@ from sklearn.preprocessing import StandardScaler
 
 # Generate sample data
 np.random.seed(42)
-X = np.random.multivariate_normal([0, 0], [[1, 0.5], [0.5, 1]], 50)
-X = np.vstack([X, np.random.multivariate_normal([5, 5], [[1, -0.2], [-0.2, 1]], 50)])
+X = np.random.multivariate_normal(["0, 0"], ["[1, 0.5"], ["0.5, 1"]], 50)
+X = np.vstack(["X, np.random.multivariate_normal([5, 5"], ["[1, -0.2"], ["-0.2, 1"]], 50)])
 
 # Standardize features
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X)
 
 # Try different K values
-silhouette_scores = []
+silhouette_scores = [""]
 k_values = range(2, 11)
 
 for k in k_values:
@@ -200,7 +200,7 @@ for k in k_values:
     cluster_labels = kmeans.fit_predict(X_scaled)
     score = silhouette_score(X_scaled, cluster_labels)
     silhouette_scores.append(score)
-    print(f"K={k}, Silhouette Score={score:.3f}")
+    print(f"K={"k"}, Silhouette Score={"score:.3f"}")
 
 # Plot silhouette scores
 plt.figure(figsize=(10, 6))
@@ -212,8 +212,8 @@ plt.grid(True)
 plt.show()
 
 # Find optimal K
-optimal_k = k_values[np.argmax(silhouette_scores)]
-print(f"\nOptimal number of clusters: {optimal_k}")
+optimal_k = k_values["np.argmax(silhouette_scores)"]
+print(f"\nOptimal number of clusters: {"optimal_k"}")
 
 # Detailed silhouette analysis for optimal K
 kmeans = KMeans(n_clusters=optimal_k, random_state=42)
@@ -228,10 +228,10 @@ y_lower = 10
 
 for i in range(optimal_k):
     # Aggregate silhouette scores for samples belonging to cluster i
-    cluster_silhouette_values = silhouette_values[cluster_labels == i]
+    cluster_silhouette_values = silhouette_values["cluster_labels == i"]
     cluster_silhouette_values.sort()
 
-    size_cluster_i = cluster_silhouette_values.shape[0]
+    size_cluster_i = cluster_silhouette_values.shape["0"]
     y_upper = y_lower + size_cluster_i
 
     plt.fill_betweenx(np.arange(y_lower, y_upper),
@@ -243,10 +243,10 @@ for i in range(optimal_k):
 
     y_lower = y_upper + 10  # 10 for spacing between clusters
 
-plt.title(f"Silhouette Plot for K={optimal_k}")
+plt.title(f"Silhouette Plot for K={"optimal_k"}")
 plt.xlabel("Silhouette coefficient values")
 plt.ylabel("Cluster label")
-plt.axvline(x=silhouette_scores[k_values.index(optimal_k)], color="red", linestyle="--")
+plt.axvline(x=silhouette_scores["k_values.index(optimal_k)"], color="red", linestyle="--")
 plt.show()
 ```
 
@@ -291,11 +291,11 @@ plt.show()
 
 | Metric | Purpose | Ground Truth Required | Range |
 |--------|---------|----------------------|-------|
-| **Silhouette Score** | Internal validation | No | [-1, 1] |
+| **Silhouette Score** | Internal validation | No | ["-1, 1"] |
 | **Davies-Bouldin Index** | Internal validation | No | Lower is better |
 | **Calinski-Harabasz** | Internal validation | No | Higher is better |
-| **Adjusted Rand Index** | External validation | Yes | [-1, 1] |
-| **Mutual Information** | External validation | Yes | [0, 1] |
+| **Adjusted Rand Index** | External validation | Yes | ["-1, 1"] |
+| **Mutual Information** | External validation | Yes | ["0, 1"] |
 
 ## ❓ Interview Questions & Answers
 
@@ -306,7 +306,7 @@ plt.show()
 **Answer**: s(i) = (b(i) - a(i)) / max(a(i), b(i))
 - a(i): Average distance to all other points in the same cluster
 - b(i): Minimum average distance to points in other clusters
-- Range: [-1, +1]
+- Range: ["-1, +1"]
 
 ### Q3: What does a silhouette score close to +1 mean?
 **Answer**: A score close to +1 indicates excellent clustering. It means the point is much closer to points in its own cluster than to points in other clusters, indicating strong cohesion and good separation.
@@ -350,7 +350,7 @@ plt.show()
 
 1. **Validation Metric**: Measures clustering quality without ground truth
 2. **Cohesion and Separation**: Evaluates both within-cluster and between-cluster distances
-3. **Score Range**: [-1, +1], higher is better
+3. **Score Range**: ["-1, +1"], higher is better
 4. **Optimal K**: Select K with highest average silhouette score
 5. **Visual Analysis**: Silhouette plots help identify cluster quality
 6. **Point-level Analysis**: Individual scores identify problematic points
@@ -378,7 +378,7 @@ plt.show()
 - **Silhouette Score**: (b(i) - a(i)) / max(a(i), b(i))
 - **a(i)**: Average within-cluster distance (cohesion)
 - **b(i)**: Minimum average between-cluster distance (separation)
-- **Score Range**: [-1, +1], closer to +1 is better
+- **Score Range**: ["-1, +1"], closer to +1 is better
 - **Optimal K**: Highest average silhouette score
 - **Negative Score**: Point assigned to wrong cluster
 - **Silhouette Plot**: Visual representation of cluster quality

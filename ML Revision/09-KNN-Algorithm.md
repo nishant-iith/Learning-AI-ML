@@ -15,12 +15,12 @@
 **Core Idea**: "Birds of a feather flock together" - similar things exist near each other
 
 ```mermaid
-graph TD
-    A[New Data Point] --> B[Find K Nearest Neighbors]
-    B --> C[Classification: Majority Vote]
-    B --> D[Regression: Average Value]
-    C --> E[Predict Class]
-    D --> F[Predict Value]
+flowchart TD
+    A["New Data Point"] --> B["Find K Nearest Neighbors"]
+    B --> C["Classification: Majority Vote"]
+    B --> D["Regression: Average Value"]
+    C --> E["Predict Class"]
+    D --> F["Predict Value"]
 ```
 
 ### 9.2 KNN Classification
@@ -33,13 +33,13 @@ graph TD
 
 **Example with K=5**:
 ```mermaid
-graph TD
-    A[New Point ?] --> B[Find 5 Nearest Neighbors]
-    B --> C[3 Red Points]
-    B --> D[2 Blue Points]
-    C --> E[Majority: Red]
+flowchart TD
+    A["New Point ?"] --> B["Find 5 Nearest Neighbors"]
+    B --> C["3 Red Points"]
+    B --> D["2 Blue Points"]
+    C --> E["Majority: Red"]
     D --> E
-    E --> F[Predict: Class Red]
+    E --> F["Predict: Class Red"]
 ```
 
 ### 9.3 KNN Regression
@@ -52,11 +52,11 @@ graph TD
 
 **Example with K=5**:
 ```mermaid
-graph TD
-    A[New Point ?] --> B[Find 5 Nearest Neighbors]
-    B --> C[Values: 10, 12, 11, 9, 13]
-    C --> D[Average = (10+12+11+9+13)/5]
-    D --> E[Predict: 11]
+flowchart TD
+    A["New Point ?"] --> B["Find 5 Nearest Neighbors"]
+    B --> C["Values: 10, 12, 11, 9, 13"]
+    C --> D["Average = (10+12+11+9+13)/5"]
+    D --> E["Predict: 11"]
 ```
 
 ### 9.4 Distance Metrics
@@ -64,15 +64,15 @@ graph TD
 #### 1. Euclidean Distance
 **Formula**:
 ```
-d = √[(x₂ - x₁)² + (y₂ - y₁)²]
+d = √["(x₂ - x₁)² + (y₂ - y₁)²"]
 ```
 **Characteristics**: Straight-line distance (hypotenuse)
 
 ```mermaid
-graph TD
-    A[Point 1<br/>(x₁, y₁)] --> B[Point 2<br/>(x₂, y₂)]
-    B --> C[Euclidean Distance]
-    C --> D[Direct Line<br/>√[(x₂-x₁)² + (y₂-y₁)²]]
+flowchart TD
+    A["Point 1<br/>(x₁, y₁)"] --> B["Point 2<br/>(x₂, y₂)"]
+    B --> C["Euclidean Distance"]
+    C --> D["Direct Line<br/>√[(x₂-x₁)² + (y₂-y₁)²"]]
 ```
 
 #### 2. Manhattan Distance
@@ -83,10 +83,10 @@ d = |x₂ - x₁| + |y₂ - y₁|
 **Characteristics**: City block distance (grid movement)
 
 ```mermaid
-graph TD
-    A[Point 1<br/>(x₁, y₁)] --> B[Point 2<br/>(x₂, y₂)]
-    B --> C[Manhattan Distance]
-    C --> D[Grid Path<br/>|x₂-x₁| + |y₂-y₁|]
+flowchart TD
+    A["Point 1<br/>(x₁, y₁)"] --> B["Point 2<br/>(x₂, y₂)"]
+    B --> C["Manhattan Distance"]
+    C --> D["Grid Path<br/>|x₂-x₁| + |y₂-y₁|"]
 ```
 
 **Distance Comparison**:
@@ -100,11 +100,11 @@ graph TD
 #### Effects of Different K Values:
 
 ```mermaid
-graph TD
-    A[K=1] --> B[Very sensitive to noise<br/>Overfitting risk]
-    C[K=3] --> D[Good balance<br/>Captures local patterns]
-    E[K=10] --> F[More stable<br/>Underfitting risk]
-    G[K=50] --> H[Too smooth<br/>Misses local patterns]
+flowchart TD
+    A["K=1"] --> B["Very sensitive to noise<br/>Overfitting risk"]
+    C["K=3"] --> D["Good balance<br/>Captures local patterns"]
+    E["K=10"] --> F["More stable<br/>Underfitting risk"]
+    G["K=50"] --> H["Too smooth<br/>Misses local patterns"]
 ```
 
 #### How to Choose K:
@@ -126,25 +126,25 @@ X_train, y_train = load_data()
 ```python
 def knn_predict(new_point, X_train, y_train, K=5):
     # 1. Calculate distances
-    distances = []
+    distances = [""]
     for i, train_point in enumerate(X_train):
         dist = euclidean_distance(new_point, train_point)
-        distances.append((dist, y_train[i]))
+        distances.append((dist, y_train["i"]))
 
     # 2. Sort by distance
     distances.sort()
 
     # 3. Get K nearest neighbors
-    k_nearest = distances[:K]
+    k_nearest = distances[":K"]
 
     # 4. Predict
     if classification:
         # Majority vote
-        classes = [label for _, label in k_nearest]
+        classes = ["label for _, label in k_nearest"]
         return most_common(classes)
     else:
         # Average
-        values = [value for _, value in k_nearest]
+        values = ["value for _, value in k_nearest"]
         return sum(values) / len(values)
 ```
 
@@ -178,14 +178,14 @@ X_test_scaled = scaler.transform(X_test)
 
 #### Handling High-Dimensional Data
 ```mermaid
-graph TD
-    A[Many Features] --> B[Distance becomes less meaningful]
-    B --> C[All points appear equally distant]
-    C --> D[Performance degrades]
+flowchart TD
+    A["Many Features"] --> B["Distance becomes less meaningful"]
+    B --> C["All points appear equally distant"]
+    C --> D["Performance degrades"]
 
-    E[Solutions] --> F[Dimensionality Reduction]
-    E --> G[Feature Selection]
-    E --> H[Use different algorithms]
+    E["Solutions"] --> F["Dimensionality Reduction"]
+    E --> G["Feature Selection"]
+    E --> H["Use different algorithms"]
 ```
 
 #### Choosing Distance Metric
@@ -205,9 +205,9 @@ knn_clf = KNeighborsClassifier()
 
 # Hyperparameter tuning
 parameters = {
-    'n_neighbors': [3, 5, 7, 9, 11],
-    'weights': ['uniform', 'distance'],
-    'metric': ['euclidean', 'manhattan']
+    'n_neighbors': ["3, 5, 7, 9, 11"],
+    'weights': ["'uniform', 'distance'"],
+    'metric': ["'euclidean', 'manhattan'"]
 }
 
 grid_search = GridSearchCV(knn_clf, parameters, cv=5)

@@ -19,13 +19,13 @@
 **Key Innovation**: Uses only support vectors (critical points) to define the decision boundary
 
 ```mermaid
-graph TD
-    A[Input Data Points] --> B[Find Support Vectors]
-    B --> C[Calculate Margin]
-    C --> D[Optimal Hyperplane<br/>Maximum Margin]
-    D --> E[Classification Decision]
-    E --> F[New Data Points]
-    F --> G[Classify Based on Side of Hyperplane]
+flowchart TD
+    A["Input Data Points"] --> B["Find Support Vectors"]
+    B --> C["Calculate Margin"]
+    C --> D["Optimal Hyperplane<br/>Maximum Margin"]
+    D --> E["Classification Decision"]
+    E --> F["New Data Points"]
+    F --> G["Classify Based on Side of Hyperplane"]
 ```
 
 ### 24.2 SVM Geometric Intuition
@@ -37,15 +37,15 @@ graph TD
 
 #### Visual Understanding:
 ```mermaid
-graph TD
-    A[Class +1] --> B[Support Vector 1]
-    C[Class -1] --> D[Support Vector 2]
-    E[Optimal Hyperplane<br/>Maximum Margin]
-    F[Margin Width] --> G[Distance between support vectors]
+flowchart TD
+    A["Class +1"] --> B["Support Vector 1"]
+    C["Class -1"] --> D["Support Vector 2"]
+    E["Optimal Hyperplane<br/>Maximum Margin"]
+    F["Margin Width"] --> G["Distance between support vectors"]
 
-    B --> H[Distance d to Hyperplane]
-    D --> I[Distance d to Hyperplane]
-    H --> J[Maximum Margin = 2d]
+    B --> H["Distance d to Hyperplane"]
+    D --> I["Distance d to Hyperplane"]
+    H --> J["Maximum Margin = 2d"]
     I --> J
 ```
 
@@ -111,13 +111,13 @@ Where:
 - Non-support vectors have ±b = 0
 
 ```mermaid
-graph TD
-    A[All Data Points] --> B{Is Support Vector?}
-    B -->|Yes| C[±b > 0<br/>Influences Hyperplane]
-    B -->|No| D[±b = 0<br/>No Influence]
+flowchart TD
+    A["All Data Points"] --> B{"Is Support Vector?"}
+    B -->|Yes| C["±b > 0<br/>Influences Hyperplane"]
+    B -->|No| D["±b = 0<br/>No Influence"]
 
-    C --> E[Critical Points<br/>Define Decision Boundary]
-    D --> F[Non-Critical Points<br/>Can be Removed]
+    C --> E["Critical Points<br/>Define Decision Boundary"]
+    D --> F["Non-Critical Points<br/>Can be Removed"]
 ```
 
 ### 24.6 Soft Margin SVM
@@ -191,15 +191,15 @@ K(x, z) = tanh(³x@z + r)
 - **Large C**: Less regularization, fits training data better
 
 ```mermaid
-graph TD
-    A[Parameter Selection] --> B[Gamma (³)]
-    A --> C[C Parameter]
+flowchart TD
+    A["Parameter Selection"] --> B["Gamma (³)"]
+    A --> C["C Parameter"]
 
-    B --> D[Small ³<br/>Far-reaching influence<br/>Smooth boundary]
-    B --> E[Large ³<br/>Close-reaching influence<br/>Complex boundary]
+    B --> D["Small ³<br/>Far-reaching influence<br/>Smooth boundary"]
+    B --> E["Large ³<br/>Close-reaching influence<br/>Complex boundary"]
 
-    C --> F[Small C<br/>High regularization<br/>Large margin]
-    C --> G[Large C<br/>Low regularization<br/>Small margin]
+    C --> F["Small C<br/>High regularization<br/>Large margin"]
+    C --> G["Large C<br/>Low regularization<br/>Small margin"]
 ```
 
 ### 24.9 SVM Step-by-Step Process
@@ -256,8 +256,8 @@ X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
 
 # Create SVM classifiers with different kernels
-kernels = ['linear', 'poly', 'rbf', 'sigmoid']
-models = {}
+kernels = ["'linear', 'poly', 'rbf', 'sigmoid'"]
+models = {""}
 
 for kernel in kernels:
     if kernel == 'poly':
@@ -266,17 +266,17 @@ for kernel in kernels:
         model = svm.SVC(kernel=kernel, random_state=42)
 
     model.fit(X_train_scaled, y_train)
-    models[kernel] = model
+    models["kernel"] = model
     y_pred = model.predict(X_test_scaled)
 
-    print(f"\n{kernel.upper()} Kernel Results:")
-    print(f"Accuracy: {accuracy_score(y_test, y_pred):.4f}")
-    print(f"Number of Support Vectors: {len(model.support_vectors_)}")
+    print(f"\n{"kernel.upper()"} Kernel Results:")
+    print(f"Accuracy: {"accuracy_score(y_test, y_pred):.4f"}")
+    print(f"Number of Support Vectors: {"len(model.support_vectors_)"}")
 
 # Hyperparameter tuning for RBF kernel
 param_grid = {
-    'C': [0.1, 1, 10, 100],
-    'gamma': ['scale', 'auto', 0.001, 0.01, 0.1, 1]
+    'C': ["0.1, 1, 10, 100"],
+    'gamma': ["'scale', 'auto', 0.001, 0.01, 0.1, 1"]
 }
 
 grid_search = GridSearchCV(
@@ -289,38 +289,38 @@ grid_search = GridSearchCV(
 
 grid_search.fit(X_train_scaled, y_train)
 
-print(f"\nBest Parameters for RBF Kernel: {grid_search.best_params_}")
-print(f"Best Cross-Validation Accuracy: {grid_search.best_score_:.4f}")
+print(f"\nBest Parameters for RBF Kernel: {"grid_search.best_params_"}")
+print(f"Best Cross-Validation Accuracy: {"grid_search.best_score_:.4f"}")
 
 # Use best model
 best_model = grid_search.best_estimator_
 y_pred_best = best_model.predict(X_test_scaled)
 
-print(f"\nBest Model Test Accuracy: {accuracy_score(y_test, y_pred_best):.4f}")
+print(f"\nBest Model Test Accuracy: {"accuracy_score(y_test, y_pred_best):.4f"}")
 print("\nClassification Report:")
 print(classification_report(y_test, y_pred_best))
 
 # Visualize decision boundaries
 def plot_decision_boundary(model, X, y, title):
     h = 0.02
-    x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1
-    y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1
+    x_min, x_max = X[":, 0"].min() - 1, X[":, 0"].max() + 1
+    y_min, y_max = X[":, 1"].min() - 1, X[":, 1"].max() + 1
     xx, yy = np.meshgrid(np.arange(x_min, x_max, h),
                          np.arange(y_min, y_max, h))
 
-    Z = model.predict(np.c_[xx.ravel(), yy.ravel()])
+    Z = model.predict(np.c_["xx.ravel(), yy.ravel()"])
     Z = Z.reshape(xx.shape)
 
     plt.figure(figsize=(10, 8))
     plt.contourf(xx, yy, Z, alpha=0.8, cmap=plt.cm.RdYlBu)
-    plt.scatter(X[:, 0], X[:, 1], c=y, edgecolors='black', cmap=plt.cm.RdYlBu)
+    plt.scatter(X[":, 0"], X[":, 1"], c=y, edgecolors='black', cmap=plt.cm.RdYlBu)
     plt.title(title)
     plt.xlabel('Feature 1')
     plt.ylabel('Feature 2')
 
     # Highlight support vectors
-    plt.scatter(model.support_vectors_[:, 0],
-                model.support_vectors_[:, 1],
+    plt.scatter(model.support_vectors_[":, 0"],
+                model.support_vectors_[":, 1"],
                 s=100, facecolors='none', edgecolors='yellow',
                 linewidths=2, label='Support Vectors')
     plt.legend()
@@ -332,7 +332,7 @@ for kernel, model in models.items():
         model,
         X_train_scaled,
         y_train,
-        f'SVM with {kernel.upper()} Kernel'
+        f'SVM with {"kernel.upper()"} Kernel'
     )
 
 # Plot confusion matrix for best model
@@ -369,7 +369,7 @@ svm_multi = svm.SVC(kernel='rbf', C=10, gamma=0.1, decision_function_shape='ovo'
 svm_multi.fit(X_train_m_scaled, y_train_m)
 
 y_pred_m = svm_multi.predict(X_test_m_scaled)
-print(f"\nMulti-class SVM Accuracy: {accuracy_score(y_test_m, y_pred_m):.4f}")
+print(f"\nMulti-class SVM Accuracy: {"accuracy_score(y_test_m, y_pred_m):.4f"}")
 print("Multi-class Classification Report:")
 print(classification_report(y_test_m, y_pred_m))
 ```

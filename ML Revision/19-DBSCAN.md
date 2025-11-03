@@ -15,12 +15,12 @@
 **Core Advantage**: Can identify arbitrarily shaped clusters and automatically handle outliers
 
 ```mermaid
-graph TD
-    A[Input Data] --> B[Identify Dense Regions]
-    B --> C[Core Points<br/>MinPts within epsilon]
-    C --> D[Border Points<br/>Within epsilon of core points]
-    D --> E[Noise Points<br/>Not part of any cluster]
-    E --> F[Final Clusters + Outliers]
+flowchart TD
+    A["Input Data"] --> B["Identify Dense Regions"]
+    B --> C["Core Points<br/>MinPts within epsilon"]
+    C --> D["Border Points<br/>Within epsilon of core points"]
+    D --> E["Noise Points<br/>Not part of any cluster"]
+    E --> F["Final Clusters + Outliers"]
 ```
 
 ### 19.2 Key DBSCAN Components
@@ -48,14 +48,14 @@ graph TD
 - Categorize each point based on neighbor count
 
 ```mermaid
-graph TD
-    A[Point P] --> B[Draw Circle with radius ε]
-    B --> C[Count points within circle]
-    C --> D{Count ≥ MinPts?}
-    D -->|Yes| E[Core Point]
-    D -->|No| F{Reachable from core point?}
-    F -->|Yes| G[Border Point]
-    F -->|No| H[Noise Point]
+flowchart TD
+    A["Point P"] --> B["Draw Circle with radius ε"]
+    B --> C["Count points within circle"]
+    C --> D{"Count ≥ MinPts?"}
+    D -->|Yes| E["Core Point"]
+    D -->|No| F{"Reachable from core point?"}
+    F -->|Yes| G["Border Point"]
+    F -->|No| H["Noise Point"]
 ```
 
 #### Step 2: Identify Core Points
@@ -82,29 +82,29 @@ graph TD
 
 #### Example 1: Core Point
 ```mermaid
-graph TD
-    A[Epsilon Circle] --> B[Center Point P]
-    B --> C[7 neighbors<br/>MinPts = 4]
-    C --> D[P is CORE POINT]
+flowchart TD
+    A["Epsilon Circle"] --> B["Center Point P"]
+    B --> C["7 neighbors<br/>MinPts = 4"]
+    C --> D["P is CORE POINT"]
 ```
 
 #### Example 2: Border Point
 ```mermaid
-graph TD
-    A[Epsilon Circle] --> B[Point Q]
-    B --> C[Only 1 neighbor<br/>MinPts = 4]
-    C --> D{Reachable from core point?}
-    D -->|Yes| E[Q is BORDER POINT]
-    D -->|No| F[Q is NOISE POINT]
+flowchart TD
+    A["Epsilon Circle"] --> B["Point Q"]
+    B --> C["Only 1 neighbor<br/>MinPts = 4"]
+    C --> D{"Reachable from core point?"}
+    D -->|Yes| E["Q is BORDER POINT"]
+    D -->|No| F["Q is NOISE POINT"]
 ```
 
 #### Example 3: Noise Point
 ```mermaid
-graph TD
-    A[Epsilon Circle] --> B[Point R]
-    B --> C[0 neighbors<br/>MinPts = 4]
-    C --> D{Reachable from core point?}
-    D -->|No| E[R is NOISE POINT]
+flowchart TD
+    A["Epsilon Circle"] --> B["Point R"]
+    B --> C["0 neighbors<br/>MinPts = 4"]
+    C --> D{"Reachable from core point?"}
+    D -->|No| E["R is NOISE POINT"]
 ```
 
 ### 19.5 Reachability and Connectivity
@@ -121,17 +121,17 @@ graph TD
 - Points A and B are density-connected if there exists point C such that both A and B are density-reachable from C
 
 ```mermaid
-graph TD
-    A[Core Point] --> B[Core Point]
-    B --> C[Core Point]
-    D[Border Point] --> A
-    E[Border Point] --> C
-    F[Noise Point] -.-> A
+flowchart TD
+    A["Core Point"] --> B["Core Point"]
+    B --> C["Core Point"]
+    D["Border Point"] --> A
+    E["Border Point"] --> C
+    F["Noise Point"] -.-> A
     F -.-> B
     F -.-> C
 
-    G[Cluster] --> H[Core Points + Connected Border Points]
-    I[Outliers] --> F
+    G["Cluster"] --> H["Core Points + Connected Border Points"]
+    I["Outliers"] --> F
 ```
 
 ### 19.6 DBSCAN vs Traditional Clustering
@@ -154,11 +154,11 @@ graph TD
 4. **Experimentation**: Try different values and evaluate
 
 ```mermaid
-graph TD
-    A[Calculate k-distance for all points] --> B[Sort distances in descending order]
-    B --> C[Plot k-distance graph]
-    C --> D[Find elbow point]
-    D --> E[Set ε to elbow value]
+flowchart TD
+    A["Calculate k-distance for all points"] --> B["Sort distances in descending order"]
+    B --> C["Plot k-distance graph"]
+    C --> D["Find elbow point"]
+    D --> E["Set ε to elbow value"]
 ```
 
 #### Choosing MinPts:
@@ -184,7 +184,7 @@ X, _ = make_moons(n_samples=300, noise=0.05, random_state=42)
 
 # Add some noise points
 noise = np.random.uniform(low=-2, high=3, size=(50, 2))
-X = np.vstack([X, noise])
+X = np.vstack(["X, noise"])
 
 # Standardize features
 scaler = StandardScaler()
@@ -195,13 +195,13 @@ def find_optimal_epsilon(X, min_pts):
     k = min_pts
     nbrs = NearestNeighbors(n_neighbors=k).fit(X)
     distances, _ = nbrs.kneighbors(X)
-    k_distances = distances[:, k-1]
-    k_distances = np.sort(k_distances)[::-1]
+    k_distances = distances[":, k-1"]
+    k_distances = np.sort(k_distances)["::-1"]
 
     plt.figure(figsize=(10, 6))
     plt.plot(k_distances)
     plt.xlabel('Points sorted by distance')
-    plt.ylabel(f'{k}-th nearest neighbor distance')
+    plt.ylabel(f'{"k"}-th nearest neighbor distance')
     plt.title('K-Distance Graph for Optimal Epsilon')
     plt.grid(True)
     plt.show()
@@ -223,16 +223,16 @@ cluster_labels = dbscan.fit_predict(X_scaled)
 n_clusters = len(set(cluster_labels)) - (1 if -1 in cluster_labels else 0)
 n_noise = list(cluster_labels).count(-1)
 
-print(f"Number of clusters: {n_clusters}")
-print(f"Number of noise points: {n_noise}")
-print(f"Silhouette score: {np.mean(cluster_labels != -1)}")
+print(f"Number of clusters: {"n_clusters"}")
+print(f"Number of noise points: {"n_noise"}")
+print(f"Silhouette score: {"np.mean(cluster_labels != -1)"}")
 
 # Visualize results
 plt.figure(figsize=(12, 5))
 
 # Original data
 plt.subplot(1, 2, 1)
-plt.scatter(X_scaled[:, 0], X_scaled[:, 1], c='gray', s=10)
+plt.scatter(X_scaled[":, 0"], X_scaled[":, 1"], c='gray', s=10)
 plt.title('Original Data')
 plt.xlabel('Feature 1')
 plt.ylabel('Feature 2')
@@ -240,20 +240,20 @@ plt.ylabel('Feature 2')
 # DBSCAN clustering
 plt.subplot(1, 2, 2)
 unique_labels = set(cluster_labels)
-colors = ['red', 'blue', 'green', 'purple', 'orange']
+colors = ["'red', 'blue', 'green', 'purple', 'orange'"]
 
 for k in unique_labels:
     if k == -1:
         # Noise points
-        plt.scatter(X_scaled[cluster_labels == k, 0],
-                   X_scaled[cluster_labels == k, 1],
+        plt.scatter(X_scaled["cluster_labels == k, 0"],
+                   X_scaled["cluster_labels == k, 1"],
                    c='black', s=10, label='Noise')
     else:
-        plt.scatter(X_scaled[cluster_labels == k, 0],
-                   X_scaled[cluster_labels == k, 1],
-                   c=colors[k % len(colors)], s=10, label=f'Cluster {k}')
+        plt.scatter(X_scaled["cluster_labels == k, 0"],
+                   X_scaled["cluster_labels == k, 1"],
+                   c=colors["k % len(colors)"], s=10, label=f'Cluster {"k"}')
 
-plt.title(f'DBSCAN Clustering (ε={optimal_epsilon}, MinPts={min_pts})')
+plt.title(f'DBSCAN Clustering (ε={"optimal_epsilon"}, MinPts={"min_pts"})')
 plt.xlabel('Feature 1')
 plt.ylabel('Feature 2')
 plt.legend()

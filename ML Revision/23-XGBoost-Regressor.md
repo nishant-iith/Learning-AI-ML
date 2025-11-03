@@ -17,15 +17,15 @@
 **Key Difference from Classifier**: Instead of predicting classes, it predicts continuous numerical values
 
 ```mermaid
-graph TD
-    A[Input Features] --> B[Base Model<br/>Mean Value]
-    B --> C[Calculate Residuals<br/>Actual - Predicted]
-    C --> D[Tree 1<br/>Regression Tree]
-    D --> E[Update Predictions]
-    E --> F[Calculate New Residuals]
-    F --> G[Tree 2<br/>Regression Tree]
-    G --> H[Continue for N Trees]
-    H --> I[Final Continuous Prediction]
+flowchart TD
+    A["Input Features"] --> B["Base Model<br/>Mean Value"]
+    B --> C["Calculate Residuals<br/>Actual - Predicted"]
+    C --> D["Tree 1<br/>Regression Tree"]
+    D --> E["Update Predictions"]
+    E --> F["Calculate New Residuals"]
+    F --> G["Tree 2<br/>Regression Tree"]
+    G --> H["Continue for N Trees"]
+    H --> I["Final Continuous Prediction"]
 ```
 
 ### 23.2 XGBoost Regression Dataset Example
@@ -129,42 +129,42 @@ hᵢ = ∂²(yᵢ - ŷᵢ)² / ∂ŷᵢ² = 2
 
 **Gain Calculation for Regression**:
 ```
-Gain = ½ [GL²/(HL + λ) + GR²/(HR + λ) - (GL + GR)²/(HL + HR + λ)] - γ
+Gain = ½ ["GL²/(HL + lambda) + GR²/(HR + lambda) - (GL + GR)²/(HL + HR + lambda)"] - gamma
 ```
 
 Where:
 - **GL, GR**: Sum of gradients in left and right nodes
 - **HL, HR**: Sum of hessians in left and right nodes
-- **λ**: L2 regularization parameter
-- **γ**: Minimum loss reduction for split
+- **lambda**: L2 regularization parameter
+- **gamma**: Minimum loss reduction for split
 
 #### Example Calculation:
 
 **Node Split Decision**:
 ```mermaid
-graph TD
-    A[Parent Node<br/>GL = -50, HL = 6] --> B{Split on Size}
-    B --> C[Left Node: Size < 1500<br/>GL = -80, HL = 4]
-    B --> D[Right Node: Size ≥ 1500<br/>GL = 30, HL = 2]
+flowchart TD
+    A["Parent Node<br/>GL = -50, HL = 6"] --> B{"Split on Size"}
+    B --> C["Left Node: Size < 1500<br/>GL = -80, HL = 4"]
+    B --> D["Right Node: Size ≥ 1500<br/>GL = 30, HL = 2"]
 
-    E[Calculate Gain] --> F[Compare with Threshold]
-    F --> G{Gain > γ?}
-    G -->|Yes| H[Make Split]
-    G -->|No| I[Don't Split]
+    E["Calculate Gain"] --> F["Compare with Threshold"]
+    F --> G{"Gain > gamma?"}
+    G -->|Yes| H["Make Split"]
+    G -->|No| I["Don't Split"]
 ```
 
 ### 23.7 Tree Structure and Leaf Values
 
 **Leaf Value Calculation**:
 ```
-Leaf Value = -Σ Gradient / (Σ Hessian + λ)
+Leaf Value = -Σ Gradient / (Σ Hessian + lambda)
 ```
 
 **Example**:
 ```
 For a leaf node:
-Gradients: [-10, 20, -15, 25, -20] → Σ = 0
-Hessians: [2, 2, 2, 2, 2] → Σ = 10
+Gradients: ["-10, 20, -15, 25, -20"] → Σ = 0
+Hessians: ["2, 2, 2, 2, 2"] → Σ = 10
 
 Leaf Value = -0 / (10 + 0.1) = 0
 ```
@@ -175,27 +175,27 @@ Leaf Value = -0 / (10 + 0.1) = 0
 
 **Final Prediction Formula**:
 ```
-Final Prediction = Base Model + Σ(α × Tree Output)
+Final Prediction = Base Model + Σ(alpha × Tree Output)
 ```
 
 **Where**:
 - **Base Model**: Mean of target values
-- **α**: Learning rate
+- **alpha**: Learning rate
 - **Tree Output**: Leaf values from regression trees
 
 #### Inference Steps:
 
 ```mermaid
-graph TD
-    A[New House Features] --> B[Base Model<br/>Mean Price = $260,000]
-    B --> C[Tree 1 Path]
-    C --> D[Leaf Value = +$5,000]
-    D --> E[Learning Rate × Leaf Value]
-    E --> F[Update Prediction]
-    F --> G[Tree 2 Path]
-    G --> H[Leaf Value = -$2,000]
-    H --> I[Continue to All Trees]
-    I --> J[Final Prediction]
+flowchart TD
+    A["New House Features"] --> B["Base Model<br/>Mean Price = $260,000"]
+    B --> C["Tree 1 Path"]
+    C --> D["Leaf Value = +$5,000"]
+    D --> E["Learning Rate × Leaf Value"]
+    E --> F["Update Prediction"]
+    F --> G["Tree 2 Path"]
+    G --> H["Leaf Value = -$2,000"]
+    H --> I["Continue to All Trees"]
+    I --> J["Final Prediction"]
 ```
 
 **Mathematical Steps**:
@@ -209,9 +209,9 @@ graph TD
 #### Core Parameters:
 - **n_estimators**: Number of trees (boosting rounds)
 - **max_depth**: Maximum depth of regression trees
-- **learning_rate (α)**: Step size shrinkage (0.01 to 0.3)
-- **lambda (λ)**: L2 regularization term
-- **alpha (α)**: L1 regularization term
+- **learning_rate (alpha)**: Step size shrinkage (0.01 to 0.3)
+- **lambda (lambda)**: L2 regularization term
+- **alpha (alpha)**: L1 regularization term
 - **subsample**: Fraction of samples used for each tree
 
 #### Regression-Specific Parameters:
@@ -283,9 +283,9 @@ mae = mean_absolute_error(y_test, y_pred)
 r2 = r2_score(y_test, y_pred)
 
 print(f"Model Performance:")
-print(f"RMSE: ${rmse:,.2f}")
-print(f"MAE: ${mae:,.2f}")
-print(f"R² Score: {r2:.4f}")
+print(f"RMSE: ${"rmse:,.2f"}")
+print(f"MAE: ${"mae:,.2f"}")
+print(f"R² Score: {"r2:.4f"}")
 
 # Feature importance
 feature_importance = pd.DataFrame({
@@ -300,10 +300,10 @@ print(feature_importance)
 from sklearn.model_selection import GridSearchCV
 
 param_grid = {
-    'n_estimators': [50, 100, 200],
-    'max_depth': [3, 4, 6],
-    'learning_rate': [0.01, 0.1, 0.2],
-    'reg_lambda': [0.1, 1, 10]
+    'n_estimators': ["50, 100, 200"],
+    'max_depth': ["3, 4, 6"],
+    'learning_rate': ["0.01, 0.1, 0.2"],
+    'reg_lambda': ["0.1, 1, 10"]
 }
 
 grid_search = GridSearchCV(
@@ -316,15 +316,15 @@ grid_search = GridSearchCV(
 
 grid_search.fit(X_train, y_train)
 
-print(f"\nBest Parameters: {grid_search.best_params_}")
-print(f"Best RMSE: ${np.sqrt(-grid_search.best_score_):,.2f}")
+print(f"\nBest Parameters: {"grid_search.best_params_"}")
+print(f"Best RMSE: ${"np.sqrt(-grid_search.best_score_):,.2f"}")
 
 # Visualize predictions vs actual
 import matplotlib.pyplot as plt
 
 plt.figure(figsize=(10, 6))
 plt.scatter(y_test, y_pred, alpha=0.6)
-plt.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], 'r--', lw=2)
+plt.plot(["y_test.min(), y_test.max()"], ["y_test.min(), y_test.max()"], 'r--', lw=2)
 plt.xlabel('Actual Price')
 plt.ylabel('Predicted Price')
 plt.title('XGBoost Regression: Actual vs Predicted')
@@ -362,7 +362,7 @@ X_train_split, X_val, y_train_split, y_val = train_test_split(
     X_train, y_train, test_size=0.2, random_state=42
 )
 
-eval_set = [(X_val, y_val)]
+eval_set = ["(X_val, y_val)"]
 xgb_regressor = xgb.XGBRegressor(
     n_estimators=1000,  # Large number, early stopping will find optimal
     learning_rate=0.05,
@@ -376,7 +376,7 @@ xgb_regressor.fit(
     verbose=False
 )
 
-print(f"Optimal number of trees: {xgb_regressor.best_iteration}")
+print(f"Optimal number of trees: {"xgb_regressor.best_iteration"}")
 ```
 
 #### Custom Loss Functions:
@@ -522,7 +522,7 @@ xgb_pseudo_huber = xgb.XGBRegressor(
 - **Gradient**: First derivative of loss function
 - **Hessian**: Second derivative of loss function
 - **Gain Calculation**: Uses gradients and hessians for optimal splits
-- **Leaf Values**: -Σ Gradient / (Σ Hessian + λ)
+- **Leaf Values**: -Σ Gradient / (Σ Hessian + lambda)
 - **Regularization**: L1 and L2 regularization available
 - **Loss Functions**: Squared error, absolute error, Huber loss
 - **Hyperparameters**: n_estimators, max_depth, learning_rate, reg_lambda

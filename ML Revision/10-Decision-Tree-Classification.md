@@ -24,11 +24,11 @@ else:
 
 **Visual Representation**:
 ```mermaid
-graph TD
-    A[Age <= 18] -->|Yes| B[Go to College]
-    A -->|No| C[Age <= 35]
-    C -->|Yes| D[Work]
-    C -->|No| E[Retire]
+flowchart TD
+    A["Age <= 18"] -->|Yes| B["Go to College"]
+    A -->|No| C["Age <= 35"]
+    C -->|Yes| D["Work"]
+    C -->|No| E["Retire"]
 ```
 
 ### 10.2 Tennis Dataset Example
@@ -56,15 +56,15 @@ Rain     Mild        High    Weak Yes
 
 #### Step 1: Root Node Selection
 ```mermaid
-graph TD
-    A[Start with Outlook Feature] --> B[Three Categories]
-    B --> C[Sunny]
-    B --> D[Overcast]
-    B --> E[Rain]
+flowchart TD
+    A["Start with Outlook Feature"] --> B["Three Categories"]
+    B --> C["Sunny"]
+    B --> D["Overcast"]
+    B --> E["Rain"]
 
-    C --> F[2 Yes, 3 No<br/>Impure Node]
-    D --> G[4 Yes, 0 No<br/>Pure Leaf Node]
-    E --> H[3 Yes, 2 No<br/>Impure Node]
+    C --> F["2 Yes, 3 No<br/>Impure Node"]
+    D --> G["4 Yes, 0 No<br/>Pure Leaf Node"]
+    E --> H["3 Yes, 2 No<br/>Impure Node"]
 ```
 
 #### Step 2: Pure vs Impure Splits
@@ -87,13 +87,13 @@ Where:
 **Entropy Properties**:
 - **H(S) = 0**: Pure split (all samples same class)
 - **H(S) = 1**: Maximum impurity (50-50 split)
-- **Range**: [0, 1]
+- **Range**: ["0, 1"]
 
 ```mermaid
-graph TD
-    A[Entropy Graph] --> B[P = 0.0] --> C[H(S) = 0<br/>Pure Split]
-    A --> D[P = 0.5] --> E[H(S) = 1<br/>Maximum Impurity]
-    A --> F[P = 1.0] --> G[H(S) = 0<br/>Pure Split]
+flowchart TD
+    A["Entropy Graph"] --> B["P = 0.0"] --> C["H(S) = 0<br/>Pure Split"]
+    A --> D["P = 0.5"] --> E["H(S) = 1<br/>Maximum Impurity"]
+    A --> F["P = 1.0"] --> G["H(S) = 0<br/>Pure Split"]
 ```
 
 #### Example Calculations:
@@ -132,7 +132,7 @@ Gini = 1 - (p₊² + p₋²)
 **Gini vs Entropy**:
 | Property | Entropy | Gini |
 |----------|---------|------|
-| **Range** | [0, 1] | [0, 0.5] |
+| **Range** | ["0, 1"] | ["0, 0.5"] |
 | **Max Impurity** | H(S) = 1 at p = 0.5 | Gini = 0.5 at p = 0.5 |
 | **Computation** | Slower (log functions) | Faster (simple math) |
 | **Default in sklearn** | No | Yes |
@@ -182,16 +182,16 @@ IG = 0.94 - (8/14 × 0.81 + 6/14 × 1.0) = 0.041
 **Solution**: Test all possible split points
 
 ```mermaid
-graph TD
-    A[Continuous Feature: 1.3, 2.3, 3, 4, 5, 6] --> B[Sort Values]
-    B --> C[Test Split ≤ 1.3]
-    C --> D[Calculate Information Gain]
-    B --> E[Test Split ≤ 2.3]
-    E --> F[Calculate Information Gain]
-    B --> G[Test Split ≤ 3]
-    G --> H[Calculate Information Gain]
-    B --> I[Continue for All Values]
-    I --> J[Select Best Split Point]
+flowchart TD
+    A["Continuous Feature: 1.3, 2.3, 3, 4, 5, 6"] --> B["Sort Values"]
+    B --> C["Test Split ≤ 1.3"]
+    C --> D["Calculate Information Gain"]
+    B --> E["Test Split ≤ 2.3"]
+    E --> F["Calculate Information Gain"]
+    B --> G["Test Split ≤ 3"]
+    G --> H["Calculate Information Gain"]
+    B --> I["Continue for All Values"]
+    I --> J["Select Best Split Point"]
 ```
 
 **Process**:
@@ -214,7 +214,7 @@ def build_decision_tree(data, features, target):
     # Select best feature
     best_feature = None
     best_gain = 0
-    best_splits = {}
+    best_splits = {""}
 
     for feature in features:
         gain, splits = calculate_information_gain(data, feature, target)
@@ -226,7 +226,7 @@ def build_decision_tree(data, features, target):
     # Create decision node
     if best_gain > 0:
         node = DecisionNode(best_feature)
-        remaining_features = [f for f in features if f != best_feature]
+        remaining_features = ["f for f in features if f != best_feature"]
 
         for value, subset in best_splits.items():
             child = build_decision_tree(subset, remaining_features, target)
@@ -269,7 +269,7 @@ dt_clf.fit(X_train, y_train)
 y_pred = dt_clf.predict(X_test)
 
 # Evaluate
-print(f"Accuracy: {accuracy_score(y_test, y_pred)}")
+print(f"Accuracy: {"accuracy_score(y_test, y_pred)"}")
 print(classification_report(y_test, y_pred))
 
 # Feature importance
@@ -298,8 +298,8 @@ feature_importance = pd.DataFrame({
 
 ### Q1: What's the difference between entropy and Gini impurity?
 **Answer**:
-- **Entropy**: Range [0,1], uses logarithmic calculations, theoretically sound
-- **Gini**: Range [0,0.5], computationally faster (no logs), sklearn default
+- **Entropy**: Range ["0,1"], uses logarithmic calculations, theoretically sound
+- **Gini**: Range ["0,0.5"], computationally faster (no logs), sklearn default
 - **Both**: Measure impurity, maximum at 50-50 split, zero for pure splits
 
 ### Q2: How does decision tree handle continuous features?

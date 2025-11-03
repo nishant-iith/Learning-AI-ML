@@ -19,13 +19,13 @@
 - **Distance-based**: Uses Euclidean distance to group points
 
 ```mermaid
-graph TD
-    A[Input Data<br/>No Labels] --> B[Initialize K Centroids]
-    B --> C[Assign Points to Nearest Centroid]
-    C --> D[Update Centroids]
-    D --> E{Converged?}
+flowchart TD
+    A["Input Data<br/>No Labels"] --> B["Initialize K Centroids"]
+    B --> C["Assign Points to Nearest Centroid"]
+    C --> D["Update Centroids"]
+    D --> E{"Converged?"}
     E -->|No| C
-    E -->|Yes| F[Final Clusters]
+    E -->|Yes| F["Final Clusters"]
 ```
 
 ### 16.2 K-Means Algorithm Step-by-Step
@@ -42,10 +42,10 @@ graph TD
 - Random initialization affects final clustering
 
 ```mermaid
-graph TD
-    A[Data Points] --> B[Initialize Centroid 1]
-    A --> C[Initialize Centroid 2]
-    A --> D[Initialize Centroid K]
+flowchart TD
+    A["Data Points"] --> B["Initialize Centroid 1"]
+    A --> C["Initialize Centroid 2"]
+    A --> D["Initialize Centroid K"]
 ```
 
 #### Step 3: Assign Points to Nearest Centroid
@@ -55,7 +55,7 @@ graph TD
 
 **Distance Calculation**:
 ```
-d = √[(x₁ - x₂)² + (y₁ - y₂)²]
+d = √["(x₁ - x₂)² + (y₁ - y₂)²"]
 ```
 
 #### Step 4: Update Centroids
@@ -72,24 +72,24 @@ d = √[(x₁ - x₂)² + (y₁ - y₂)²]
 
 #### Iteration 1:
 ```mermaid
-graph TD
-    A[Data Points] --> B[Random Centroids<br/>C1, C2]
-    B --> C[Assign Points]
-    C --> D[Cluster 1<br/>Red Points]
-    C --> E[Cluster 2<br/>Green Points]
-    D --> F[Update Centroid 1<br/>New Position]
-    E --> G[Update Centroid 2<br/>New Position]
+flowchart TD
+    A["Data Points"] --> B["Random Centroids<br/>C1, C2"]
+    B --> C["Assign Points"]
+    C --> D["Cluster 1<br/>Red Points"]
+    C --> E["Cluster 2<br/>Green Points"]
+    D --> F["Update Centroid 1<br/>New Position"]
+    E --> G["Update Centroid 2<br/>New Position"]
 ```
 
 #### Iteration 2:
 ```mermaid
-graph TD
-    A[Updated Centroids] --> B[Reassign Points]
-    B --> C[Some Points Change<br/>Red ↔ Green]
-    C --> D[Update Centroids Again]
-    D --> E{No Changes?}
+flowchart TD
+    A["Updated Centroids"] --> B["Reassign Points"]
+    B --> C["Some Points Change<br/>Red ↔ Green"]
+    C --> D["Update Centroids Again"]
+    D --> E{"No Changes?"}
     E -->|No| B
-    E -->|Yes| F[Converged!]
+    E -->|Yes| F["Converged!"]
 ```
 
 ### 16.4 Mathematical Foundation
@@ -128,28 +128,28 @@ new_centroid = (Σ all_points_in_cluster) / (number_of_points)
 4. **Find the "elbow" point**
 
 ```mermaid
-graph TD
-    A[K = 1] --> B[High WCSS<br/>Single Centroid]
-    B --> C[K = 2] --> D[Lower WCSS]
-    C --> E[K = 3] --> F[Lower WCSS]
-    E --> G[K = 4] --> H[Slightly Lower WCSS]
-    G --> I[K = 5] --> J[Similar WCSS]
+flowchart TD
+    A["K = 1"] --> B["High WCSS<br/>Single Centroid"]
+    B --> C["K = 2"] --> D["Lower WCSS"]
+    C --> E["K = 3"] --> F["Lower WCSS"]
+    E --> G["K = 4"] --> H["Slightly Lower WCSS"]
+    G --> I["K = 5"] --> J["Similar WCSS"]
 
-    K[Plot K vs WCSS] --> L[Elbow Curve<br/>Shape of human elbow]
-    L --> M[Optimal K at elbow]
+    K["Plot K vs WCSS"] --> L["Elbow Curve<br/>Shape of human elbow"]
+    L --> M["Optimal K at elbow"]
 ```
 
 #### Elbow Curve Interpretation:
 
 ```mermaid
-graph TD
-    A[WCSS<br/>↑] --> B[K=1<br/>High Distance]
-    B --> C[K=2<br/>↓ Large Drop]
-    C --> D[K=3<br/>↓ Medium Drop]
-    D --> E[K=4<br/>← Elbow Point]
-    E --> F[K=5<br/>→ Small Drop]
-    F --> G[K=6<br/>→ Minimal Drop]
-    G --> H[K values →]
+flowchart TD
+    A["WCSS<br/>↑"] --> B["K=1<br/>High Distance"]
+    B --> C["K=2<br/>↓ Large Drop"]
+    C --> D["K=3<br/>↓ Medium Drop"]
+    D --> E["K=4<br/>← Elbow Point"]
+    E --> F["K=5<br/>→ Small Drop"]
+    F --> G["K=6<br/>→ Minimal Drop"]
+    G --> H["K values →"]
 ```
 
 **Optimal K**: Point where WCSS improvement slows significantly (the "elbow")
@@ -194,7 +194,7 @@ scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X)
 
 # Try different K values and calculate WCSS
-wcss = []
+wcss = [""]
 k_values = range(1, 11)
 
 for k in k_values:
@@ -219,9 +219,9 @@ clusters = kmeans.fit_predict(X_scaled)
 # Get centroids
 centroids = kmeans.cluster_centers_
 
-print(f"Optimal K: {optimal_k}")
-print(f"Cluster centers:\n{centroids}")
-print(f"Inertia (WCSS): {kmeans.inertia_}")
+print(f"Optimal K: {"optimal_k"}")
+print(f"Cluster centers:\n{"centroids"}")
+print(f"Inertia (WCSS): {"kmeans.inertia_"}")
 ```
 
 ### 16.8 Advantages and Disadvantages

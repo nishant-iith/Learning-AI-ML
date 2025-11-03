@@ -84,11 +84,11 @@ plt.show()
 **Understanding the Tree Structure**:
 
 ```mermaid
-graph TD
-    A[Root Node<br/>petal length <= 2.45] -->|Yes| B[Leaf Node<br/>50 Setosa]
-    A -->|No| C[Internal Node<br/>petal width <= 1.75]
-    C -->|Yes| D[Leaf Node<br/>49 Versicolor, 5 Virginica]
-    C -->|No| E[Leaf Node<br/>1 Versicolor, 45 Virginica]
+flowchart TD
+    A["Root Node<br/>petal length <= 2.45"] -->|Yes| B["Leaf Node<br/>50 Setosa"]
+    A -->|No| C["Internal Node<br/>petal width <= 1.75"]
+    C -->|Yes| D["Leaf Node<br/>49 Versicolor, 5 Virginica"]
+    C -->|No| E["Leaf Node<br/>1 Versicolor, 45 Virginica"]
 ```
 
 ### 12.5 Decision Tree Hyperparameters
@@ -123,12 +123,12 @@ dt_classifier = DecisionTreeClassifier(
 **Pre-Pruning Strategies**:
 
 ```mermaid
-graph TD
-    A[Training Data] --> B{Stopping Condition Met?}
-    B -->|max_depth reached| C[Stop Growing]
+flowchart TD
+    A["Training Data"] --> B{"Stopping Condition Met?"}
+    B -->|max_depth reached| C["Stop Growing"]
     B -->|min_samples_leaf reached| C
     B -->|No significant gain| C
-    B -->|Continue| D[Split Further]
+    B -->|Continue| D["Split Further"]
     D --> B
 ```
 
@@ -138,11 +138,11 @@ from sklearn.model_selection import GridSearchCV
 
 # Define parameter grid
 param_grid = {
-    'criterion': ['gini', 'entropy'],
-    'max_depth': [3, 5, 7, 10, None],
-    'min_samples_split': [2, 5, 10],
-    'min_samples_leaf': [1, 2, 4],
-    'max_features': [None, 'sqrt', 'log2', 2, 3, 4]
+    'criterion': ["'gini', 'entropy'"],
+    'max_depth': ["3, 5, 7, 10, None"],
+    'min_samples_split': ["2, 5, 10"],
+    'min_samples_leaf': ["1, 2, 4"],
+    'max_features': ["None, 'sqrt', 'log2', 2, 3, 4"]
 }
 
 # Initialize GridSearchCV
@@ -158,8 +158,8 @@ grid_search = GridSearchCV(
 grid_search.fit(X_train, y_train)
 
 # Best parameters
-print(f"Best parameters: {grid_search.best_params_}")
-print(f"Best cross-validation accuracy: {grid_search.best_score_:.4f}")
+print(f"Best parameters: {"grid_search.best_params_"}")
+print(f"Best cross-validation accuracy: {"grid_search.best_score_:.4f"}")
 
 # Use best model
 best_dt = grid_search.best_estimator_
@@ -169,9 +169,9 @@ best_dt = grid_search.best_estimator_
 
 **Purpose**: Grow full tree, then remove branches that don't improve validation performance
 
-**Cost Complexity Pruning Parameter**: α (alpha)
-- **α = 0**: No pruning (full tree)
-- **α > 0**: More pruning as α increases
+**Cost Complexity Pruning Parameter**: alpha (alpha)
+- **alpha = 0**: No pruning (full tree)
+- **alpha > 0**: More pruning as alpha increases
 
 ```python
 # Get effective alphas for pruning
@@ -180,7 +180,7 @@ ccp_alphas = path.ccp_alphas
 impurities = path.impurities
 
 # Train trees with different alphas
-clfs = []
+clfs = [""]
 for ccp_alpha in ccp_alphas:
     clf = DecisionTreeClassifier(
         random_state=42,
@@ -192,15 +192,15 @@ for ccp_alpha in ccp_alphas:
 # Find optimal alpha using cross-validation
 from sklearn.model_selection import cross_val_score
 
-alpha_scores = []
+alpha_scores = [""]
 for clf in clfs:
     scores = cross_val_score(clf, X_train, y_train, cv=5)
     alpha_scores.append(scores.mean())
 
 # Find best alpha
 best_alpha_index = alpha_scores.index(max(alpha_scores))
-best_alpha = ccp_alphas[best_alpha_index]
-best_pruned_tree = clfs[best_alpha_index]
+best_alpha = ccp_alphas["best_alpha_index"]
+best_pruned_tree = clfs["best_alpha_index"]
 ```
 
 ### 12.8 Train-Test Split and Evaluation
@@ -222,9 +222,9 @@ y_test_pred = best_dt.predict(X_test)
 train_accuracy = accuracy_score(y_train, y_train_pred)
 test_accuracy = accuracy_score(y_test, y_test_pred)
 
-print(f"Training Accuracy: {train_accuracy:.4f}")
-print(f"Test Accuracy: {test_accuracy:.4f}")
-print(f"Overfitting Gap: {train_accuracy - test_accuracy:.4f}")
+print(f"Training Accuracy: {"train_accuracy:.4f"}")
+print(f"Test Accuracy: {"test_accuracy:.4f"}")
+print(f"Overfitting Gap: {"train_accuracy - test_accuracy:.4f"}")
 
 # Detailed classification report
 print("\nTest Set Classification Report:")
@@ -245,7 +245,7 @@ print(feature_importance)
 
 # Plot feature importance
 plt.figure(figsize=(10, 6))
-plt.bar(feature_importance['feature'], feature_importance['importance'])
+plt.bar(feature_importance["'feature'"], feature_importance["'importance'"])
 plt.title('Feature Importance in Decision Tree')
 plt.xlabel('Features')
 plt.ylabel('Importance')
@@ -257,50 +257,50 @@ plt.show()
 ### 12.10 Practical Implementation Checklist
 
 #### Data Preparation:
-- [ ] Load and explore dataset
-- [ ] Check for missing values
-- [ ] Handle categorical features (if any)
-- [ ] Split features and target
-- [ ] Train-test split
+- [" "] Load and explore dataset
+- [" "] Check for missing values
+- [" "] Handle categorical features (if any)
+- [" "] Split features and target
+- [" "] Train-test split
 
 #### Model Training:
-- [ ] Initialize DecisionTreeClassifier
-- [ ] Fit model on training data
-- [ ] Visualize the decision tree
-- [ ] Analyze tree structure
+- [" "] Initialize DecisionTreeClassifier
+- [" "] Fit model on training data
+- [" "] Visualize the decision tree
+- [" "] Analyze tree structure
 
 #### Hyperparameter Tuning:
-- [ ] Define parameter grid
-- [ ] Use GridSearchCV for optimization
-- [ ] Select best parameters
-- [ ] Train final model
+- [" "] Define parameter grid
+- [" "] Use GridSearchCV for optimization
+- [" "] Select best parameters
+- [" "] Train final model
 
 #### Evaluation:
-- [ ] Make predictions on test set
-- [ ] Calculate accuracy metrics
-- [ ] Generate classification report
-- [ ] Analyze confusion matrix
-- [ ] Check for overfitting
+- [" "] Make predictions on test set
+- [" "] Calculate accuracy metrics
+- [" "] Generate classification report
+- [" "] Analyze confusion matrix
+- [" "] Check for overfitting
 
 #### Analysis:
-- [ ] Examine feature importance
-- [ ] Visualize decision boundaries
-- [ ] Interpret tree rules
-- [ ] Document findings
+- [" "] Examine feature importance
+- [" "] Visualize decision boundaries
+- [" "] Interpret tree rules
+- [" "] Document findings
 
 ### 12.11 Common Decision Tree Patterns
 
 #### Perfect Split:
 ```mermaid
-graph TD
-    A[Node: 50 samples<br/>100% Setosa] --> B[Leaf Node<br/>Pure Split]
+flowchart TD
+    A["Node: 50 samples<br/>100% Setosa"] --> B["Leaf Node<br/>Pure Split"]
 ```
 
 #### Mixed Split:
 ```mermaid
-graph TD
-    A[Node: 100 samples<br/>60% Class A, 40% Class B] --> B[Child 1<br/>70% Class A, 30% Class B]
-    A --> C[Child 2<br/>50% Class A, 50% Class B]
+flowchart TD
+    A["Node: 100 samples<br/>60% Class A, 40% Class B"] --> B["Child 1<br/>70% Class A, 30% Class B"]
+    A --> C["Child 2<br/>50% Class A, 50% Class B"]
 ```
 
 #### Overfitting Indicators:

@@ -15,23 +15,23 @@
 **Core Idea**: "Wisdom of crowds" - combining multiple models often gives better performance than any single model
 
 ```mermaid
-graph TD
-    A[Input Data] --> B[Model 1<br/>Logistic Regression]
-    A --> C[Model 2<br/>Decision Tree]
-    A --> D[Model 3<br/>KNN]
-    A --> E[Model 4<br/>Naive Bayes]
+flowchart TD
+    A["Input Data"] --> B["Model 1<br/>Logistic Regression"]
+    A --> C["Model 2<br/>Decision Tree"]
+    A --> D["Model 3<br/>KNN"]
+    A --> E["Model 4<br/>Naive Bayes"]
 
-    B --> F[Prediction 1]
-    C --> G[Prediction 2]
-    D --> H[Prediction 3]
-    E --> I[Prediction 4]
+    B --> F["Prediction 1"]
+    C --> G["Prediction 2"]
+    D --> H["Prediction 3"]
+    E --> I["Prediction 4"]
 
-    F --> J[Aggregation<br/>Majority Vote/Average]
+    F --> J["Aggregation<br/>Majority Vote/Average"]
     G --> J
     H --> J
     I --> J
 
-    J --> K[Final Prediction]
+    J --> K["Final Prediction"]
 ```
 
 ### 13.2 Ensemble vs Single Model
@@ -52,23 +52,23 @@ graph TD
 #### How Bagging Works:
 
 ```mermaid
-graph TD
-    A[Original Dataset D<br/>10,000 samples] --> B[Bootstrap Sample D'₁<br/>6,000 samples<br/>Row Sampling]
-    A --> C[Bootstrap Sample D'₂<br/>6,000 samples<br/>Row Sampling]
-    A --> D[Bootstrap Sample D'₃<br/>6,000 samples<br/>Row Sampling]
-    A --> E[Bootstrap Sample D'₄<br/>6,000 samples<br/>Row Sampling]
+flowchart TD
+    A["Original Dataset D<br/>10,000 samples"] --> B["Bootstrap Sample D'₁<br/>6,000 samples<br/>Row Sampling"]
+    A --> C["Bootstrap Sample D'₂<br/>6,000 samples<br/>Row Sampling"]
+    A --> D["Bootstrap Sample D'₃<br/>6,000 samples<br/>Row Sampling"]
+    A --> E["Bootstrap Sample D'₄<br/>6,000 samples<br/>Row Sampling"]
 
-    B --> F[Model 1<br/>Logistic Regression]
-    C --> G[Model 2<br/>Decision Tree]
-    D --> H[Model 3<br/>KNN]
-    E --> I[Model 4<br/>Decision Tree]
+    B --> F["Model 1<br/>Logistic Regression"]
+    C --> G["Model 2<br/>Decision Tree"]
+    D --> H["Model 3<br/>KNN"]
+    E --> I["Model 4<br/>Decision Tree"]
 
-    F --> J[Prediction 1: 0]
-    G --> K[Prediction 2: 1]
-    H --> L[Prediction 3: 1]
-    I --> M[Prediction 4: 1]
+    F --> J["Prediction 1: 0"]
+    G --> K["Prediction 2: 1"]
+    H --> L["Prediction 3: 1"]
+    I --> M["Prediction 4: 1"]
 
-    J --> N[Majority Voting<br/>Output: 1]
+    J --> N["Majority Voting<br/>Output: 1"]
     K --> N
     L --> N
     M --> N
@@ -104,15 +104,15 @@ graph TD
 #### How Boosting Works:
 
 ```mermaid
-graph LR
-    A[Original Data] --> B[Model 1<br/>Weak Learner]
-    B --> C[Predictions 1<br/>with Errors]
-    C --> D[Focus on Errors<br/>+ Sample Weights]
-    D --> E[Model 2<br/>Weak Learner]
-    E --> F[Predictions 2<br/>Fewer Errors]
-    F --> G[Focus on Remaining Errors<br/>+ Sample Weights]
-    G --> H[Model 3<br/>Weak Learner]
-    H --> I[Combined Strong Learner]
+flowchart LR
+    A["Original Data"] --> B["Model 1<br/>Weak Learner"]
+    B --> C["Predictions 1<br/>with Errors"]
+    C --> D["Focus on Errors<br/>+ Sample Weights"]
+    D --> E["Model 2<br/>Weak Learner"]
+    E --> F["Predictions 2<br/>Fewer Errors"]
+    F --> G["Focus on Remaining Errors<br/>+ Sample Weights"]
+    G --> H["Model 3<br/>Weak Learner"]
+    H --> I["Combined Strong Learner"]
 ```
 
 #### Key Characteristics of Boosting:
@@ -165,14 +165,14 @@ graph LR
 ### 13.7 Bias-Variance Tradeoff in Ensembles
 
 ```mermaid
-graph TD
-    A[Single Model] --> B[High Bias + High Variance]
+flowchart TD
+    A["Single Model"] --> B["High Bias + High Variance"]
 
-    C[Bagging] --> D[Similar Bias + Lower Variance]
+    C["Bagging"] --> D["Similar Bias + Lower Variance"]
 
-    E[Boosting] --> F[Lower Bias + Similar Variance]
+    E["Boosting"] --> F["Lower Bias + Similar Variance"]
 
-    G[Ensemble Goal] --> H[Low Bias + Low Variance]
+    G["Ensemble Goal"] --> H["Low Bias + Low Variance"]
 ```
 
 **Effect on Bias-Variance**:
@@ -196,13 +196,13 @@ graph TD
 
 #### Number of Models:
 ```mermaid
-graph TD
-    A[Number of Models] --> B{Too Few Models}
-    B -->|< 10| C[Limited Improvement]
-    A --> D{Optimal Range}
-    D -->|10-100| E[Good Performance]
-    A --> F{Too Many Models}
-    F -->|> 500| G[Diminishing Returns<br/>High Computation]
+flowchart TD
+    A["Number of Models"] --> B{"Too Few Models"}
+    B -->|< 10| C["Limited Improvement"]
+    A --> D{"Optimal Range"}
+    D -->|10-100| E["Good Performance"]
+    A --> F{"Too Many Models"}
+    F -->|> 500| G["Diminishing Returns<br/>High Computation"]
 ```
 
 #### Computational Requirements:

@@ -32,12 +32,12 @@
 - **LSTAT**: % lower status of the population
 
 ```mermaid
-graph TD
-    A[Load Dataset] --> B[Create DataFrame]
-    B --> C[Add Target Column]
-    C --> D[Split Features X, y]
-    D --> E[Data Preprocessing]
-    E --> F[Model Training]
+flowchart TD
+    A["Load Dataset"] --> B["Create DataFrame"]
+    B --> C["Add Target Column"]
+    C --> D["Split Features X, y"]
+    D --> E["Data Preprocessing"]
+    E --> F["Model Training"]
 ```
 
 ### 6.2 Implementation Steps
@@ -60,11 +60,11 @@ boston = load_boston()
 df = pd.DataFrame(boston.data, columns=boston.feature_names)
 
 # Add target variable
-df['PRICE'] = boston.target
+df["'PRICE'"] = boston.target
 
 # Split into features and target
-X = df.iloc[:, :-1]  # All columns except last
-y = df.iloc[:, -1]   # Last column only
+X = df.iloc[":, :-1"]  # All columns except last
+y = df.iloc[":, -1"]   # Last column only
 ```
 
 #### Step 3: Initialize and Train Model
@@ -85,22 +85,22 @@ mse_scores = cross_val_score(lin_reg, X, y,
 **How 5-Fold Cross-Validation Works**:
 
 ```mermaid
-graph TD
-    A[Dataset: 100 samples] --> B[Split into 5 folds]
+flowchart TD
+    A["Dataset: 100 samples"] --> B["Split into 5 folds"]
 
-    B --> C1[Fold 1: Test<br/>Folds 2-5: Train]
-    B --> C2[Fold 2: Test<br/>Folds 1,3-5: Train]
-    B --> C3[Fold 3: Test<br/>Folds 1-2,4-5: Train]
-    B --> C4[Fold 4: Test<br/>Folds 1-3,5: Train]
-    B --> C5[Fold 5: Test<br/>Folds 1-4: Train]
+    B --> C1["Fold 1: Test<br/>Folds 2-5: Train"]
+    B --> C2["Fold 2: Test<br/>Folds 1,3-5: Train"]
+    B --> C3["Fold 3: Test<br/>Folds 1-2,4-5: Train"]
+    B --> C4["Fold 4: Test<br/>Folds 1-3,5: Train"]
+    B --> C5["Fold 5: Test<br/>Folds 1-4: Train"]
 
-    C1 --> D1[Score 1]
-    C2 --> D2[Score 2]
-    C3 --> D3[Score 3]
-    C4 --> D4[Score 4]
-    C5 --> D5[Score 5]
+    C1 --> D1["Score 1"]
+    C2 --> D2["Score 2"]
+    C3 --> D3["Score 3"]
+    C4 --> D4["Score 4"]
+    C5 --> D5["Score 5"]
 
-    D1 --> E[Average Score]
+    D1 --> E["Average Score"]
     D2 --> E
     D3 --> E
     D4 --> E
@@ -118,7 +118,7 @@ graph TD
 #### Mean Squared Error (MSE)
 ```python
 # Negative MSE from cross_val_score (sklearn convention)
-mse_scores = [-37.13, -35.42, -36.87, -38.91, -36.45]
+mse_scores = ["-37.13, -35.42, -36.87, -38.91, -36.45"]
 avg_mse = np.mean(mse_scores)  # 36.96
 ```
 
@@ -166,9 +166,9 @@ lin_reg.fit(X, y)
 predictions = lin_reg.predict(X_test)
 
 # Example prediction
-sample_house = [[0.02, 0, 7, 0, 0.5, 6, 78, 4, 1, 296, 15, 396, 5]]
+sample_house = ["[0.02, 0, 7, 0, 0.5, 6, 78, 4, 1, 296, 15, 396, 5"]]
 predicted_price = lin_reg.predict(sample_house)
-# Output: [24.5] = $24,500
+# Output: ["24.5"] = $24,500
 ```
 
 ### 6.7 Practical Tips

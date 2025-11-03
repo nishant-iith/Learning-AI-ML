@@ -13,14 +13,14 @@
 **Scenario**: Model fits training data perfectly but fails on test data
 
 ```mermaid
-graph TD
-    A[Training Data] --> B[Perfect Fit<br/>Cost = 0]
-    B --> C[New Test Data]
-    C --> D[Poor Predictions<br/>High Error]
+flowchart TD
+    A["Training Data"] --> B["Perfect Fit<br/>Cost = 0"]
+    B --> C["New Test Data"]
+    C --> D["Poor Predictions<br/>High Error"]
 
-    E[Overfitting Model] --> F[Low Bias<br/>High Variance]
-    G[Good Model] --> H[Low Bias<br/>Low Variance]
-    I[Underfitting Model] --> J[High Bias<br/>High Variance]
+    E["Overfitting Model"] --> F["Low Bias<br/>High Variance"]
+    G["Good Model"] --> H["Low Bias<br/>Low Variance"]
+    I["Underfitting Model"] --> J["High Bias<br/>High Variance"]
 ```
 
 **Bias-Variance Definitions**:
@@ -38,25 +38,25 @@ graph TD
 
 **Modified Cost Function**:
 ```
-J(θ) = (1/2m) * Σ[hθ(xᵢ) - yᵢ]² + λ * Σ[θⱼ²]
+J(θ) = (1/2m) * Σ["h(xᵢ) - yᵢ"]² + lambda * Σ["θⱼ²"]
 ```
 
 **Components**:
 - **First term**: Original MSE cost function
-- **λ * Σ[θⱼ²]**: L2 regularization penalty
-- **λ (Lambda)**: Hyperparameter controlling regularization strength
+- **lambda * Σ["θⱼ²"]**: L2 regularization penalty
+- **lambda (Lambda)**: Hyperparameter controlling regularization strength
 
 **How Ridge Works**:
 
 ```mermaid
-graph TD
-    A[Original Cost Function] --> B[Add λ * slope² penalty]
-    B --> C[Prevents coefficients from becoming too large]
-    C --> D[Creates less steep line]
-    D --> E[Generalized model with better test performance]
+flowchart TD
+    A["Original Cost Function"] --> B["Add lambda * slope² penalty"]
+    B --> C["Prevents coefficients from becoming too large"]
+    C --> D["Creates less steep line"]
+    D --> E["Generalized model with better test performance"]
 
-    F[High λ] --> G[Strong regularization<br/>Flatter line]
-    H[Low λ] --> I[Weak regularization<br/>Steeper line]
+    F["High lambda"] --> G["Strong regularization<br/>Flatter line"]
+    H["Low lambda"] --> I["Weak regularization<br/>Steeper line"]
 ```
 
 **Effect on Coefficients**:
@@ -70,7 +70,7 @@ graph TD
 
 **Modified Cost Function**:
 ```
-J(θ) = (1/2m) * Σ[hθ(xᵢ) - yᵢ]² + λ * Σ[|θⱼ|
+J(θ) = (1/2m) * Σ["h(xᵢ) - yᵢ"]² + lambda * Σ[|θⱼ|
 ```
 
 **Key Difference**: Uses absolute value instead of square
@@ -81,44 +81,44 @@ J(θ) = (1/2m) * Σ[hθ(xᵢ) - yᵢ]² + λ * Σ[|θⱼ|
 - Creates sparse models
 
 ```mermaid
-graph LR
-    A[Many Features] --> B[Lasso Regularization]
-    B --> C[Unimportant Features → Coefficient = 0]
-    C --> D[Feature Selection]
-    D --> E[Simpler Model]
+flowchart LR
+    A["Many Features"] --> B["Lasso Regularization"]
+    B --> C["Unimportant Features → Coefficient = 0"]
+    C --> D["Feature Selection"]
+    D --> E["Simpler Model"]
 
-    F[Feature 1: θ₁ = 0.8] --> G[Kept]
-    H[Feature 2: θ₂ = 0.0] --> I[Removed]
-    J[Feature 3: θ₃ = 1.2] --> K[Kept]
+    F["Feature 1: theta1 = 0.8"] --> G["Kept"]
+    H["Feature 2: θ₂ = 0.0"] --> I["Removed"]
+    J["Feature 3: θ₃ = 1.2"] --> K["Kept"]
 ```
 
 ### 4.4 Ridge vs Lasso Comparison
 
 | Aspect | Ridge (L2) | Lasso (L1) |
 |--------|------------|------------|
-| **Penalty** | Σ[θⱼ²] | Σ[|θⱼ|] |
+| **Penalty** | Σ["θⱼ²"] | Σ["|θⱼ|"] |
 | **Feature Selection** | No (coefficients → 0, not = 0) | Yes (coefficients = 0) |
 | **Best When** | Many small/medium effects | Few large effects, many zero |
 | **Multicollinearity** | Handles well | May select one feature randomly |
 | **Model Type** | Dense | Sparse |
 
-### 4.5 Lambda (λ) Hyperparameter
+### 4.5 Lambda (lambda) Hyperparameter
 
 **Purpose**: Controls regularization strength
 
-**Effect of λ Values**:
+**Effect of lambda Values**:
 ```mermaid
-graph TD
-    A[λ = 0] --> B[No regularization<br/>Original linear regression]
-    C[λ small] --> D[Weak regularization<br/>Slight coefficient shrinkage]
-    E[λ large] --> F[Strong regularization<br/>Major coefficient shrinkage]
-    G[λ very large] --> H[Underfitting<br/>All coefficients → 0]
+flowchart TD
+    A["lambda = 0"] --> B["No regularization<br/>Original linear regression"]
+    C["lambda small"] --> D["Weak regularization<br/>Slight coefficient shrinkage"]
+    E["lambda large"] --> F["Strong regularization<br/>Major coefficient shrinkage"]
+    G["lambda very large"] --> H["Underfitting<br/>All coefficients → 0"]
 ```
 
-**Selecting Optimal λ**:
+**Selecting Optimal lambda**:
 - Use cross-validation
-- Test multiple λ values
-- Choose λ with best validation performance
+- Test multiple lambda values
+- Choose lambda with best validation performance
 
 ### 4.6 Linear Regression Assumptions
 
@@ -165,7 +165,7 @@ graph TD
 ### Q8: Can Lasso and Ridge be combined?
 **Answer**: Yes, Elastic Net combines both L1 and L2 penalties:
 ```
-α * L1_penalty + (1-α) * L2_penalty
+alpha * L1_penalty + (1-alpha) * L2_penalty
 ```
 This gives benefits of both regularization techniques.
 
@@ -174,7 +174,7 @@ This gives benefits of both regularization techniques.
 1. **Overfitting**: Good training performance, poor test performance (low bias, high variance)
 2. **Ridge Regression**: L2 regularization, prevents overfitting, handles multicollinearity
 3. **Lasso Regression**: L1 regularization, prevents overfitting, performs feature selection
-4. **Lambda (λ)**: Controls regularization strength, chosen via cross-validation
+4. **Lambda (lambda)**: Controls regularization strength, chosen via cross-validation
 5. **Standardization**: Essential before regularization for fair feature treatment
 6. **Feature Selection**: Lasso can automatically select important features
 
@@ -195,9 +195,9 @@ This gives benefits of both regularization techniques.
 ## 📝 Quick Revision Points
 
 - **Overfitting**: Low bias, high variance
-- **Ridge Cost**: MSE + λ * Σ[θⱼ²]
-- **Lasso Cost**: MSE + λ * Σ[|θⱼ|]
-- **Lambda (λ)**: Regularization strength, hyperparameter
+- **Ridge Cost**: MSE + lambda * Σ["θⱼ²"]
+- **Lasso Cost**: MSE + lambda * Σ["|θⱼ|"]
+- **Lambda (lambda)**: Regularization strength, hyperparameter
 - **Feature Selection**: Lasso can zero out coefficients
 - **Standardization**: Mean = 0, std = 1 before regularization
 - **Cross-Validation**: Method to select optimal lambda

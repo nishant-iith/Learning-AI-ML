@@ -15,14 +15,14 @@
 **Core Problem Solved**: Addresses overfitting in decision trees by reducing variance while maintaining low bias
 
 ```mermaid
-graph TD
-    A[Single Decision Tree<br/>Low Bias + High Variance] --> B[Random Forest<br/>Low Bias + Low Variance]
+flowchart TD
+    A["Single Decision Tree<br/>Low Bias + High Variance"] --> B["Random Forest<br/>Low Bias + Low Variance"]
 
-    C[Overfitting Problem] --> D[Training Accuracy: 98%]
-    C --> E[Test Accuracy: 75%]
+    C["Overfitting Problem"] --> D["Training Accuracy: 98%"]
+    C --> E["Test Accuracy: 75%"]
 
-    F[Random Forest Solution] --> G[Training Accuracy: 95%]
-    F --> H[Test Accuracy: 93%]
+    F["Random Forest Solution"] --> G["Training Accuracy: 95%"]
+    F --> H["Test Accuracy: 93%"]
 ```
 
 ### 14.2 How Random Forest Works
@@ -30,28 +30,28 @@ graph TD
 #### Step-by-Step Process:
 
 ```mermaid
-graph TD
-    A[Original Dataset] --> B[Bootstrap Sample 1<br/>Row Sampling + Feature Sampling]
-    A --> C[Bootstrap Sample 2<br/>Row Sampling + Feature Sampling]
-    A --> D[Bootstrap Sample 3<br/>Row Sampling + Feature Sampling]
-    A --> E[Bootstrap Sample N<br/>Row Sampling + Feature Sampling]
+flowchart TD
+    A["Original Dataset"] --> B["Bootstrap Sample 1<br/>Row Sampling + Feature Sampling"]
+    A --> C["Bootstrap Sample 2<br/>Row Sampling + Feature Sampling"]
+    A --> D["Bootstrap Sample 3<br/>Row Sampling + Feature Sampling"]
+    A --> E["Bootstrap Sample N<br/>Row Sampling + Feature Sampling"]
 
-    B --> F[Decision Tree 1]
-    C --> G[Decision Tree 2]
-    D --> H[Decision Tree 3]
-    E --> I[Decision Tree N]
+    B --> F["Decision Tree 1"]
+    C --> G["Decision Tree 2"]
+    D --> H["Decision Tree 3"]
+    E --> I["Decision Tree N"]
 
-    F --> J[Prediction 1]
-    G --> K[Prediction 2]
-    H --> L[Prediction 3]
-    I --> M[Prediction N]
+    F --> J["Prediction 1"]
+    G --> K["Prediction 2"]
+    H --> L["Prediction 3"]
+    I --> M["Prediction N"]
 
-    J --> N[Aggregation<br/>Majority Vote/Average]
+    J --> N["Aggregation<br/>Majority Vote/Average"]
     K --> N
     L --> N
     M --> N
 
-    N --> O[Final Prediction]
+    N --> O["Final Prediction"]
 ```
 
 ### 14.3 Key Components of Random Forest
@@ -79,12 +79,12 @@ graph TD
 
 ### 14.4 Random Forest Example
 
-#### Dataset with 4 Features: [F1, F2, F3, F4]
+#### Dataset with 4 Features: ["F1, F2, F3, F4"]
 
-**Tree 1**: Gets 60% rows + features [F1, F3]
-**Tree 2**: Gets 60% rows + features [F2, F4]
-**Tree 3**: Gets 60% rows + features [F1, F2, F4]
-**Tree 4**: Gets 60% rows + features [F1, F3, F4]
+**Tree 1**: Gets 60% rows + features ["F1, F3"]
+**Tree 2**: Gets 60% rows + features ["F2, F4"]
+**Tree 3**: Gets 60% rows + features ["F1, F2, F4"]
+**Tree 4**: Gets 60% rows + features ["F1, F3, F4"]
 
 **Prediction Process**:
 - New data point → All trees
@@ -165,9 +165,9 @@ y_test_pred = rf_classifier.predict(X_test)
 train_accuracy = accuracy_score(y_train, y_train_pred)
 test_accuracy = accuracy_score(y_test, y_test_pred)
 
-print(f"Training Accuracy: {train_accuracy:.4f}")
-print(f"Test Accuracy: {test_accuracy:.4f}")
-print(f"Overfitting Gap: {train_accuracy - test_accuracy:.4f}")
+print(f"Training Accuracy: {"train_accuracy:.4f"}")
+print(f"Test Accuracy: {"test_accuracy:.4f"}")
+print(f"Overfitting Gap: {"train_accuracy - test_accuracy:.4f"}")
 
 # Feature importance
 feature_importance = pd.DataFrame({
@@ -205,8 +205,8 @@ test_mse = mean_squared_error(y_test, y_test_pred)
 train_r2 = r2_score(y_train, y_train_pred)
 test_r2 = r2_score(y_test, y_test_pred)
 
-print(f"Train MSE: {train_mse:.4f}, Test MSE: {test_mse:.4f}")
-print(f"Train R²: {train_r2:.4f}, Test R²: {test_r2:.4f}")
+print(f"Train MSE: {"train_mse:.4f"}, Test MSE: {"test_mse:.4f"}")
+print(f"Train R²: {"train_r2:.4f"}, Test R²: {"test_r2:.4f"}")
 ```
 
 ### 14.9 Feature Importance in Random Forest
@@ -254,7 +254,7 @@ rf_classifier = RandomForestClassifier(
     random_state=42
 )
 rf_classifier.fit(X_train, y_train)
-print(f"OOB Score: {rf_classifier.oob_score_:.4f}")
+print(f"OOB Score: {"rf_classifier.oob_score_:.4f"}")
 ```
 
 ### 14.12 Common Interview Questions

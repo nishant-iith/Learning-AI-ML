@@ -16,16 +16,16 @@
 3. **Non-Convex Cost Function**: Creates local minima problems
 
 ```mermaid
-graph TD
-    A[Study Hours] --> B[Linear Regression]
-    B --> C[Output: 0.25, 0.7, 1.2]
-    C --> D[Problem: Values outside 0-1 range]
+flowchart TD
+    A["Study Hours"] --> B["Linear Regression"]
+    B --> C["Output: 0.25, 0.7, 1.2"]
+    C --> D["Problem: Values outside 0-1 range"]
 
-    E[Outlier Point] --> F[Line Shifts Dramatically]
-    F --> G[Wrong Predictions]
+    E["Outlier Point"] --> F["Line Shifts Dramatically"]
+    F --> G["Wrong Predictions"]
 
-    H[Logistic Regression] --> I[Output: 0.3, 0.6, 0.9]
-    I --> J[Solution: Bounded between 0-1]
+    H["Logistic Regression"] --> I["Output: 0.3, 0.6, 0.9"]
+    I --> J["Solution: Bounded between 0-1"]
 ```
 
 **Example Scenario**:
@@ -36,31 +36,31 @@ graph TD
 
 ### 5.2 Sigmoid Function
 
-**Purpose**: Squash output to range [0,1]
+**Purpose**: Squash output to range ["0,1"]
 
 **Formula**:
 ```
 σ(z) = 1 / (1 + e^(-z))
 ```
-Where: `z = θ₀ + θ₁x₁ + θ₂x₂ + ... + θₙxₙ`
+Where: `z = theta0 + theta1x₁ + θ₂x₂ + ... + θₙxₙ`
 
 **Properties**:
-- **Range**: [0,1]
+- **Range**: ["0,1"]
 - **S-shaped curve**
 - **Decision Boundary**: σ(z) ≥ 0.5 when z ≥ 0
 - **Monotonically increasing**
 
 ```mermaid
-graph TD
-    A[Input: z] --> B[Sigmoid Function<br/>σ(z) = 1/(1+e^(-z))]
-    B --> C[Output: [0,1]]
+flowchart TD
+    A["Input: z"] --> B["Sigmoid Function<br/>σ(z) = 1/(1+e^(-z))"]
+    B --> C["Output: [0,1"]]
 
-    D[z ≥ 0] --> E[σ(z) ≥ 0.5<br/>Class 1]
-    F[z < 0] --> G[σ(z) < 0.5<br/>Class 0]
+    D["z ≥ 0"] --> E["σ(z) ≥ 0.5<br/>Class 1"]
+    F["z < 0"] --> G["σ(z) < 0.5<br/>Class 0"]
 
-    H[-∞] --> I[σ(z) → 0]
-    J[+∞] --> K[σ(z) → 1]
-    L[z = 0] --> M[σ(z) = 0.5]
+    H["-∞"] --> I["σ(z) → 0"]
+    J["+∞"] --> K["σ(z) → 1"]
+    L["z = 0"] --> M["σ(z) = 0.5"]
 ```
 
 **Decision Rule**:
@@ -75,15 +75,15 @@ graph TD
 
 **Cost Function**:
 ```
-Cost(hθ(x), y) = {
-    -log(hθ(x))     if y = 1
-    -log(1 - hθ(x)) if y = 0
+Cost(h(x), y) = {
+    -log(h(x))     if y = 1
+    -log(1 - h(x)) if y = 0
 }
 ```
 
 **Combined Formula**:
 ```
-J(θ) = -(1/m) * Σ[y * log(hθ(x)) + (1-y) * log(1 - hθ(x))]
+J(θ) = -(1/m) * Σ["y * log(h(x)) + (1-y) * log(1 - h(x))"]
 ```
 
 **Why This Works**:
@@ -92,39 +92,39 @@ J(θ) = -(1/m) * Σ[y * log(hθ(x)) + (1-y) * log(1 - hθ(x))]
 - Zero cost for confident correct predictions
 
 ```mermaid
-graph TD
-    A[Prediction vs Reality] --> B{Cost Calculation}
+flowchart TD
+    A["Prediction vs Reality"] --> B{"Cost Calculation"}
 
-    C[y=1, hθ(x)=1] --> D[Cost = 0<br/>Perfect!]
-    E[y=1, hθ(x)=0] --> F[Cost = ∞<br/>Very Wrong!]
-    G[y=0, hθ(x)=0] --> H[Cost = 0<br/>Perfect!]
-    I[y=0, hθ(x)=1] --> J[Cost = ∞<br/>Very Wrong!]
+    C["y=1, h(x)=1"] --> D["Cost = 0<br/>Perfect!"]
+    E["y=1, h(x)=0"] --> F["Cost = ∞<br/>Very Wrong!"]
+    G["y=0, h(x)=0"] --> H["Cost = 0<br/>Perfect!"]
+    I["y=0, h(x)=1"] --> J["Cost = ∞<br/>Very Wrong!"]
 
-    B --> K[Convex Function<br/>Single Global Minimum]
+    B --> K["Convex Function<br/>Single Global Minimum"]
 ```
 
 ### 5.4 Gradient Descent for Logistic Regression
 
 **Update Rule**:
 ```
-θⱼ = θⱼ - α * ∂J(θ)/∂θⱼ
+θⱼ = θⱼ - alpha * ∂J(θ)/∂θⱼ
 ```
 
 **Gradient**:
 ```
-∂J(θ)/∂θⱼ = (1/m) * Σ[hθ(xᵢ) - yᵢ] * xᵢⱼ
+∂J(θ)/∂θⱼ = (1/m) * Σ["h(xᵢ) - yᵢ"] * xᵢⱼ
 ```
 
 **Algorithm Flow**:
 ```mermaid
 flowchart TD
-    A[Initialize θ₀, θ₁, ..., θₙ] --> B[Calculate Predictions:<br/>hθ(x) = σ(θᵀx)]
-    B --> C[Calculate Cost:<br/>Log Loss]
-    C --> D[Calculate Gradients]
-    D --> E[Update Parameters]
-    E --> F{Converged?}
+    A["Initialize theta0, theta1, ..., θₙ"] --> B["Calculate Predictions:<br/>h(x) = σ(θᵀx)"]
+    B --> C["Calculate Cost:<br/>Log Loss"]
+    C --> D["Calculate Gradients"]
+    D --> E["Update Parameters"]
+    E --> F{"Converged?"}
     F -->|No| B
-    F -->|Yes| G[Final Model Ready]
+    F -->|Yes| G["Final Model Ready"]
 ```
 
 ### 5.5 Confusion Matrix
@@ -147,8 +147,8 @@ Actual   0  TN    FP
 
 **Example Calculation**:
 ```
-Actual:    [0, 1, 0, 1, 1, 0, 1]
-Predicted: [1, 1, 0, 1, 1, 1, 0]
+Actual:    ["0, 1, 0, 1, 1, 0, 1"]
+Predicted: ["1, 1, 0, 1, 1, 1, 0"]
 
 Confusion Matrix:
           Pred 0  Pred 1
@@ -226,20 +226,20 @@ Fβ = (1 + β²) * (Precision * Recall) / (β² * Precision + Recall)
 ### Q1: Why can't we use linear regression for classification?
 **Answer**:
 - Outliers can dramatically shift the decision boundary
-- Output can be outside [0,1] range
+- Output can be outside ["0,1"] range
 - Creates non-convex cost function with local minima
 - Cannot handle categorical outcomes appropriately
 
 ### Q2: What is the sigmoid function and why is it used?
 **Answer**:
 - **Formula**: σ(z) = 1/(1 + e^(-z))
-- **Purpose**: Squashes any real number to [0,1] range
+- **Purpose**: Squashes any real number to ["0,1"] range
 - **Properties**: S-shaped, differentiable, monotonic
 - **Use**: Converts linear combination to probability
 
 ### Q3: Explain the logistic regression cost function.
 **Answer**:
-- **Formula**: -(1/m) * Σ[y*log(hθ(x)) + (1-y)*log(1-hθ(x))]
+- **Formula**: -(1/m) * Σ["y*log(h(x)) + (1-y)*log(1-h(x))"]
 - **Intuition**:
   - If y=1: Cost = -log(prediction) → penalizes low predictions
   - If y=0: Cost = -log(1-prediction) → penalizes high predictions
@@ -279,7 +279,7 @@ Fβ = (1 + β²) * (Precision * Recall) / (β² * Precision + Recall)
 
 ## 💡 Key Takeaways
 
-1. **Sigmoid Function**: Maps any real number to [0,1] probability range
+1. **Sigmoid Function**: Maps any real number to ["0,1"] probability range
 2. **Log Loss**: Creates convex cost function suitable for gradient descent
 3. **Decision Boundary**: Where probability = 0.5 (z = 0)
 4. **Confusion Matrix**: Foundation for classification metrics
@@ -303,7 +303,7 @@ Fβ = (1 + β²) * (Precision * Recall) / (β² * Precision + Recall)
 
 ## 📝 Quick Revision Points
 
-- **Sigmoid**: σ(z) = 1/(1+e^(-z)), range [0,1]
+- **Sigmoid**: σ(z) = 1/(1+e^(-z)), range ["0,1"]
 - **Cost Function**: Log Loss, creates convex optimization
 - **Decision Rule**: σ(z) ≥ 0.5 → Class 1
 - **Precision**: TP/(TP+FP), minimize false positives
