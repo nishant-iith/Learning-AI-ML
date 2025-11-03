@@ -53,7 +53,7 @@ Where: `z = theta0 + theta1x₁ + θ₂x₂ + ... + θₙxₙ`
 ```mermaid
 flowchart TD
     A["Input: z"] --> B["Sigmoid Function<br/>σ(z) = 1/(1+e^(-z))"]
-    B --> C["Output: [0,1"]]
+    B --> C["Output: [0,1]"]
 
     D["z ≥ 0"] --> E["σ(z) ≥ 0.5<br/>Class 1"]
     F["z < 0"] --> G["σ(z) < 0.5<br/>Class 0"]
