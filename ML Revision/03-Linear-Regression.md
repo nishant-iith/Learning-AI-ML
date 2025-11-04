@@ -27,21 +27,21 @@ flowchart TD
 
 The equation of the best fit line can be written in multiple notations:
 
-- **Traditional**: `y = mx + c`
-- **Statistical**: `y = β₀ + β₁x`
-- **Machine Learning**: `h₀(x) = theta0 + theta1x`
+- **Traditional**: $y = mx + c$
+- **Statistical**: $y = \beta_0 + \beta_1 x$
+- **Machine Learning**: $h_\theta(x) = \theta_0 + \theta_1 x$
 
 **Parameters**:
-- **theta0 (Intercept)**: Value when X = 0 (where line meets Y-axis)
-- **theta1 (Slope/Coefficient)**: Change in Y for 1 unit change in X
+- **$\theta_0$ (Intercept)**: Value when X = 0 (where line meets Y-axis)
+- **$\theta_1$ (Slope/Coefficient)**: Change in Y for 1 unit change in X
 
 ```mermaid
 flowchart LR
-    A["Input: Age"] --> B["Hypothesis Function<br/>h(x) = theta0 + theta1x"]
+    A["Input: Age"] --> B["Hypothesis Function<br/>$h(x) = \\theta_0 + \\theta_1 x$"]
     B --> C["Output: Predicted Weight"]
 
-    D["theta0: Intercept"] --> B
-    E["theta1: Slope"] --> B
+    D["$\\theta_0$: Intercept"] --> B
+    E["$\\theta_1$: Slope"] --> B
 ```
 
 ### 3.3 Cost Function (Mean Squared Error)
@@ -49,15 +49,13 @@ flowchart LR
 **Purpose**: Measure how well the model fits the data
 
 **Formula**:
-```
-J(theta0, theta1) = (1/2m) * Σ["h(xᵢ) - yᵢ"]²
-```
+$$J(\theta_0, \theta_1) = \frac{1}{2m} \sum_{i=1}^{m} [h(x_i) - y_i]^2$$
 
 **Components**:
 - **m**: Number of data points
-- **h(xᵢ)**: Predicted value
-- **yᵢ**: Actual value
-- **(1/2m)**: Average + simplifies derivation
+- **$h(x_i)$**: Predicted value
+- **$y_i$**: Actual value
+- **$\frac{1}{2m}$**: Average + simplifies derivation
 
 **Why Square?**
 - Removes negative values
@@ -70,24 +68,26 @@ J(theta0, theta1) = (1/2m) * Σ["h(xᵢ) - yᵢ"]²
 
 ```mermaid
 flowchart TD
-    A["Initialize theta0, theta1"] --> B["Calculate Cost"]
+    A["Initialize $\\theta_0, \\theta_1$"] --> B["Calculate Cost"]
     B --> C["Update Parameters"]
     C --> D{"Converged?"}
     D -->|No| B
     D -->|Yes| E["Optimal Parameters"]
 
-    F["Learning Rate alpha"] --> C
+    F["Learning Rate $\\alpha$"] --> C
 ```
 
 **Update Rules**:
-```
-theta0 = theta0 - alpha * (1/m) * Σ["h(xᵢ) - yᵢ"]
-theta1 = theta1 - alpha * (1/m) * Σ["h(xᵢ) - yᵢ"] * xᵢ
-```
+$$
+\theta_0 = \theta_0 - \alpha \cdot \frac{1}{m} \sum_{i=1}^{m} [h(x_i) - y_i]
+$$
+$$
+\theta_1 = \theta_1 - \alpha \cdot \frac{1}{m} \sum_{i=1}^{m} [h(x_i) - y_i] \cdot x_i
+$$
 
-**Learning Rate (alpha)**:
-- **Small alpha**: Takes tiny steps, slow convergence
-- **Large alpha**: May overshoot, never converge
+**Learning Rate ($\alpha$)**:
+- **Small $\alpha$**: Takes tiny steps, slow convergence
+- **Large $\alpha$**: May overshoot, never converge
 - **Typical values**: 0.01, 0.1, 0.001
 
 **Gradient Descent Visualization**:

@@ -39,10 +39,9 @@ flowchart TD
 **Purpose**: Squash output to range ["0,1"]
 
 **Formula**:
-```
-σ(z) = 1 / (1 + e^(-z))
-```
-Where: `z = theta0 + theta1x₁ + θ₂x₂ + ... + θₙxₙ`
+$$\sigma(z) = \frac{1}{1 + e^{-z}}$$
+
+Where: $z = \theta_0 + \theta_1 x_1 + \theta_2 x_2 + \ldots + \theta_n x_n$
 
 **Properties**:
 - **Range**: ["0,1"]
@@ -74,17 +73,13 @@ flowchart TD
 **Solution**: Log Loss (Binary Cross-Entropy)
 
 **Cost Function**:
-```
-Cost(h(x), y) = {
-    -log(h(x))     if y = 1
-    -log(1 - h(x)) if y = 0
-}
-```
+$$\text{Cost}(h(x), y) = \begin{cases}
+    -\log(h(x)) & \text{if } y = 1 \\
+    -\log(1 - h(x)) & \text{if } y = 0
+\end{cases}$$
 
 **Combined Formula**:
-```
-J(θ) = -(1/m) * Σ["y * log(h(x)) + (1-y) * log(1 - h(x))"]
-```
+$$J(\theta) = -\frac{1}{m} \sum_{i=1}^{m} \left[ y_i \log(h(x_i)) + (1-y_i) \log(1 - h(x_i)) \right]$$
 
 **Why This Works**:
 - Creates convex cost function (single global minimum)
@@ -106,19 +101,15 @@ flowchart TD
 ### 5.4 Gradient Descent for Logistic Regression
 
 **Update Rule**:
-```
-θⱼ = θⱼ - alpha * ∂J(θ)/∂θⱼ
-```
+$$\theta_j = \theta_j - \alpha \cdot \frac{\partial J(\theta)}{\partial \theta_j}$$
 
 **Gradient**:
-```
-∂J(θ)/∂θⱼ = (1/m) * Σ["h(xᵢ) - yᵢ"] * xᵢⱼ
-```
+$$\frac{\partial J(\theta)}{\partial \theta_j} = \frac{1}{m} \sum_{i=1}^{m} [h(x_i) - y_i] \cdot x_{ij}$$
 
 **Algorithm Flow**:
 ```mermaid
 flowchart TD
-    A["Initialize theta0, theta1, ..., θₙ"] --> B["Calculate Predictions:<br/>h(x) = σ(θᵀx)"]
+    A["Initialize θ₀, θ₁, ..., θₙ"] --> B["Calculate Predictions:<br/>h(x) = σ(θᵀx)"]
     B --> C["Calculate Cost:<br/>Log Loss"]
     C --> D["Calculate Gradients"]
     D --> E["Update Parameters"]
@@ -161,39 +152,29 @@ TP = 3, TN = 1, FP = 2, FN = 1
 ### 5.6 Classification Metrics
 
 #### 1. Accuracy
-```
-Accuracy = (TP + TN) / (TP + TN + FP + FN)
-```
+$$\text{Accuracy} = \frac{TP + TN}{TP + TN + FP + FN}$$
 **Problem**: Misleading for imbalanced datasets
 
 #### 2. Precision
-```
-Precision = TP / (TP + FP)
-```
+$$\text{Precision} = \frac{TP}{TP + FP}$$
 **Question**: Of all predicted positives, how many are actually positive?
 **Use Case**: Spam detection (minimize false positives)
 
 #### 3. Recall (Sensitivity/True Positive Rate)
-```
-Recall = TP / (TP + FN)
-```
+$$\text{Recall} = \frac{TP}{TP + FN}$$
 **Question**: Of all actual positives, how many were predicted positive?
 **Use Case**: Medical diagnosis (minimize false negatives)
 
 #### 4. F1-Score
-```
-F1 = 2 * (Precision * Recall) / (Precision + Recall)
-```
+$$F_1 = 2 \cdot \frac{\text{Precision} \cdot \text{Recall}}{\text{Precision} + \text{Recall}}$$
 **Purpose**: Harmonic mean of precision and recall
 **Use Case**: When both FP and FN are important
 
 #### 5. Fβ-Score
-```
-Fβ = (1 + β²) * (Precision * Recall) / (β² * Precision + Recall)
-```
-- **β = 1**: Equal weight to precision and recall (F1)
-- **β < 1**: More weight to precision
-- **β > 1**: More weight to recall
+$$F_\beta = \frac{1 + \beta^2}{\beta^2 \cdot \text{Precision} + \text{Recall}} \cdot (\text{Precision} \cdot \text{Recall})$$
+- **$\beta = 1$**: Equal weight to precision and recall (F₁)
+- **$\beta < 1$**: More weight to precision
+- **$\beta > 1$**: More weight to recall
 
 ### 5.7 When to Use Precision vs Recall
 

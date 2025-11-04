@@ -37,14 +37,12 @@ flowchart TD
 **Purpose**: Prevent overfitting by adding penalty for large coefficients
 
 **Modified Cost Function**:
-```
-J(θ) = (1/2m) * Σ["h(xᵢ) - yᵢ"]² + lambda * Σ["θⱼ²"]
-```
+$$J(\theta) = \frac{1}{2m} \sum_{i=1}^{m} [h(x_i) - y_i]^2 + \lambda \sum_{j=1}^{n} \theta_j^2$$
 
 **Components**:
 - **First term**: Original MSE cost function
-- **lambda * Σ["θⱼ²"]**: L2 regularization penalty
-- **lambda (Lambda)**: Hyperparameter controlling regularization strength
+- **$\lambda \sum_{j=1}^{n} \theta_j^2$**: L2 regularization penalty
+- **$\lambda$ (Lambda)**: Hyperparameter controlling regularization strength
 
 **How Ridge Works**:
 
@@ -69,9 +67,7 @@ flowchart TD
 **Purpose**: Prevent overfitting AND perform feature selection
 
 **Modified Cost Function**:
-```
-J(θ) = (1/2m) * Σ["h(xᵢ) - yᵢ"]² + lambda * Σ[|θⱼ|
-```
+$$J(\theta) = \frac{1}{2m} \sum_{i=1}^{m} [h(x_i) - y_i]^2 + \lambda \sum_{j=1}^{n} |\theta_j|$$
 
 **Key Difference**: Uses absolute value instead of square
 
@@ -87,9 +83,9 @@ flowchart LR
     C --> D["Feature Selection"]
     D --> E["Simpler Model"]
 
-    F["Feature 1: theta1 = 0.8"] --> G["Kept"]
-    H["Feature 2: θ₂ = 0.0"] --> I["Removed"]
-    J["Feature 3: θ₃ = 1.2"] --> K["Kept"]
+    F["Feature 1: $\\theta_1 = 0.8$"] --> G["Kept"]
+    H["Feature 2: $\\theta_2 = 0.0$"] --> I["Removed"]
+    J["Feature 3: $\\theta_3 = 1.2$"] --> K["Kept"]
 ```
 
 ### 4.4 Ridge vs Lasso Comparison
