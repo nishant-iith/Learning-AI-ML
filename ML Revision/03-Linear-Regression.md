@@ -27,13 +27,13 @@ flowchart TD
 
 The equation of the best fit line can be written in multiple notations:
 
-- **Traditional**: $y = mx + c$
-- **Statistical**: $y = \beta_0 + \beta_1 x$
-- **Machine Learning**: $h_\theta(x) = \theta_0 + \theta_1 x$
+- **Traditional**: y = mx + c
+- **Statistical**: y = β₀ + β₁x
+- **Machine Learning**: h(x) = θ₀ + θ₁x
 
 **Parameters**:
-- **$\theta_0$ (Intercept)**: Value when X = 0 (where line meets Y-axis)
-- **$\theta_1$ (Slope/Coefficient)**: Change in Y for 1 unit change in X
+- **θ₀ (Intercept)**: Value when X = 0 (where line meets Y-axis)
+- **θ₁ (Slope/Coefficient)**: Change in Y for 1 unit change in X
 
 ```mermaid
 flowchart LR
@@ -49,13 +49,14 @@ flowchart LR
 **Purpose**: Measure how well the model fits the data
 
 **Formula**:
-$$J(\theta_0, \theta_1) = \frac{1}{2m} \sum_{i=1}^{m} [h(x_i) - y_i]^2$$
+
+J(θ₀, θ₁) = (1/2m) × Σ[h(xᵢ) - yᵢ]²
 
 **Components**:
 - **m**: Number of data points
-- **$h(x_i)$**: Predicted value
-- **$y_i$**: Actual value
-- **$\frac{1}{2m}$**: Average + simplifies derivation
+- **h(xᵢ)**: Predicted value
+- **yᵢ**: Actual value
+- **1/2m**: Average + simplifies derivation
 
 **Why Square?**
 - Removes negative values
@@ -78,16 +79,14 @@ flowchart TD
 ```
 
 **Update Rules**:
-$$
-\theta_0 = \theta_0 - \alpha \cdot \frac{1}{m} \sum_{i=1}^{m} [h(x_i) - y_i]
-$$
-$$
-\theta_1 = \theta_1 - \alpha \cdot \frac{1}{m} \sum_{i=1}^{m} [h(x_i) - y_i] \cdot x_i
-$$
 
-**Learning Rate ($\alpha$)**:
-- **Small $\alpha$**: Takes tiny steps, slow convergence
-- **Large $\alpha$**: May overshoot, never converge
+θ₀ = θ₀ - α × (1/m) × Σ[h(xᵢ) - yᵢ]
+
+θ₁ = θ₁ - α × (1/m) × Σ[h(xᵢ) - yᵢ] × xᵢ
+
+**Learning Rate (α)**:
+- **Small α**: Takes tiny steps, slow convergence
+- **Large α**: May overshoot, never converge
 - **Typical values**: 0.01, 0.1, 0.001
 
 **Gradient Descent Visualization**:
@@ -124,16 +123,17 @@ flowchart TD
 #### R-Squared (R²)
 
 **Formula**:
-$$R^2 = 1 - \frac{SSR}{SST}$$
+
+R² = 1 - (SSR / SST)
 
 Where:
-- **SSR** = $\sum_{i=1}^{n} (y_i - \hat{y}_i)^2$ (Sum of Squared Residuals)
-- **SST** = $\sum_{i=1}^{n} (y_i - \bar{y})^2$ (Total Sum of Squares)
+- **SSR** = Σ(yᵢ - ŷᵢ)² (Sum of Squared Residuals)
+- **SST** = Σ(yᵢ - ȳ)² (Total Sum of Squares)
 
 **Interpretation**:
-- **$R^2 = 1$**: Perfect fit
-- **$R^2 = 0$**: Model is as good as predicting mean
-- **$R^2 < 0$**: Model is worse than predicting mean
+- **R² = 1**: Perfect fit
+- **R² = 0**: Model is as good as predicting mean
+- **R² < 0**: Model is worse than predicting mean
 
 **Key Point**: SSR should be less than SST for good models
 
@@ -142,7 +142,8 @@ Where:
 **Problem with R²**: Always increases with more features, even useless ones
 
 **Formula**:
-$$\text{Adjusted } R^2 = 1 - \frac{(1 - R^2) \cdot (n - 1)}{n - p - 1}$$
+
+Adjusted R² = 1 - [(1 - R²) × (n - 1)] / (n - p - 1)
 
 Where:
 - **n**: Number of samples
@@ -151,8 +152,8 @@ Where:
 **Advantage**: Penalyzes adding useless features
 
 **Example**:
-- 2 features: $R^2 = 90\%$, Adjusted $R^2 = 86\%$
-- 3 features (with useless feature): $R^2 = 91\%$, Adjusted $R^2 = 82\%$
+- 2 features: R² = 90%, Adjusted R² = 86%
+- 3 features (with useless feature): R² = 91%, Adjusted R² = 82%
 
 ### 3.7 Complete Algorithm Flow
 
@@ -230,9 +231,9 @@ flowchart TD
 
 ## 📝 Quick Revision Points
 
-- **Hypothesis**: $h(x) = \theta_0 + \theta_1 x$
-- **Cost**: $J(\theta_0, \theta_1) = \frac{1}{2m} \sum_{i=1}^{m} [h(x_i) - y_i]^2$
-- **Gradient Descent**: $\theta_j = \theta_j - \alpha \cdot \frac{\partial J}{\partial \theta_j}$
+- **Hypothesis**: h(x) = θ₀ + θ₁x
+- **Cost**: J(θ₀, θ₁) = (1/2m) × Σ[h(xᵢ) - yᵢ]²
+- **Gradient Descent**: θⱼ = θⱼ - α × (∂J/∂θⱼ)
 - **R²**: Measures variance explained by model
 - **Adjusted R²**: Penalizes useless features
 - **Learning Rate**: Controls optimization step size
