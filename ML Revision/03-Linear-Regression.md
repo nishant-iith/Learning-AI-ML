@@ -37,11 +37,11 @@ The equation of the best fit line can be written in multiple notations:
 
 ```mermaid
 flowchart LR
-    A["Input: Age"] --> B["Hypothesis Function<br/>$h(x) = \\theta_0 + \\theta_1 x$"]
+    A["Input: Age"] --> B["Hypothesis Function<br/>h(x) = θ₀ + θ₁x"]
     B --> C["Output: Predicted Weight"]
 
-    D["$\\theta_0$: Intercept"] --> B
-    E["$\\theta_1$: Slope"] --> B
+    D["θ₀: Intercept"] --> B
+    E["θ₁: Slope"] --> B
 ```
 
 ### 3.3 Cost Function (Mean Squared Error)
@@ -64,17 +64,17 @@ $$J(\theta_0, \theta_1) = \frac{1}{2m} \sum_{i=1}^{m} [h(x_i) - y_i]^2$$
 
 ### 3.4 Gradient Descent Optimization
 
-**Goal**: Find the values of theta0 and theta1 that minimize the cost function
+**Goal**: Find the values of θ₀ and θ₁ that minimize the cost function
 
 ```mermaid
 flowchart TD
-    A["Initialize $\\theta_0, \\theta_1$"] --> B["Calculate Cost"]
+    A["Initialize θ₀, θ₁"] --> B["Calculate Cost"]
     B --> C["Update Parameters"]
     C --> D{"Converged?"}
     D -->|No| B
     D -->|Yes| E["Optimal Parameters"]
 
-    F["Learning Rate $\\alpha$"] --> C
+    F["Learning Rate α"] --> C
 ```
 
 **Update Rules**:
@@ -94,7 +94,7 @@ $$
 
 ```mermaid
 flowchart TD
-    A["Cost Function<br/>J(theta0, theta1)"] --> B["Bowl Shape"]
+    A["Cost Function<br/>J(θ₀, θ₁)"] --> B["Bowl Shape"]
     B --> C["Global Minimum"]
 
     D["High Cost"] --> E["Medium Cost"] --> F["Low Cost"]
@@ -106,36 +106,34 @@ flowchart TD
 
 **Dataset**: (1,1), (2,2), (3,3)
 
-**When theta1 = 1, theta0 = 0**:
+**When θ₁ = 1, θ₀ = 0**:
 - h(1) = 1, h(2) = 2, h(3) = 3
-- J(theta1) = 0 (perfect fit)
+- J(θ₁) = 0 (perfect fit)
 
-**When theta1 = 0.5, theta0 = 0**:
+**When θ₁ = 0.5, θ₀ = 0**:
 - h(1) = 0.5, h(2) = 1, h(3) = 1.5
-- J(theta1) ≈ 0.58
+- J(θ₁) ≈ 0.58
 
 **Cost Function Graph**:
-- theta1 = 1 → J = 0 (Global Minimum)
-- theta1 = 0.5 → J = 0.58
-- theta1 = 0 → J = 2.3
+- θ₁ = 1 → J = 0 (Global Minimum)
+- θ₁ = 0.5 → J = 0.58
+- θ₁ = 0 → J = 2.3
 
 ### 3.6 Model Evaluation Metrics
 
 #### R-Squared (R²)
 
 **Formula**:
-```
-R² = 1 - (SSR / SST)
-```
+$$R^2 = 1 - \frac{SSR}{SST}$$
 
 Where:
-- **SSR** = Σ["yᵢ - ŷᵢ"]² (Sum of Squared Residuals)
-- **SST** = Σ["yᵢ - ȳ"]² (Total Sum of Squares)
+- **SSR** = $\sum_{i=1}^{n} (y_i - \hat{y}_i)^2$ (Sum of Squared Residuals)
+- **SST** = $\sum_{i=1}^{n} (y_i - \bar{y})^2$ (Total Sum of Squares)
 
 **Interpretation**:
-- **R² = 1**: Perfect fit
-- **R² = 0**: Model is as good as predicting mean
-- **R² < 0**: Model is worse than predicting mean
+- **$R^2 = 1$**: Perfect fit
+- **$R^2 = 0$**: Model is as good as predicting mean
+- **$R^2 < 0$**: Model is worse than predicting mean
 
 **Key Point**: SSR should be less than SST for good models
 
@@ -144,9 +142,7 @@ Where:
 **Problem with R²**: Always increases with more features, even useless ones
 
 **Formula**:
-```
-Adjusted R² = 1 - ["(1 - R²) * (n - 1) / (n - p - 1)"]
-```
+$$\text{Adjusted } R^2 = 1 - \frac{(1 - R^2) \cdot (n - 1)}{n - p - 1}$$
 
 Where:
 - **n**: Number of samples
@@ -155,17 +151,17 @@ Where:
 **Advantage**: Penalyzes adding useless features
 
 **Example**:
-- 2 features: R² = 90%, Adjusted R² = 86%
-- 3 features (with useless feature): R² = 91%, Adjusted R² = 82%
+- 2 features: $R^2 = 90\%$, Adjusted $R^2 = 86\%$
+- 3 features (with useless feature): $R^2 = 91\%$, Adjusted $R^2 = 82\%$
 
 ### 3.7 Complete Algorithm Flow
 
 ```mermaid
 flowchart TD
-    A["Data: Age, Weight"] --> B["Initialize theta0, theta1 randomly"]
+    A["Data: Age, Weight"] --> B["Initialize θ₀, θ₁ randomly"]
     B --> C["Calculate Predictions: h(x)"]
-    C --> D["Calculate Cost: J(theta0, theta1)"]
-    D --> E["Update theta0, theta1 using Gradient Descent"]
+    C --> D["Calculate Cost: J(θ₀, θ₁)"]
+    D --> E["Update θ₀, θ₁ using Gradient Descent"]
     E --> F{"Cost Decreased?"}
     F -->|Yes| C
     F -->|No| G["Convergence Reached"]
@@ -234,9 +230,9 @@ flowchart TD
 
 ## 📝 Quick Revision Points
 
-- **Hypothesis**: h(x) = theta0 + theta1x
-- **Cost**: J(theta0, theta1) = (1/2m) Σ["h(xᵢ) - yᵢ"]²
-- **Gradient Descent**: θⱼ = θⱼ - alpha × ∂J/∂θⱼ
+- **Hypothesis**: $h(x) = \theta_0 + \theta_1 x$
+- **Cost**: $J(\theta_0, \theta_1) = \frac{1}{2m} \sum_{i=1}^{m} [h(x_i) - y_i]^2$
+- **Gradient Descent**: $\theta_j = \theta_j - \alpha \cdot \frac{\partial J}{\partial \theta_j}$
 - **R²**: Measures variance explained by model
 - **Adjusted R²**: Penalizes useless features
 - **Learning Rate**: Controls optimization step size
