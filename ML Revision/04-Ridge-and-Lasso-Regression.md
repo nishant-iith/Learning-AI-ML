@@ -160,7 +160,13 @@ flowchart TD
 
 ### Q8: Can Lasso and Ridge be combined?
 **Answer**: Yes, Elastic Net combines both L1 and L2 penalties:
-$$\text{Elastic Net} = \alpha \cdot \text{L1_penalty} + (1-\alpha) \cdot \text{L2_penalty}$$
+$$J(\theta) = \frac{1}{2m} \sum_{i=1}^{m} [h(x_i) - y_i]^2 + \alpha \cdot \sum_{j=1}^{n} |\theta_j| + (1-\alpha) \cdot \sum_{j=1}^{n} \theta_j^2$$
+
+Where:
+- **α** controls the mix between L1 (Lasso) and L2 (Ridge) penalties
+- **α = 1**: Pure Lasso (L1 only)
+- **α = 0**: Pure Ridge (L2 only)
+- **0 < α < 1**: Combination of both
 
 This gives benefits of both regularization techniques.
 
