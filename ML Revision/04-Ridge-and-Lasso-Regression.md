@@ -83,38 +83,38 @@ flowchart LR
     C --> D["Feature Selection"]
     D --> E["Simpler Model"]
 
-    F["Feature 1: $\\theta_1 = 0.8$"] --> G["Kept"]
-    H["Feature 2: $\\theta_2 = 0.0$"] --> I["Removed"]
-    J["Feature 3: $\\theta_3 = 1.2$"] --> K["Kept"]
+    F["Feature 1: θ₁ = 0.8"] --> G["Kept"]
+    H["Feature 2: θ₂ = 0.0"] --> I["Removed"]
+    J["Feature 3: θ₃ = 1.2"] --> K["Kept"]
 ```
 
 ### 4.4 Ridge vs Lasso Comparison
 
 | Aspect | Ridge (L2) | Lasso (L1) |
 |--------|------------|------------|
-| **Penalty** | Σ["θⱼ²"] | Σ["|θⱼ|"] |
+| **Penalty** | $\sum_{j=1}^{n} \theta_j^2$ | $\sum_{j=1}^{n} |\theta_j|$ |
 | **Feature Selection** | No (coefficients → 0, not = 0) | Yes (coefficients = 0) |
 | **Best When** | Many small/medium effects | Few large effects, many zero |
 | **Multicollinearity** | Handles well | May select one feature randomly |
 | **Model Type** | Dense | Sparse |
 
-### 4.5 Lambda (lambda) Hyperparameter
+### 4.5 Lambda (λ) Hyperparameter
 
 **Purpose**: Controls regularization strength
 
-**Effect of lambda Values**:
+**Effect of λ Values**:
 ```mermaid
 flowchart TD
-    A["lambda = 0"] --> B["No regularization<br/>Original linear regression"]
-    C["lambda small"] --> D["Weak regularization<br/>Slight coefficient shrinkage"]
-    E["lambda large"] --> F["Strong regularization<br/>Major coefficient shrinkage"]
-    G["lambda very large"] --> H["Underfitting<br/>All coefficients → 0"]
+    A["λ = 0"] --> B["No regularization<br/>Original linear regression"]
+    C["λ small"] --> D["Weak regularization<br/>Slight coefficient shrinkage"]
+    E["λ large"] --> F["Strong regularization<br/>Major coefficient shrinkage"]
+    G["λ very large"] --> H["Underfitting<br/>All coefficients → 0"]
 ```
 
-**Selecting Optimal lambda**:
+**Selecting Optimal λ**:
 - Use cross-validation
-- Test multiple lambda values
-- Choose lambda with best validation performance
+- Test multiple λ values
+- Choose λ with best validation performance
 
 ### 4.6 Linear Regression Assumptions
 
@@ -160,9 +160,8 @@ flowchart TD
 
 ### Q8: Can Lasso and Ridge be combined?
 **Answer**: Yes, Elastic Net combines both L1 and L2 penalties:
-```
-alpha * L1_penalty + (1-alpha) * L2_penalty
-```
+$$\text{Elastic Net} = \alpha \cdot \text{L1_penalty} + (1-\alpha) \cdot \text{L2_penalty}$$
+
 This gives benefits of both regularization techniques.
 
 ## 💡 Key Takeaways
@@ -170,14 +169,14 @@ This gives benefits of both regularization techniques.
 1. **Overfitting**: Good training performance, poor test performance (low bias, high variance)
 2. **Ridge Regression**: L2 regularization, prevents overfitting, handles multicollinearity
 3. **Lasso Regression**: L1 regularization, prevents overfitting, performs feature selection
-4. **Lambda (lambda)**: Controls regularization strength, chosen via cross-validation
+4. **Lambda ($\lambda$)**: Controls regularization strength, chosen via cross-validation
 5. **Standardization**: Essential before regularization for fair feature treatment
 6. **Feature Selection**: Lasso can automatically select important features
 
 ## 🚨 Common Mistakes
 
-**Mistake 1**: Using same lambda for all problems
-- **Reality**: Lambda should be tuned using cross-validation for each dataset
+**Mistake 1**: Using same λ for all problems
+- **Reality**: λ should be tuned using cross-validation for each dataset
 
 **Mistake 2**: Not standardizing features before regularization
 - **Reality**: Features on different scales get unfair penalty treatment
@@ -185,15 +184,15 @@ This gives benefits of both regularization techniques.
 **Mistake 3**: Using Lasso when you have many correlated features
 - **Reality**: Lasso may arbitrarily select one feature, Ridge handles multicollinearity better
 
-**Mistake 4**: Setting lambda too high
+**Mistake 4**: Setting λ too high
 - **Reality**: Too much regularization leads to underfitting
 
 ## 📝 Quick Revision Points
 
 - **Overfitting**: Low bias, high variance
-- **Ridge Cost**: MSE + lambda * Σ["θⱼ²"]
-- **Lasso Cost**: MSE + lambda * Σ["|θⱼ|"]
-- **Lambda (lambda)**: Regularization strength, hyperparameter
+- **Ridge Cost**: MSE + $\lambda \sum_{j=1}^{n} \theta_j^2$
+- **Lasso Cost**: MSE + $\lambda \sum_{j=1}^{n} |\theta_j|$
+- **Lambda ($\lambda$)**: Regularization strength, hyperparameter
 - **Feature Selection**: Lasso can zero out coefficients
 - **Standardization**: Mean = 0, std = 1 before regularization
-- **Cross-Validation**: Method to select optimal lambda
+- **Cross-Validation**: Method to select optimal $\lambda$
