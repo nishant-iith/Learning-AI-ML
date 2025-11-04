@@ -98,6 +98,157 @@ flowchart LR
 | **Multicollinearity** | Handles well | May select one feature randomly |
 | **Model Type** | Dense | Sparse |
 
+#### 🎯 Keynote: Mathematical Behavior of L1 vs L2 on Coefficients
+
+### Why L2 Never Reaches Zero vs L1 Can Reach Zero
+
+#### 🔢 L2 Regularization (Ridge) - "Smooth Shrinkage"
+
+**Mathematical Behavior**:
+- **Penalty Term**: $\lambda \sum_{j=1}^{n} \theta_j^2$
+- **Gradient**: $\frac{\partial}{\partial \theta_j} (\lambda \theta_j^2) = 2\lambda \theta_j$
+- **Update Rule**: $\theta_j \leftarrow \theta_j - \alpha \cdot \text{gradient} - \alpha \cdot 2\lambda \theta_j$
+
+**Why L2 Never Reaches Zero**:
+1. **Continuous Gradient**: The penalty gradient $2\lambda \theta_j$ becomes very small as $\theta_j$ approaches 0
+2. **No "Sharp Corner"**: No discontinuity in the optimization landscape
+3. **Asymptotic Approach**: Coefficients get smaller and smaller but never exactly zero
+
+**Visualization**:
+```
+Coefficient Value    →    5.0    2.0    0.5    0.1    0.01    0.001
+L2 Gradient          →    10λ    4λ     1λ     0.2λ   0.02λ   0.002λ
+Result               →    Keeps   going   smaller   but   never   zero
+```
+
+#### 🔢 L1 Regularization (Lasso) - "Sharp Thresholding"
+
+**Mathematical Behavior**:
+- **Penalty Term**: $\lambda \sum_{j=1}^{n} |\theta_j|$
+- **Sub-gradient**: $\frac{\partial}{\partial \theta_j} (\lambda |\theta_j|) = \begin{cases} \lambda & \text{if } \theta_j > 0 \\ -\lambda & \text{if } \theta_j < 0 \\ \text{[-λ, λ]} & \text{if } \theta_j = 0 \end{cases}$
+- **Update Rule**: $\theta_j \leftarrow \theta_j - \alpha \cdot \text{gradient} - \alpha \cdot \lambda \cdot \text{sign}(\theta_j)$
+
+**Why L1 Can Reach Zero**:
+1. **Constant Penalty**: The sub-gradient magnitude is always $\lambda$ (constant!)
+2. **Sharp Corner**: Creates discontinuity at $\theta_j = 0$
+3. **Threshold Effect**: If data gradient < λ, coefficient gets pushed to exactly zero
+
+**Visualization**:
+```
+Coefficient Value    →    5.0    2.0    0.5    0.1    0.05    0.0
+L1 Sub-gradient      →    λ      λ      λ      λ      λ      [-λ, λ]
+Data Gradient        →    8λ     3λ     0.8λ   0.2λ   0.05λ  0.01λ
+Result               →    5-αλ   2-αλ   0.5-αλ → Push to 0 → Stay at 0
+```
+
+### 🧮 Feature Selection Mechanism Explained
+
+#### The Optimization Problem:
+
+**L2 (Ridge)**:
+$$\min_\theta \frac{1}{2m} \sum_{i=1}^{m} [h(x_i) - y_i]^2 + \lambda \sum_{j=1}^{n} \theta_j^2$$
+
+**L1 (Lasso)**:
+$$\min_\theta \frac{1}{2m} \sum_{i=1}^{m} [h(x_i) - y_i]^2 + \lambda \sum_{j=1}^{n} |\theta_j|$$
+
+#### 🎯 Geometric Intuition
+
+```mermaid
+flowchart TD
+    A["Optimization Problem"] --> B["Balance Two Terms"]
+    B --> C["Data Fitting Term<br/>(MSE)"]
+    B --> D["Regularization Term<br/>(L1/L2 Penalty)"]
+
+    E["L2: Circle Constraint<br/>θ₁² + θ₂² ≤ c"] --> F["Smooth boundary<br/>Never hits axis"]
+    G["L1: Diamond Constraint<br/>|θ₁| + |θ₂| ≤ c"] --> H["Sharp corners<br/>Hits axes at exact points"]
+
+    F --> I["Coefficients approach 0<br/>but never equal 0"]
+    H --> J["Coefficients become exactly 0<br/>at corner points"]
+```
+
+#### 📊 Decision Boundary Analysis
+
+**For 2 coefficients (θ₁, θ₂)**:
+
+**L2 Constraint**: $\theta_1^2 + \theta_2^2 \leq c$
+- **Shape**: Circle
+- **Boundary**: Smooth, curved
+- **Intersection with axes**: Never touches axes exactly
+
+**L1 Constraint**: $|\theta_1| + |\theta_2| \leq c$
+- **Shape**: Diamond (rotated square)
+- **Boundary**: Sharp corners at axes
+- **Intersection with axes**: Hits axes at exact points (θ₁=0, θ₂=±c) and (θ₁=±c, θ₂=0)
+
+#### 🔍 Step-by-Step Feature Selection Process
+
+**L1 Regularization Steps**:
+
+1. **Calculate Data Gradient**:
+   $$\text{Data Gradient}_j = \frac{1}{m} \sum_{i=1}^{m} [h(x_i) - y_i] \cdot x_{ij}$$
+
+2. **Apply L1 Penalty**:
+   $$\text{Total Gradient}_j = \text{Data Gradient}_j + \lambda \cdot \text{sign}(\theta_j)$$
+
+3. **Update Decision**:
+   - If $|\text{Data Gradient}_j| > \lambda$: Update coefficient
+   - If $|\text{Data Gradient}_j| \leq \lambda$: Set coefficient to 0
+
+**Feature Elimination Criteria**:
+- **Coefficient becomes 0 when**: Predictive power < regularization strength
+- **Mathematical condition**: $|\frac{1}{m} \sum_{i=1}^{m} [h(x_i) - y_i] \cdot x_{ij}| \leq \lambda$
+
+#### 📈 Practical Example
+
+**House Price Prediction**:
+```python
+# Original coefficients (no regularization)
+θ_sqrft = 150      # Strong predictor
+θ_bedrooms = 50    # Medium predictor
+θ_age = -30        # Weak predictor
+θ_mailbox = 2      # Very weak predictor
+
+# After L1 regularization (λ = 25)
+θ_sqrft = 140      # Reduced but kept (150 > 25)
+θ_bedrooms = 35     # Reduced but kept (50 > 25)
+θ_age = -10        # Reduced but kept (30 > 25)
+θ_mailbox = 0      # ELIMINATED (2 < 25) ← Feature selection!
+```
+
+**After L2 regularization (λ = 25)**:
+```python
+θ_sqrft = 120      # Reduced but not zero
+θ_bedrooms = 40    # Reduced but not zero
+θ_age = -20        # Reduced but not zero
+θ_mailbox = 1.8    # Reduced but not zero ← All features kept
+```
+
+#### 🎛️ Controlling Feature Selection with λ
+
+**λ Effects on Feature Selection**:
+
+| λ Value | L1 Behavior | Features Kept | L2 Behavior |
+|---------|-------------|----------------|-------------|
+| **λ = 0** | No regularization | All features | No regularization |
+| **λ small** | Mild feature selection | Most features | Small coefficient shrinkage |
+| **λ medium** | Aggressive feature selection | Important features only | Significant shrinkage |
+| **λ large** | Very aggressive selection | Few/one feature | Heavy shrinkage |
+| **λ very large** | All coefficients → 0 | No features | All coefficients ≈ 0 |
+
+#### 💡 Key Insights
+
+**L1 (Lasso) Feature Selection Works Because**:
+1. **Constant penalty force** doesn't diminish as coefficients get small
+2. **Sharp optimization boundaries** create exact zero solutions
+3. **Threshold mechanism** eliminates weak predictors
+4. **Sparsity-inducing** property creates interpretable models
+
+**L2 (Ridge) No Feature Selection Because**:
+1. **Diminishing penalty force** as coefficients approach zero
+2. **Smooth optimization boundaries** never hit axes exactly
+3. **Continuous shrinkage** keeps all features
+4. **Better for multicollinearity** but no sparsity
+
 ### 4.5 Lambda (λ) Hyperparameter
 
 **Purpose**: Controls regularization strength
@@ -170,6 +321,43 @@ Where:
 
 This gives benefits of both regularization techniques.
 
+### Q9: Why does L2 regularization never make coefficients exactly zero, while L1 can?
+**Answer**:
+- **L2 Gradient**: $2\lambda \theta_j$ becomes very small as $\theta_j$ approaches 0, creating diminishing force
+- **L1 Sub-gradient**: Always $\lambda$ (constant), creating threshold effect
+- **L2**: Smooth optimization, coefficients asymptotically approach zero but never reach it
+- **L1**: Sharp optimization corners, coefficients can hit exactly zero when data gradient < λ
+
+### Q10: Explain the geometric difference between L1 and L2 constraint regions.
+**Answer**:
+- **L2 Constraint**: $\theta_1^2 + \theta_2^2 \leq c$ forms a circle with smooth boundary
+- **L1 Constraint**: $|\theta_1| + |\theta_2| \leq c$ forms a diamond with sharp corners
+- **L2**: Smooth boundary never touches axes → no exact zeros
+- **L1**: Sharp corners hit axes at exact points → coefficients become zero
+
+### Q11: How does the mathematical condition for feature selection work in Lasso?
+**Answer**:
+A coefficient becomes zero when: $|\text{Data Gradient}_j| \leq \lambda$
+- **Data Gradient**: $\frac{1}{m} \sum_{i=1}^{m} [h(x_i) - y_i] \cdot x_{ij}$
+- **Interpretation**: If predictive power (data gradient) is less than regularization strength (λ), feature is eliminated
+- **Result**: Automatic feature selection based on mathematical threshold
+
+### Q12: What happens to feature selection as you increase λ in Lasso?
+**Answer**:
+- **λ = 0**: No regularization, all features kept
+- **λ small**: Mild selection, only weakest features eliminated
+- **λ medium**: Aggressive selection, only important features kept
+- **λ large**: Very aggressive selection, few/one feature kept
+- **λ very large**: All coefficients → 0, no features kept (underfitting)
+
+### Q13: When would you prefer Ridge over Lasso despite Lasso's feature selection?
+**Answer**:
+- **Many correlated features**: Ridge handles multicollinearity better
+- **All features potentially useful**: When you don't want to eliminate any features
+- **Stable coefficients needed**: Ridge provides more stable coefficient estimates
+- **Small dataset**: Lasso may be too aggressive with limited data
+- **Continuous relationships**: When all features have small but meaningful effects
+
 ## 💡 Key Takeaways
 
 1. **Overfitting**: Good training performance, poor test performance (low bias, high variance)
@@ -178,6 +366,10 @@ This gives benefits of both regularization techniques.
 4. **Lambda ($\lambda$)**: Controls regularization strength, chosen via cross-validation
 5. **Standardization**: Essential before regularization for fair feature treatment
 6. **Feature Selection**: Lasso can automatically select important features
+7. **L2 vs L1 Behavior**: L2 shrinks coefficients asymptotically, L1 creates exact zeros
+8. **Mathematical Intuition**: L1 has constant penalty force, L2 has diminishing force near zero
+9. **Geometric Constraint**: L2 creates circles, L1 creates diamonds with sharp corners
+10. **Feature Selection Threshold**: Coefficients become zero when $|\text{Data Gradient}| \leq \lambda$
 
 ## 🚨 Common Mistakes
 
@@ -202,3 +394,7 @@ This gives benefits of both regularization techniques.
 - **Feature Selection**: Lasso can zero out coefficients
 - **Standardization**: Mean = 0, std = 1 before regularization
 - **Cross-Validation**: Method to select optimal $\lambda$
+- **L2 Gradient**: $2\lambda \theta_j$ (diminishing force)
+- **L1 Sub-gradient**: $\lambda$ (constant force)
+- **Feature Selection Condition**: $|\text{Data Gradient}_j| \leq \lambda$
+- **Geometric**: L2 = circles, L1 = diamonds with corners
