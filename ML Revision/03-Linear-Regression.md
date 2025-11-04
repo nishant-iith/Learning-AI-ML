@@ -150,7 +150,165 @@ Where:
 - 2 features: $R^2 = 90\%$, Adjusted $R^2 = 86\%$
 - 3 features (with useless feature): $R^2 = 91\%$, Adjusted $R^2 = 82\%$
 
-### 3.7 Complete Algorithm Flow
+#### 🎯 Keynote: R² vs Adjusted R² Behavior with Features
+
+**Why R² Always Increases with More Features**:
+$$R^2 = 1 - \frac{\text{Unexplained Variance}}{\text{Total Variance}}$$
+
+- **Mathematical Reason**: Adding any feature (even random noise) will always reduce unexplained variance or keep it the same
+- **Never Decreases**: $R^2_{new} \geq R^2_{old}$ always holds true
+- **Problem**: Cannot distinguish between useful and useless features
+
+**Four Possible Scenarios**:
+
+| Scenario | R² Trend | Adjusted R² Trend | Interpretation |
+|----------|----------|-------------------|----------------|
+| **🟢 Good** | ↑ | ↑ | **Adding useful features** - Both metrics improve |
+| **🟡 Warning** | ↑ | → | **Adding neutral features** - Features add no real value |
+| **🔴 Bad** | ↑ | ↓ | **Adding useless features** - Overfitting with noise |
+| **🔴 Critical** | → | ↓ | **Severe overfitting** - Model complexity hurts performance |
+
+**Decision Rules**:
+- **Both ↑**: Keep adding similar features
+- **R² ↑, Adjusted R² →**: Stop adding features, current set is optimal
+- **R² ↑, Adjusted R² ↓**: Remove recently added features (overfitting)
+- **Both ↓**: Model is deteriorating, review entire approach
+
+**Real-World Example**:
+```python
+# House price prediction example
+features = ["sqft", "bedrooms", "age", "location"]
+
+# Adding good features
+features.append("garage_size")     # R²: 0.85 → 0.87, Adjusted R²: 0.83 → 0.85  ✅
+
+# Adding neutral features
+features.append("has_mailbox")     # R²: 0.87 → 0.87, Adjusted R²: 0.85 → 0.85  ⚠️
+
+# Adding bad features
+features.append("random_noise_1")  # R²: 0.87 → 0.88, Adjusted R²: 0.85 → 0.84  ❌
+```
+
+### 3.7 Model Parameters vs Hyperparameters
+
+#### 📋 Model Parameters (θ)
+**Definition**: Parameters learned from data during training
+
+**Characteristics**:
+- **Learned**: Automatically optimized during training
+- **Internal**: Part of the model itself
+- **Data-driven**: Values depend on training data
+- **Goal**: Minimize cost function
+
+**Examples in Linear Regression**:
+- **$\theta_0$ (Intercept)**: Baseline prediction when all features = 0
+- **$\theta_1, \theta_2, ...$ (Coefficients)**: Feature weights
+- **Final values**: $\theta_0 = 25.4$, $\theta_1 = 0.8$, $\theta_2 = -1.2$
+
+#### ⚙️ Hyperparameters
+**Definition**: Configuration settings set before training
+
+**Characteristics**:
+- **Pre-set**: Chosen by human/data scientist
+- **External**: Control the learning process
+- **Manual**: Require tuning and experimentation
+- **Goal**: Optimize model performance
+
+**Examples in Linear Regression**:
+- **$\alpha$ (Learning Rate)**: Step size for gradient descent (0.001, 0.01, 0.1)
+- **Iterations**: Number of training cycles (100, 1000, 10000)
+- **Tolerance**: Convergence threshold (0.0001, 0.001)
+
+```mermaid
+flowchart TD
+    A["Hyperparameters<br/>Set Before Training"] --> B["Training Process"]
+    B --> C["Model Parameters<br/>Learned During Training"]
+
+    D["α = 0.01<br/>Iterations = 1000"] --> A
+    E["θ₀ = 25.4<br/>θ₁ = 0.8"] --> C
+
+    F["Human/Data Scientist"] --> A
+    G["Algorithm/Optimization"] --> C
+```
+
+#### 🎯 Tuning Process
+**Hyperparameter Tuning Strategies**:
+1. **Grid Search**: Test all combinations systematically
+2. **Random Search**: Test random combinations
+3. **Bayesian Optimization**: Intelligent search based on results
+4. **Manual Tuning**: Based on experience and intuition
+
+### 3.8 Gradient Descent: Partial Derivative General Equation
+
+#### 📐 General Gradient Descent Formula
+For any parameter $\theta_j$ in the cost function $J(\theta)$:
+
+$$\theta_j = \theta_j - \alpha \cdot \frac{\partial J(\theta)}{\partial \theta_j}$$
+
+Where:
+- **$\theta_j$**: j-th parameter being updated
+- **$\alpha$**: Learning rate (step size)
+- **$\frac{\partial J(\theta)}{\partial \theta_j}$**: Partial derivative of cost w.r.t. $\theta_j$
+- **Goal**: Find minimum of $J(\theta)$
+
+#### 🔢 Applying to Linear Regression Cost Function
+
+**Cost Function**:
+$$J(\theta_0, \theta_1) = \frac{1}{2m} \sum_{i=1}^{m} [h_\theta(x_i) - y_i]^2$$
+
+**Where**: $h_\theta(x_i) = \theta_0 + \theta_1 x_i$
+
+#### Step 1: Partial Derivative for $\theta_0$
+
+$$\frac{\partial J(\theta_0, \theta_1)}{\partial \theta_0} = \frac{\partial}{\partial \theta_0} \left[ \frac{1}{2m} \sum_{i=1}^{m} [\theta_0 + \theta_1 x_i - y_i]^2 \right]$$
+
+**Using Chain Rule**:
+$$\frac{\partial J}{\partial \theta_0} = \frac{1}{2m} \sum_{i=1}^{m} 2 \cdot [\theta_0 + \theta_1 x_i - y_i] \cdot \frac{\partial}{\partial \theta_0}[\theta_0 + \theta_1 x_i - y_i]$$
+
+**Simplifying**:
+$$\frac{\partial J}{\partial \theta_0} = \frac{1}{m} \sum_{i=1}^{m} [h_\theta(x_i) - y_i] \cdot 1$$
+
+$$\frac{\partial J}{\partial \theta_0} = \frac{1}{m} \sum_{i=1}^{m} [h_\theta(x_i) - y_i]$$
+
+**Update Rule for $\theta_0$**:
+$$\theta_0 = \theta_0 - \alpha \cdot \frac{1}{m} \sum_{i=1}^{m} [h_\theta(x_i) - y_i]$$
+
+#### Step 2: Partial Derivative for $\theta_1$
+
+$$\frac{\partial J(\theta_0, \theta_1)}{\partial \theta_1} = \frac{\partial}{\partial \theta_1} \left[ \frac{1}{2m} \sum_{i=1}^{m} [\theta_0 + \theta_1 x_i - y_i]^2 \right]$$
+
+**Using Chain Rule**:
+$$\frac{\partial J}{\partial \theta_1} = \frac{1}{2m} \sum_{i=1}^{m} 2 \cdot [\theta_0 + \theta_1 x_i - y_i] \cdot \frac{\partial}{\partial \theta_1}[\theta_0 + \theta_1 x_i - y_i]$$
+
+**Simplifying**:
+$$\frac{\partial J}{\partial \theta_1} = \frac{1}{m} \sum_{i=1}^{m} [h_\theta(x_i) - y_i] \cdot x_i$$
+
+**Update Rule for $\theta_1$**:
+$$\theta_1 = \theta_1 - \alpha \cdot \frac{1}{m} \sum_{i=1}^{m} [h_\theta(x_i) - y_i] \cdot x_i$$
+
+#### 🧮 General Pattern for Multiple Features
+
+For $n$ features $(\theta_0, \theta_1, \theta_2, ..., \theta_n)$:
+
+$$\theta_j = \theta_j - \alpha \cdot \frac{1}{m} \sum_{i=1}^{m} [h_\theta(x_i) - y_i] \cdot x_{ij}$$
+
+Where:
+- **$j = 0$**: $x_{ij} = 1$ (for intercept term)
+- **$j > 0$**: $x_{ij}$ = value of j-th feature for i-th example
+
+#### 💡 Intuition Behind Partial Derivatives
+
+**Geometric Meaning**:
+- **Partial derivative**: Rate of change of cost function in one direction
+- **$\frac{\partial J}{\partial \theta_0}$**: How cost changes when we nudge the intercept
+- **$\frac{\partial J}{\partial \theta_1}$**: How cost changes when we nudge the slope
+
+**Sign Interpretation**:
+- **Positive derivative**: Cost increases if we increase parameter → Decrease parameter
+- **Negative derivative**: Cost decreases if we increase parameter → Increase parameter
+- **Zero derivative**: We're at minimum in this direction → Stop changing parameter
+
+### 3.9 Complete Algorithm Flow
 
 ```mermaid
 flowchart TD
@@ -201,14 +359,49 @@ flowchart TD
 ### Q8: Explain gradient descent with an analogy.
 **Answer**: Imagine you're standing on a mountain in fog and want to reach the lowest point. You feel the slope beneath your feet and take a small step in the steepest downward direction. Repeat until you can't go lower. The "learning rate" is the size of your steps.
 
+### Q9: What's the difference between model parameters and hyperparameters?
+**Answer**:
+- **Model Parameters (θ)**: Learned during training from data (intercept, coefficients)
+- **Hyperparameters**: Set before training by humans (learning rate, iterations)
+- **Example**: θ₀, θ₁ are parameters; α = 0.01 is a hyperparameter
+- **Key**: Parameters are optimized by algorithm, hyperparameters are tuned by humans
+
+### Q10: How do you interpret different combinations of R² and Adjusted R² changes?
+**Answer**:
+- **Both ↑**: Adding useful features → Keep adding similar features
+- **R² ↑, Adjusted R² →**: Neutral features → Stop adding features
+- **R² ↑, Adjusted R² ↓**: Useless features → Remove recent additions (overfitting)
+- **Both ↓**: Model deterioration → Review entire approach
+
+### Q11: Why does R² never decrease when adding features?
+**Answer**: Mathematically, $R^2 = 1 - \frac{\text{Unexplained Variance}}{\text{Total Variance}}$. Adding any feature (even random noise) will either reduce unexplained variance or keep it the same, never increase it. Therefore $R^2_{new} \geq R^2_{old}$ always holds true.
+
+### Q12: How do partial derivatives work in gradient descent?
+**Answer**:
+- **Purpose**: Measure rate of change of cost function w.r.t each parameter
+- **For θ₀**: $\frac{\partial J}{\partial \theta_0} = \frac{1}{m} \sum [h(x_i) - y_i]$ (error direction)
+- **For θ₁**: $\frac{\partial J}{\partial \theta_1} = \frac{1}{m} \sum [h(x_i) - y_i] \cdot x_i$ (weighted error)
+- **Update**: $\theta_j = \theta_j - \alpha \cdot \frac{\partial J}{\partial \theta_j}$
+
+### Q13: What does the sign of partial derivative tell us?
+**Answer**:
+- **Positive derivative**: Cost increases if we increase parameter → Decrease parameter
+- **Negative derivative**: Cost decreases if we increase parameter → Increase parameter
+- **Zero derivative**: At minimum in this direction → Stop changing parameter
+- **Intuition**: Gradient points "uphill", we move "downhill" by subtracting it
+
 ## 💡 Key Takeaways
 
 1. **Linear regression finds best fit line** through data points
 2. **Cost function measures prediction error** using mean squared error
-3. **Gradient descent updates parameters** to minimize cost
+3. **Gradient descent updates parameters** to minimize cost using partial derivatives
 4. **Learning rate controls step size** in parameter updates
 5. **R² measures model fit**, Adjusted R² accounts for number of features
-6. **Convex cost function guarantees global minimum**
+6. **Model parameters (θ) are learned**, hyperparameters (α) are set by humans
+7. **R² never decreases with features**, Adjusted R² helps detect overfitting
+8. **Convex cost function guarantees global minimum**
+9. **Partial derivatives guide parameter updates** by showing direction of steepest ascent
+10. **Feature selection guided by R² vs Adjusted R² behavior**
 
 ## 🚨 Common Mistakes
 
@@ -224,12 +417,26 @@ flowchart TD
 **Mistake 4**: Assuming linear regression works for all relationships
 - **Reality**: Only works for linear relationships, check scatter plots first
 
+**Mistake 5**: Adding features based only on R² increase
+- **Reality**: Use Adjusted R² to detect if features are actually useful
+
+**Mistake 6**: Confusing parameters and hyperparameters
+- **Reality**: Parameters (θ) are learned, hyperparameters (α) are set before training
+
+**Mistake 7**: Not understanding partial derivative signs
+- **Reality**: Positive derivative means decrease parameter, negative means increase
+
+**Mistake 8**: Using the same learning rate for all problems
+- **Reality**: Learning rate (α) is a hyperparameter that needs tuning per problem
+
 ## 📝 Quick Revision Points
 
 - **Hypothesis**: $h(x) = \theta_0 + \theta_1 x$
 - **Cost**: $J(\theta_0, \theta_1) = \frac{1}{2m} \sum_{i=1}^{m} [h(x_i) - y_i]^2$
 - **Gradient Descent**: $\theta_j = \theta_j - \alpha \cdot \frac{\partial J}{\partial \theta_j}$
-- **R²**: Measures variance explained by model
-- **Adjusted R²**: Penalizes useless features
+- **Partial Derivatives**: $\frac{\partial J}{\partial \theta_0} = \frac{1}{m} \sum [h(x_i) - y_i]$
+- **R² vs Adjusted R²**: R² always ↑, Adjusted R² detects overfitting
+- **Parameters vs Hyperparameters**: θ learned, α set by humans
 - **Learning Rate**: Controls optimization step size
 - **Convergence**: Stop when cost stops decreasing
+- **Feature Selection**: Use R² ↑ + Adjusted R² ↑ = good feature
