@@ -115,12 +115,16 @@ $$\tanh'(x) = 1 - \tanh^2(x)$$
 ### 3. ReLU (Rectified Linear Unit)
 
 **Formula:**
-$$\text{ReLU}(x) = \max(0, x) = \begin{cases} 0 & \text{if } x < 0 \\ x & \text{if } x \geq 0 \end{cases}$$
+
+$$\text{ReLU}(x) = \max(0, x)$$
+
+$$\text{ReLU}(x) = \begin{cases} 0 & \text{if } x < 0 \\\ x & \text{if } x \geq 0 \end{cases}$$
 
 **Range**: $[0, \infty)$
 
 **Derivative:**
-$$\text{ReLU}'(x) = \begin{cases} 0 & \text{if } x < 0 \\ 1 & \text{if } x > 0 \end{cases}$$
+
+$$\text{ReLU}'(x) = \begin{cases} 0 & \text{if } x < 0 \\\ 1 & \text{if } x > 0 \end{cases}$$
 
 **Graph:**
 - Flat at 0 for negative values
@@ -144,12 +148,16 @@ $$\text{ReLU}'(x) = \begin{cases} 0 & \text{if } x < 0 \\ 1 & \text{if } x > 0 \
 ### 4. Leaky ReLU
 
 **Formula:**
-$$\text{Leaky ReLU}(x) = \max(0.01x, x) = \begin{cases} 0.01x & \text{if } x < 0 \\ x & \text{if } x \geq 0 \end{cases}$$
+
+$$\text{Leaky ReLU}(x) = \max(0.01x, x)$$
+
+$$\text{Leaky ReLU}(x) = \begin{cases} 0.01x & \text{if } x < 0 \\\ x & \text{if } x \geq 0 \end{cases}$$
 
 **Range**: $(-\infty, \infty)$
 
 **Derivative:**
-$$\text{Leaky ReLU}'(x) = \begin{cases} 0.01 & \text{if } x < 0 \\ 1 & \text{if } x > 0 \end{cases}$$
+
+$$\text{Leaky ReLU}'(x) = \begin{cases} 0.01 & \text{if } x < 0 \\\ 1 & \text{if } x > 0 \end{cases}$$
 
 **Advantages:**
 - **Solves Dead Neuron Problem**: Small gradient (0.01) for negative values
@@ -167,7 +175,8 @@ $$\text{Leaky ReLU}'(x) = \begin{cases} 0.01 & \text{if } x < 0 \\ 1 & \text{if 
 ### 5. PReLU (Parametric ReLU)
 
 **Formula:**
-$$\text{PReLU}(x) = \begin{cases} \alpha x & \text{if } x < 0 \\ x & \text{if } x \geq 0 \end{cases}$$
+
+$$\text{PReLU}(x) = \begin{cases} \alpha x & \text{if } x < 0 \\\ x & \text{if } x \geq 0 \end{cases}$$
 
 **Where**: $\alpha$ is a **learnable parameter** (not fixed like 0.01)
 
@@ -190,7 +199,8 @@ $$\text{PReLU}(x) = \begin{cases} \alpha x & \text{if } x < 0 \\ x & \text{if } 
 ### 6. ELU (Exponential Linear Unit)
 
 **Formula:**
-$$\text{ELU}(x) = \begin{cases} \alpha(e^x - 1) & \text{if } x < 0 \\ x & \text{if } x \geq 0 \end{cases}$$
+
+$$\text{ELU}(x) = \begin{cases} \alpha(e^x - 1) & \text{if } x < 0 \\\ x & \text{if } x \geq 0 \end{cases}$$
 
 **Range**: $(-\alpha, \infty)$
 

@@ -189,7 +189,7 @@ Loss
 **Formula:**
 
 $$\text{Huber Loss} = \begin{cases}
-\frac{1}{2}(y - \hat{y})^2 & \text{if } |y - \hat{y}| \leq \delta \\
+\frac{1}{2}(y - \hat{y})^2 & \text{if } |y - \hat{y}| \leq \delta \\\
 \delta |y - \hat{y}| - \frac{1}{2}\delta^2 & \text{otherwise}
 \end{cases}$$
 
@@ -232,7 +232,7 @@ $$\text{BCE} = -[y \log(\hat{y}) + (1-y) \log(1-\hat{y})]$$
 **Alternative Form:**
 
 $$\text{BCE} = \begin{cases}
--\log(1 - \hat{y}) & \text{if } y = 0 \\
+-\log(1 - \hat{y}) & \text{if } y = 0 \\\
 -\log(\hat{y}) & \text{if } y = 1
 \end{cases}$$
 
@@ -261,8 +261,8 @@ $$\hat{y} = \sigma(z) = \frac{1}{1 + e^{-z}}$$
 **Output Range**: $(0, 1)$ → Interpreted as probability
 
 **Decision Rule:**
-- If $\hat{y} \geq 0.5$ → Class 1
-- If $\hat{y} < 0.5$ → Class 0
+- If $\hat{y} \geq 0.5$ → Predict Class 1
+- If $\hat{y} < 0.5$ → Predict Class 0
 
 #### When to Use Binary Cross Entropy
 
@@ -503,7 +503,7 @@ $$\frac{1}{2}|y - \hat{y}|$$
 - Slower (sub-gradient)
 
 **Huber Loss:**
-$$\begin{cases} \frac{1}{2}(y - \hat{y})^2 & |error| \leq \delta \\ \delta|y - \hat{y}| - \frac{1}{2}\delta^2 & \text{otherwise} \end{cases}$$
+$$\begin{cases} \frac{1}{2}(y - \hat{y})^2 & |error| \leq \delta \\\ \delta|y - \hat{y}| - \frac{1}{2}\delta^2 & \text{otherwise} \end{cases}$$
 - Combines MSE + MAE
 - Best of both worlds
 
