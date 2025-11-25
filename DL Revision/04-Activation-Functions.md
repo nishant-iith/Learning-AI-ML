@@ -288,21 +288,27 @@ graph TD
 ## ❓ Interview Questions & Answers
 
 **Q1: What is the vanishing gradient problem?**
+
 When gradients become extremely small during backpropagation in deep networks, weights barely update, and the network stops learning. Caused by activation functions (like sigmoid) with derivatives < 1 that multiply in chain rule.
 
 **Q2: Why does sigmoid cause vanishing gradient?**
+
 Sigmoid's derivative range is (0, 0.25). In deep networks, multiplying many small derivatives (e.g., 0.25 × 0.1 × 0.05) results in extremely tiny gradients, making weight updates negligible.
 
 **Q3: How does ReLU solve vanishing gradient?**
+
 ReLU's derivative is either 0 or 1. For positive inputs, derivative = 1, so gradients don't shrink during backpropagation. This allows deep networks to train effectively.
 
 **Q4: What is the dead neuron problem in ReLU?**
+
 When input is negative, ReLU outputs 0 and derivative = 0. If a neuron consistently receives negative inputs, it stays "dead" (always outputs 0, never learns). Weight updates become: $w_{\text{new}} = w_{\text{old}} - \alpha \times 0 = w_{\text{old}}$.
 
 **Q5: How does Leaky ReLU solve the dead neuron problem?**
+
 Leaky ReLU uses $f(x) = 0.01x$ for negative inputs instead of 0. This gives a small gradient (0.01) for negative values, allowing neurons to recover from "death."
 
 **Q6: What does "zero-centered" mean and why does it matter?**
+
 Zero-centered means the activation function outputs both positive and negative values around 0. It improves weight update efficiency. Sigmoid (0, 1) is not zero-centered; Tanh (-1, 1) is.
 
 **Q7: Which activation function should you use for binary classification?**
@@ -318,16 +324,20 @@ Zero-centered means the activation function outputs both positive and negative v
 - **Output Layer**: Linear (unbounded continuous output)
 
 **Q10: Why is ReLU computationally efficient?**
+
 ReLU uses simple $\max(0, x)$ operation. Sigmoid/Tanh use expensive exponential operations ($e^x$). ReLU is just comparison and multiplication - much faster!
 
 **Q11: What's the difference between Leaky ReLU and PReLU?**
+
 - **Leaky ReLU**: Fixed slope (0.01) for negative values
 - **PReLU**: Learnable slope (α parameter) optimized during training
 
 **Q12: When should you use Tanh instead of ReLU?**
+
 In shallow networks where zero-centering is important and vanishing gradient is not a major issue. Generally, ReLU is preferred for deep learning.
 
 **Q13: Can you use sigmoid in hidden layers of a deep network?**
+
 No! It causes vanishing gradient problem. Use ReLU or its variants in hidden layers. Sigmoid only in output layer for binary classification.
 
 ## 💡 Key Takeaways

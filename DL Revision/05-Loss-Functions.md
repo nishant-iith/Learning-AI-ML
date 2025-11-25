@@ -408,18 +408,23 @@ graph LR
 - **Cost Function**: Average error for a batch: $\frac{1}{2n}\sum(y_i - \hat{y}_i)^2$
 
 **Q2: Why is MSE not robust to outliers?**
+
 MSE squares the error: $(y - \hat{y})^2$. Outliers have large errors, and squaring makes them enormous (e.g., $100^2 = 10000$), causing the model to shift significantly toward outliers to minimize this huge loss.
 
 **Q3: When should you use MAE over MSE?**
+
 Use MAE when your dataset has outliers. MAE uses absolute value $|y - \hat{y}|$ instead of squaring, so outliers don't get excessively penalized.
 
 **Q4: What is Huber Loss and when is it useful?**
+
 Huber Loss combines MSE and MAE. It uses MSE for small errors (fast convergence) and MAE for large errors (robust to outliers). Use it when you want both speed and robustness.
 
 **Q5: What loss function for binary classification?**
+
 Binary Cross Entropy (Log Loss): $-[y\log(\hat{y}) + (1-y)\log(1-\hat{y})]$ with Sigmoid activation in output layer.
 
 **Q6: What loss function for multi-class classification?**
+
 Categorical Cross Entropy: $-\sum y_{ij} \log(\hat{y}_{ij})$ with Softmax activation in output layer and one-hot encoded labels.
 
 **Q7: What is one-hot encoding and why is it needed?**
@@ -437,6 +442,7 @@ Softmax converts raw logits to a probability distribution:
 - Used in output layer for multi-class classification
 
 **Q9: Can you use Binary Cross Entropy for multi-class?**
+
 No! Binary Cross Entropy is only for 2 classes. For 3+ classes, use Categorical Cross Entropy with Softmax.
 
 **Q10: What activation function with each loss?**
