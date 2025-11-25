@@ -20,12 +20,6 @@ graph LR
     I3["Input 3<br/>(x3)"] --> H1
     B1["Bias"] --> H1
     H1 --> O["Output<br/>(y-hat)"]
-
-    style I1 fill:#e1f5ff
-    style I2 fill:#e1f5ff
-    style I3 fill:#e1f5ff
-    style H1 fill:#fff4e1
-    style O fill:#e8f5e9
 ```
 
 **Three Main Layers:**
@@ -58,10 +52,6 @@ graph LR
 graph LR
     A["Eyes<br/>(Input)"] --> B["Neural Network<br/>(Processing)"]
     B --> C["Brain<br/>(Output Decision)"]
-
-    style A fill:#e1f5ff
-    style B fill:#fff4e1
-    style C fill:#e8f5e9
 ```
 
 **Human Learning Process:**
@@ -89,11 +79,6 @@ graph LR
     A["Hot Object<br/>on Right Hand"] --> B["Neuron Activation<br/>(High Weight)"]
     A -.-> C["Left Hand<br/>(No Activation)"]
     B --> D["Brain Signal:<br/>Remove Hand!"]
-
-    style A fill:#ffebee
-    style B fill:#fff4e1
-    style C fill:#f5f5f5
-    style D fill:#e8f5e9
 ```
 
 **What Happens:**
@@ -129,13 +114,6 @@ graph TB
     D["Bias:<br/>b"] --> B
     B --> E["Step 2:<br/>Activation Function"]
     E --> F["Output:<br/>z"]
-
-    style A fill:#e1f5ff
-    style B fill:#fff4e1
-    style C fill:#ffe1f5
-    style D fill:#f5e1ff
-    style E fill:#fff4e1
-    style F fill:#e8f5e9
 ```
 
 #### Step 1: Weighted Sum
@@ -200,16 +178,6 @@ graph LR
     H4 --> O1
     H3 --> O2["y2"]
     H4 --> O2
-
-    style I1 fill:#e1f5ff
-    style I2 fill:#e1f5ff
-    style I3 fill:#e1f5ff
-    style H1 fill:#fff4e1
-    style H2 fill:#fff4e1
-    style H3 fill:#ffe1f5
-    style H4 fill:#ffe1f5
-    style O1 fill:#e8f5e9
-    style O2 fill:#e8f5e9
 ```
 
 **Characteristics:**
