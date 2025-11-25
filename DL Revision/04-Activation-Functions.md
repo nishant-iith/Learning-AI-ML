@@ -53,6 +53,7 @@ $$w_{\text{new}} \approx w_{\text{old}}$$
 | Leaky ReLU | (-∞, ∞) | {0.01, 1} | ❌ | ❌ No |
 | PReLU | (-∞, ∞) | {α, 1} | ❌ | ❌ No |
 | ELU | (-α, ∞) | (0, 1) | ~✓ | ❌ No |
+| Swish | (-∞, ∞) | Smooth | ❌ | ❌ No |
 
 ### 1. Sigmoid Activation Function
 
@@ -218,7 +219,34 @@ $$\text{ELU}(x) = \begin{cases} \alpha(e^x - 1) & \text{if } x < 0 \\\ x & \text
 - When zero-centering is important
 - Advanced architectures
 
-### 7. Softmax Activation Function
+### 7. Swish Activation Function
+
+**Formula:**
+
+$$\text{Swish}(x) = x \times \sigma(x) = \frac{x}{1 + e^{-x}}$$
+
+**Range**: $(-\infty, \infty)$
+
+**Properties:**
+- Self-gated activation function
+- Developed by Google
+- Smooth, non-monotonic function
+
+**Advantages:**
+- Better than ReLU for deeper networks
+- Smooth gradient (unlike ReLU's sharp corner at 0)
+- No upper bound (like ReLU)
+
+**Disadvantages:**
+- **Computationally expensive**: Uses sigmoid internally (exponential operation)
+- Derivative at zero not well-defined (though differentiable everywhere else)
+
+**Use Case:**
+- Deep networks where performance matters more than speed
+- When ReLU/Leaky ReLU underperform
+- Research and advanced architectures
+
+### 8. Softmax Activation Function
 
 **Formula** (for multi-class with K classes):
 $$\text{Softmax}(z_i) = \frac{e^{z_i}}{\sum_{j=1}^{K} e^{z_j}}$$
@@ -239,7 +267,7 @@ $$\text{Softmax}(z_i) = \frac{e^{z_i}}{\sum_{j=1}^{K} e^{z_j}}$$
 - **Output layer for multi-class classification**
 - Converts scores to probability distribution
 
-### 8. Linear Activation Function
+### 9. Linear Activation Function
 
 **Formula:**
 $$f(x) = x$$
