@@ -57,6 +57,8 @@ $$w_{\text{new}} \approx w_{\text{old}}$$
 
 ### 1. Sigmoid Activation Function
 
+![Sigmoid Activation Function](https://media.geeksforgeeks.org/wp-content/uploads/20250131185746649092/Sigmoid-Activation-Function.png)
+
 **Formula:**
 $$\sigma(x) = \frac{1}{1 + e^{-x}}$$
 
